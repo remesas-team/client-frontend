@@ -7,7 +7,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
-      baseUrl: process.env.BASE_URL
+      baseUrl: process.env.BASE_URL,
+      apiBase: process.env.API_BASE
     }
   },
   generate: {

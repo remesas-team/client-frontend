@@ -1,5 +1,7 @@
+import type {$Fetch} from "nitropack";
+
 interface PluginsInjections {
-	// $axios: ReturnType
+	$api: $Fetch
 }
 
 declare module '#app' {
