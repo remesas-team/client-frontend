@@ -1,66 +1,62 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
-    <TheHeader />
-    
-    <main class="flex-1 flex items-center justify-center p-4">
-      <div class="w-full max-w-lg">
-        <!-- Success Card -->
-        <div class="bg-white rounded-xl shadow-lg p-8 space-y-8">
-          <!-- Title Section -->
-          <div class="text-center space-y-2">
-            <div class="success-checkmark">
-              <div class="check-icon">
-                <span class="icon-line line-tip"></span>
-                <span class="icon-line line-long"></span>
-                <div class="icon-circle"></div>
-                <div class="icon-fix"></div>
-              </div>
-            </div>
-            <h1 class="text-3xl font-bold">Transacción exitosa</h1>
-            <p class="text-gray-600">Move your money where it matters</p>
-          </div>
-
-          <!-- Transaction Details -->
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <span class="text-gray-600">Dinero transferido</span>
-              <span class="font-medium">S/300</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-600">Impuestos</span>
-              <span class="font-medium">S/20</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-600">Comisión</span>
-              <span class="font-medium">S/20</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-600">Dinero en destino</span>
-              <span class="font-medium">BRL3300</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-600">Código de operación</span>
-              <span class="font-medium">74112</span>
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-lg">
+      <!-- Success Card -->
+      <div class="bg-white rounded-xl shadow-lg p-8 space-y-8">
+        <!-- Title Section -->
+        <div class="text-center space-y-2">
+          <div class="success-checkmark">
+            <div class="check-icon">
+              <span class="icon-line line-tip"></span>
+              <span class="icon-line line-long"></span>
+              <div class="icon-circle"></div>
+              <div class="icon-fix"></div>
             </div>
           </div>
+          <h1 class="text-3xl font-bold">Transacción exitosa</h1>
+          <p class="text-gray-600">Move your money where it matters</p>
+        </div>
 
-          <!-- Action Button -->
-          <div class="space-y-4">
-            <NuxtLink 
-              to="/tracking/74112"
-              class="block w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium text-center"
-            >
-              Dale seguimiento
-            </NuxtLink>
-            
-            <p class="text-center text-gray-600">
-              Tu dinero estará disponible en máximo 6h
-            </p>
+        <!-- Transaction Details -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Dinero transferido</span>
+            <span class="font-medium">S/300</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Impuestos</span>
+            <span class="font-medium">S/20</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Comisión</span>
+            <span class="font-medium">S/20</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Dinero en destino</span>
+            <span class="font-medium">BRL3300</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-600">Código de operación</span>
+            <span class="font-medium">74112</span>
           </div>
         </div>
+
+        <!-- Action Button -->
+        <div class="space-y-4">
+          <NuxtLink
+              to="/tracking/74112"
+              class="block w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium text-center"
+          >
+            Dale seguimiento
+          </NuxtLink>
+
+          <p class="text-center text-gray-600">
+            Tu dinero estará disponible en máximo 6h
+          </p>
+        </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </template>
 
 <style scoped>

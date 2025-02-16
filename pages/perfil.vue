@@ -1,61 +1,57 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
-    <TheHeader />
-    
-    <main class="flex-1 container mx-auto px-4 py-8">
-      <div class="max-w-3xl mx-auto">
-        <!-- Header -->
-        <div class="mb-8">
-          <h1 class="text-2xl font-bold">Mi Perfil</h1>
-          <p class="text-gray-600">Gestiona tu información personal y preferencias</p>
-        </div>
+  <main class="flex-1 container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold">Mi Perfil</h1>
+        <p class="text-gray-600">Gestiona tu información personal y preferencias</p>
+      </div>
 
-        <form @submit.prevent="saveProfile" class="space-y-6">
-          <!-- Avatar Section -->
-          <ProfileAvatar v-model="avatar" />
+      <form @submit.prevent="saveProfile" class="space-y-6">
+        <!-- Avatar Section -->
+        <ProfileAvatar v-model="avatar"/>
 
-          <!-- Personal Information -->
-          <ProfilePersonalInfo ref="personalInfo" />
+        <!-- Personal Information -->
+        <ProfilePersonalInfo ref="personalInfo"/>
 
-          <!-- Document Information -->
-          <ProfileDocumentInfo ref="documentInfo" />
+        <!-- Document Information -->
+        <ProfileDocumentInfo ref="documentInfo"/>
 
-          <!-- Compliance Information -->
-          <ProfileComplianceInfo ref="complianceInfo" />
+        <!-- Compliance Information -->
+        <ProfileComplianceInfo ref="complianceInfo"/>
 
-          <!-- Terms and Conditions -->
-          <div class="bg-white rounded-xl shadow-lg p-6">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input
+        <!-- Terms and Conditions -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <input
                   v-model="termsAccepted"
                   type="checkbox"
                   required
                   class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                />
-              </div>
-              <div class="ml-3">
-                <label class="text-sm text-gray-700">
-                  Declaro que toda la información proporcionada es verdadera y acepto los
-                  <a href="#" class="text-blue-600 hover:underline">términos y condiciones</a>
-                </label>
-              </div>
+              />
+            </div>
+            <div class="ml-3">
+              <label class="text-sm text-gray-700">
+                Declaro que toda la información proporcionada es verdadera y acepto los
+                <a href="#" class="text-blue-600 hover:underline">términos y condiciones</a>
+              </label>
             </div>
           </div>
+        </div>
 
-          <!-- Submit Button -->
-          <div class="flex justify-end">
-            <button
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+          <button
               type="submit"
               class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium"
-            >
-              Guardar Cambios
-            </button>
-          </div>
-        </form>
-      </div>
-    </main>
-  </div>
+          >
+            Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
 </template>
 
 <script setup lang="ts">

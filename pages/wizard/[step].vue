@@ -1,23 +1,19 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
-    <TheHeader />
-    
-    <main class="flex-1 flex items-center justify-center py-12 px-4">
-      <div class="w-full max-w-2xl">
-        <!-- Progress Steps -->
-        <WizardProgress :current-step="currentStep" />
+  <main class="flex-1 flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-2xl">
+      <!-- Progress Steps -->
+      <WizardProgress :current-step="currentStep"/>
 
-        <!-- Step Content -->
-        <div class="bg-white rounded-xl shadow-lg p-8">
-          <component 
-            :is="currentComponent" 
-            @next="nextStep" 
-            @back="goBack" 
-          />
-        </div>
+      <!-- Step Content -->
+      <div class="bg-white rounded-xl shadow-lg p-8">
+        <component
+            :is="currentComponent"
+            @next="nextStep"
+            @back="goBack"
+        />
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </template>
 
 <script setup lang="ts">
