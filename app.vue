@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSystemConfigStore } from '@/stores/systemConfig';
+import { useSystemConfigStore } from '~/stores/systemConfig';
 
 const systemConfig = useSystemConfigStore();
 

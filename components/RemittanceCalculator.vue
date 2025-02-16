@@ -8,12 +8,12 @@
           <label class="block text-[15px] font-medium text-gray-700 mb-2">
             ENVIAR DINERO DESDE
           </label>
-          <button 
+          <button
             class="w-full flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             @click="toggleFromCountries"
           >
             <div class="flex items-center gap-3">
-              <span 
+              <span
                 class="object-cover rounded-sm text-[35px]">
                 <template v-if="selectedFromCountry">
                   {{selectedFromCountry.emoji}}
@@ -25,11 +25,11 @@
               <span class="text-[17px] font-medium">{{ selectedFromCountry?.name || 'Select Country' }}
               </span>
             </div>
-            <svg 
+            <svg
               class="w-5 h-5 text-gray-400 transition-transform duration-200"
               :class="{ 'rotate-180': showFromCountries }"
-              fill="none" 
-              stroke="currentColor" 
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -37,7 +37,7 @@
           </button>
 
           <!-- From Countries Dropdown -->
-          <div 
+          <div
             v-if="showFromCountries"
             class="absolute z-10 w-full mt-2 bg-white rounded-xl shadow-lg border border-gray-200 py-2"
           >
@@ -47,7 +47,7 @@
               @click="selectFromCountry(country)"
               class="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
             >
-              <span 
+              <span
                 class="object-cover rounded-sm text-[35px]">
                 {{country.emoji}}
               </span>
@@ -61,12 +61,12 @@
           <label class="block text-[15px] font-medium text-gray-700 mb-2">
             HACIA
           </label>
-          <button 
+          <button
             class="w-full flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             @click="toggleToCountries"
           >
             <div class="flex items-center gap-3">
-              <span 
+              <span
                 class="object-cover rounded-sm text-[35px]">
                 <template v-if="selectedToCountry">
                   {{selectedToCountry.emoji}}
@@ -77,11 +77,11 @@
               </span>
               <span class="text-[17px] font-medium">{{ selectedToCountry?.name || 'Select Country' }}</span>
             </div>
-            <svg 
+            <svg
               class="w-5 h-5 text-gray-400 transition-transform duration-200"
               :class="{ 'rotate-180': showToCountries }"
-              fill="none" 
-              stroke="currentColor" 
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -89,7 +89,7 @@
           </button>
 
           <!-- Replace the To Countries Dropdown section -->
-          <div 
+          <div
             v-if="showToCountries"
             class="absolute z-10 w-full mt-2 bg-white rounded-xl shadow-lg border border-gray-200 py-2"
           >
@@ -99,7 +99,7 @@
               @click="selectToCountry(country)"
               class="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
             >
-              <span 
+              <span
                 class="object-cover rounded-sm text-[35px]">
                 {{country.emoji}}
               </span>
@@ -126,16 +126,16 @@
               @input="handleAmountInput"
             />
             <div class="absolute right-2 top-0 h-full">
-              <button 
+              <button
                 class="h-full px-4 flex items-center gap-2 border-l-2 border-[#8BC83F] hover:bg-gray-50 transition-colors"
                 @click="toggleFromCurrencyDropdown"
               >
                 <span class="text-[17px] font-medium">{{ selectedFromCurrency }}</span>
-                <svg 
+                <svg
                   class="w-5 h-5 text-gray-400 transition-transform duration-200"
                   :class="{ 'rotate-180': showFromCurrencyDropdown }"
-                  fill="none" 
-                  stroke="currentColor" 
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -143,7 +143,7 @@
               </button>
 
               <!-- From Currency Dropdown -->
-              <div 
+              <div
                 v-if="showFromCurrencyDropdown"
                 class="absolute z-10 w-24 mt-2 bg-white rounded-xl shadow-lg border border-gray-200 py-2"
               >
@@ -165,16 +165,16 @@
           <label class="block text-[15px] font-medium text-gray-700 mb-2">
             Ellos reciben en:
           </label>
-          <button 
+          <button
             class="w-full flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
             @click="toggleToCurrencyDropdown"
           >
             <span class="text-[17px] font-medium">{{ selectedToCurrency }}</span>
-            <svg 
+            <svg
               class="w-5 h-5 text-gray-400 transition-transform duration-200"
               :class="{ 'rotate-180': showToCurrencyDropdown }"
-              fill="none" 
-              stroke="currentColor" 
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -182,7 +182,7 @@
           </button>
 
           <!-- To Currency Dropdown -->
-          <div 
+          <div
             v-if="showToCurrencyDropdown"
             class="absolute z-10 w-full mt-2 bg-white rounded-xl shadow-lg border border-gray-200 py-2"
           >
@@ -200,7 +200,7 @@
 
       <!-- Exchange Rate Information -->
       <div v-if="estimate" class="space-y-4 mb-8">
-        
+
 
         <div class="space-y-3">
           <div class="flex justify-between items-center">
@@ -263,7 +263,7 @@
         </div>
       </div>
       <!-- Compare Button -->
-      <button 
+      <button
         @click="startOperation"
         class="w-full bg-[#E87234] text-white py-4 rounded-xl text-[17px] font-medium hover:bg-[#D66024] transition-colors"
       >
@@ -275,8 +275,8 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue';
-import { useRemittanceStore } from '@/stores/remittance';
-import { useSystemConfigStore } from '@/stores/systemConfig';
+import { useRemittanceStore } from '~/stores/remittance';
+import { useSystemConfigStore } from '~/stores/systemConfig';
 import { storeToRefs } from 'pinia';
 
 const router = useRouter();
@@ -354,23 +354,23 @@ interface Country {
 
 const selectFromCountry = (country: Country) => {
   if (!country || !country.currency) return;
-  
+
   remittanceStore.$patch({
     selectedFromCountry: country,
     selectedFromCurrency: country.currency.code
   });
-  
+
   showFromCountries.value = false;
 };
 
 const selectToCountry = (country: Country) => {
   if (!country || !country.currency) return;
-  
+
   remittanceStore.$patch({
     selectedToCountry: country,
     selectedToCurrency: country.currency.code
   });
-  
+
   showToCountries.value = false;
   remittanceStore.calculateEstimate();
 };
@@ -397,14 +397,14 @@ const handleAmountInput = (event: Event) => {
 onMounted(async () => {
   // Initialize system config first
   await systemConfigStore.initializeConfig();
-  
+
   // Wait for countries to be loaded and set initial values
   await nextTick();
-  
+
   if (getCountries.value?.length > 0) {
     const defaultFromCountry = getCountries.value[0];
     const defaultToCountry = getCountries.value[1] || getCountries.value[0]; // Fallback to first if second doesn't exist
-    
+
     remittanceStore.$patch({
       selectedFromCountry: defaultFromCountry,
       selectedFromCurrency: defaultFromCountry.currency.code,
@@ -412,7 +412,7 @@ onMounted(async () => {
       selectedToCurrency: defaultToCountry.currency.code
     });
   }
-  
+
   document.addEventListener('click', (event: MouseEvent) => {
     const target = event.target as HTMLElement;
     if (!target.closest('.relative')) {
