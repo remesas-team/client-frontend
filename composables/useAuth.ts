@@ -1,6 +1,3 @@
-import { ref, reactive } from 'vue'
-import { useRuntimeConfig } from '#app'
-
 interface User {
   id: number;
   name: string;

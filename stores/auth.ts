@@ -1,28 +1,5 @@
 import { defineStore } from 'pinia'
-
-interface User {
-  id: number;
-  name: string;
-  last_name: string;
-  phone_code: string;
-  phone: string;
-  email: string;
-  birth_date: string;
-  doc_type_id: number;
-  user_status_id: number;
-  doc_value: string;
-  is_pep: number;
-  is_pep_familiar: number;
-  occupation_id: number;
-  genre: string;
-  proof_residence: string | null;
-  civil_status: string;
-  address: string;
-  geo_district_id: string;
-  email_verified_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
+import type {User} from "~/types/user";
 
 interface AuthState {
   token: string | null;
@@ -51,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
 
       if (userCookie.value) {
         try {
-          const parsedUser = typeof userCookie.value === 'string' 
+          const parsedUser = typeof userCookie.value === 'string'
             ? JSON.parse(userCookie.value)
             : userCookie.value;
           this.user = parsedUser;
@@ -93,7 +70,7 @@ export const useAuthStore = defineStore('auth', {
     async getProfile(token: string) {
         console.log("get profile", token);
       const config = useRuntimeConfig();
-      
+
       try {
         const response = await fetch(`${config.public.baseUrl}/api/v1/platform/auth/user`, {
           headers: {
@@ -119,7 +96,7 @@ export const useAuthStore = defineStore('auth', {
 
     async login(email: string, password: string) {
       const config = useRuntimeConfig();
-      
+
       try {
         const response = await fetch(`${config.public.baseUrl}/api/v1/platform/auth/login`, {
           method: 'POST',
@@ -141,11 +118,11 @@ export const useAuthStore = defineStore('auth', {
 
         console.log(data.data.user, data.data.access_token)
 
-        
+
         // Set initial auth data
         this.setAuth(data.data.access_token, data.data.user);
-        
-        
+
+
         return true;
       } catch (error) {
         console.error('Login error:', error);
@@ -155,7 +132,7 @@ export const useAuthStore = defineStore('auth', {
 
     async logout() {
       const config = useRuntimeConfig();
-      
+
       try {
         const response = await fetch(`${config.public.baseUrl}/api/v1/platform/auth/logout`, {
           method: 'POST',

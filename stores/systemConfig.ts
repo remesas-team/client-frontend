@@ -1,23 +1,8 @@
 import { defineStore } from 'pinia';
-import { useRuntimeConfig } from '#app';
+import type {Country} from "~/types/country";
+import type {Currency} from "~/types/currency";
 
 // Define interfaces for type safety
-interface Currency {
-  id: number;
-  name: string;
-  code: string;
-  symbol: string;
-}
-
-interface Country {
-  id: number;
-  name: string;
-  phone_prefix: string;
-  emoji: string;
-  currency_id: number;
-  currency: Currency;
-}
-
 interface SystemState {
   countries: Country[];
   isLoading: boolean;
@@ -53,7 +38,7 @@ export const useSystemConfigStore = defineStore({
       try {
         this.isLoading = true;
         this.error = null;
-        
+
         const config = useRuntimeConfig();
         const response = await fetch(`${config.public.baseUrl}/api/v1/platform/sources/countries`);
         const result = await response.json();

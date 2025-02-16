@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware((to) => {
   const authStore = useAuthStore();
-  
+
   // Public pages that don't require authentication
   const publicPages = ['/login', '/registro'];
   const authRequired = !publicPages.includes(to.path);
