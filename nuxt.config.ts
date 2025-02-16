@@ -4,13 +4,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   modules: [
-    '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    '@nuxt/ui'
   ],
-  nitro: {
-    preset: 'node'
-  },
+  css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
       baseUrl: process.env.BASE_URL
@@ -41,5 +39,11 @@ export default defineNuxtConfig({
         }
       ]
     }
+  },
+  nitro: {
+    preset: 'node'
+  },
+  ui: {
+    colorMode: false
   }
 })
