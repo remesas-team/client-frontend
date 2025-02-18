@@ -34,7 +34,7 @@ const currentComponent = computed(() => {
     case 4:
       return resolveComponent('WizardStepBank');
     case 5:
-      return resolveComponent('WizardStepUpload'); // This was the issue - component name was incorrect
+      return resolveComponent('WizardStepUpload');
     default:
       return null;
   }

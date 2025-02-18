@@ -9,7 +9,7 @@
         <div class="flex items-center gap-4">
           <template v-if="authStore.isAuthenticated">
             <div class="relative" v-click-outside="closeDropdown">
-              <button 
+              <button
                 @click="toggleDropdown"
                 class="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
               >
@@ -20,13 +20,13 @@
               </button>
 
               <div v-if="isDropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
-                <NuxtLink 
-                  to="/perfil" 
+                <NuxtLink
+                  to="/perfil"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Mi Perfil
                 </NuxtLink>
-                <button 
+                <button
                   @click="handleLogout"
                   class="block w-full text-left px-4 py-2 tex/Users/cristianvega/Documents/project 2/components/ProfilePersonalInfo.vuet-sm text-gray-700 hover:bg-gray-100"
                 >
@@ -37,13 +37,13 @@
           </template>
 
           <template v-else>
-            <NuxtLink 
+            <NuxtLink
               to="/login"
               class="text-gray-600 hover:text-gray-900"
             >
               Iniciar sesión
             </NuxtLink>
-            <NuxtLink 
+            <NuxtLink
               to="/registro"
               class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
             >

@@ -1,5 +1,7 @@
 import type {$Fetch} from "nitropack";
 
+
+
 interface PluginsInjections {
 	$api: $Fetch
 }
@@ -14,6 +16,12 @@ declare module 'nuxt/dist/app/nuxt' {
 
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties extends PluginsInjections {}
+}
+
+declare module 'nitropack' {
+	interface $Fetch {
+		setHeader(key: string, value: string): void
+	}
 }
 
 declare global {
