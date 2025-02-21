@@ -8,6 +8,7 @@ interface SourcesState {
     civil_statuses: any[];
     currencies: Currency[];
     countries: Country[];
+    banks: any[];
 }
 
 export const useSourcesStore = defineStore('sources', {
@@ -17,6 +18,7 @@ export const useSourcesStore = defineStore('sources', {
     civil_statuses: [],
     currencies: [],
     countries: [],
+    banks: []
   }),
 
   getters: {},
@@ -75,6 +77,16 @@ export const useSourcesStore = defineStore('sources', {
 
         const requestSources = sourcesRepository();
         const response = await requestSources.getCountries();
+
+        if (response.success) {
+          this.countries = response.data;
+        }
+
+        return response;
+    },
+    async fetchBanksByCountry(country_id: number) {
+        const requestSources = sourcesRepository();
+        const response = await requestSources.getBanksByCountry({country_id: country_id});
 
         if (response.success) {
           this.countries = response.data;

@@ -14,7 +14,9 @@ export const useRemittanceStore = defineStore('remittance', {
       destination_origin_fund_id: 3,
       coupon_id: null,
       timezone: "America/Lima",
-      payment_method: "transferencia"
+      payment_method: "transferencia",
+      source_country_id: 0,
+      destination_country_id: 0
     },
   }),
 

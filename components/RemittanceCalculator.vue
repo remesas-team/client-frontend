@@ -12,7 +12,6 @@
         <!-- Country Selection Grid -->
         <div class="grid md:grid-cols-2 gap-6 mb-8">
           <!-- From Country -->
-          <pre class="col-span-full">{{ formRemittance }}</pre>
           <div class="relative">
             <label class="block text-[15px] font-medium text-gray-700 mb-2">
               ENVIAR DINERO DESDE
@@ -90,7 +89,6 @@
             <label class="block text-[15px] font-medium text-gray-700 mb-2">
               Monto a enviar:
             </label>
-
             <UFormField name="amount">
               <UButtonGroup size="2xl" class="w-full">
                   <UInput
@@ -100,8 +98,7 @@
                       type="number"
                       @update:modelValue="handleAmountInput"
                   />
-
-                <USelectMenu class="w-32" :search-input="false" v-model="toCountry" :items="getCountries"/>
+                <USelectMenu class="w-32" :search-input="false" v-model="fromCurrency" :items="getFromCurrency"/>
               </UButtonGroup>
             </UFormField>
           </div>
@@ -113,7 +110,7 @@
             </label>
 
             <UFormField name="to">
-              <USelectMenu size="2xl" class="w-full" :search-input="false" v-model="toCountry" :items="getCountries"/>
+              <USelectMenu size="2xl" class="w-full" :search-input="false" v-model="toCurrency" :items="getToCurrency"/>
             </UFormField>
           </div>
         </div>
@@ -131,7 +128,7 @@
               <span class="text-gray-600">Comisión de envío:</span>
               <span class="text-[#E91E63] font-medium">{{
                   estimate.from
-                }} {{ (estimate.send_cost - estimate.amount).toFixed(2) }}</span>
+                }} {{ (estimate.send_cost).toFixed(2) }}</span>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Impuestos:</span>
@@ -143,9 +140,15 @@
                   estimate.from
                 }} {{ estimate.subtotal || (Number(estimate.send_cost) + Number(estimate.tax || 0)).toFixed(2) }}</span>
             </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Total a enviar:</span>
+              <span class="text-[#E91E63] font-medium">{{
+                  estimate.from
+                }} {{ estimate.amount_to_send.toFixed(2) }}</span>
+            </div>
             <div class="flex justify-between items-center font-bold">
               <span class="text-gray-600">Total a Recibir en destino:</span>
-              <span class="text-[#E91E63]">{{ estimate.to }} {{ estimate.amount_to_send.toFixed(2) }}</span>
+              <span class="text-[#E91E63]">{{ estimate.to }} {{ estimate.exchange_result.toFixed(2) }}</span>
             </div>
           </div>
 
@@ -196,10 +199,11 @@
             type="submit"
             class="w-full bg-[#E87234] text-white py-4 rounded-xl text-[17px] font-medium hover:bg-[#D66024] transition-colors"
         >
-          Completar transferencia
+          Iniciar transferencia
         </button>
       </UForm>
     </div>
+    <pre> {{ remittanceStore }} </pre>
   </div>
 </template>
 
@@ -217,8 +221,11 @@ const requestOperations = operationsRepository();
 const refFormRemittance = ref(null)
 const fromCountry = ref(null)
 const toCountry = ref(null)
+const toCurrency = ref(null)
+const fromCurrency = ref(null)
 const estimate = ref(null)
 const loadingSubmit = ref(false)
+
 const formRemittance = ref({
   from: 'PEN',
   to: 'BRL',
@@ -233,6 +240,33 @@ const getCountries = computed(() => {
     emoji: item.emoji,
     currency_id: item.currency_id
   }))
+})
+
+const getCountryCurrencies = computed(() => {
+  return sourcesStore.countries.map(item => ({
+    id: item.currency.id,
+    label: item.currency.code,
+    emoji: item.emoji,
+    currency_id: item.currency_id
+  }))
+})
+
+const getFromCurrency = computed(() => {
+  if (!fromCountry.value) return null
+  const returnCurrency = useSourcesStore().currencies.find(currency => currency.id === fromCountry.value.currency_id)
+  return [{
+    id: returnCurrency?.id,
+    label: returnCurrency?.code,
+  }]
+})
+
+const getToCurrency = computed(() => {
+  if (!toCountry.value) return null
+  const returnCurrency = useSourcesStore().currencies.find(currency => currency.id === toCountry.value.currency_id)
+  return [{
+    id: returnCurrency?.id,
+    label: returnCurrency?.code,
+  }]
 })
 
 const schemaRemittance = v.object({
@@ -276,7 +310,17 @@ const applyCoupon = () => {
 
 const startOperation = () => {
   loadingSubmit.value = true
+  
+  remittanceStore.form.source_currency_id = fromCurrency.value.id
+  remittanceStore.form.source_amount = formRemittance.value.amount // Fixed: added .value
+  remittanceStore.form.destination_currency_id = toCurrency.value.id
+  remittanceStore.form.destination_amount = estimate.value.exchange_result
+  remittanceStore.form.exchange_rate = estimate.value.exchange_unit
+  remittanceStore.form.coupon_id = formRemittance.value.coupon?.toUpperCase()
+  remittanceStore.form.source_country_id = fromCountry.value.id
+  remittanceStore.form.destination_country_id = toCountry.value.id
 
+  console.log(remittanceStore)
   router.push('/wizard/1');
 }
 
@@ -289,5 +333,17 @@ onMounted(async () => {
   if (sourcesStore.countries?.length > 0) {
     await calculateEstimate();
   }
+  fromCountry.value = getCountries.value[0]
+  toCountry.value = getCountries.value[1]
 });
+
+watch(fromCountry, () => {
+  fromCurrency.value = getFromCurrency.value[0];
+});
+
+watch(toCountry, () => {
+  toCurrency.value = getToCurrency.value[0];
+});
+
+
 </script>
