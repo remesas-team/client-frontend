@@ -53,6 +53,6 @@ const props = defineProps<{
 }>();
 
 const handleStepClick = (stepNumber: number) => {
-  router.push(`/wizard/${stepNumber}`);
+  router.push(`/operacion/${stepNumber}`);
 };
 </script>

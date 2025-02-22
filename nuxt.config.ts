@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
-      baseUrl: process.env.BASE_URL,
-      apiBase: process.env.API_BASE
+      baseUrl: process.env.BASE_URL || "https://remesas.com" ,
+      apiBase: process.env.API_BASE || "https://test-api.remesas.com/api"
     }
   },
   generate: {

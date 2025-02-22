@@ -234,6 +234,9 @@ const formRemittance = ref({
 })
 
 const getCountries = computed(() => {
+  console.log(sourcesStore.countries)
+  if (!sourcesStore.countries) return []
+  
   return sourcesStore.countries.map(item => ({
     id: item.id,
     label: item.name,
