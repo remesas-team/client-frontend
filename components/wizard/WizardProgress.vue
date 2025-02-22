@@ -44,9 +44,8 @@ interface Step {
 const steps: Step[] = [
   { number: 1, label: 'Destinatario' },
   { number: 2, label: 'Cuenta de origen' },
-  { number: 3, label: 'Confirma transacción' },
-  { number: 4, label: 'Selecciona banco' },
-  { number: 5, label: 'Sube comprobante' }
+  { number: 3, label: 'Valida los datos' },
+  { number: 4, label: 'Confirma transacción' }
 ];
 
 const props = defineProps<{

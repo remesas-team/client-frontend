@@ -44,5 +44,10 @@ const testimonials = ref<Testimonial[]>([
     text: 'Proceso simple y transparente, muy recomendado',
     author: 'María González',
   },
+  {
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80',
+    text: 'Proceso simple y transparente, muy recomendado',
+    author: 'María González',
+  },
 ]);
 </script>

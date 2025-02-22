@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <!-- Transfer Method Selection -->
+    <!-- Transfer Method Selection 
     <div class="bg-white rounded-lg border p-4">
       <div class="flex items-center gap-3">
         <svg class="w-6 h-6 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -23,7 +23,8 @@
         </svg>
       </div>
     </div>
-
+    -->
+    
     <!-- Transfer Details -->
     <div class="space-y-4">
       <h3 class="text-lg font-medium">Datos para la transferencia</h3>

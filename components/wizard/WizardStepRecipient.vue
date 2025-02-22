@@ -6,6 +6,16 @@
     <UForm id="refFormRemittance" ref="refFormRemittance" :state="form" @submit="handleSubmit">
       <div class="space-y-4 w-full">
         <div class="w-full">
+          <label for="" >Destinatarios guardados:</label>
+          <USelect 
+            v-model="form.bank"
+            :items="banks"
+            value-attribute="id"
+            placeholder="Selecciona un banco"
+            size="xl"
+            class="w-full text-xl"
+          />
+          <label for="">Nuevo destinatario:</label>
           <USelect 
             v-model="form.bank"
             :items="banks"
@@ -73,11 +83,10 @@
 import {userRepository} from "~/repositories/v1/platform/userRepository"
 import {useRemittanceStore} from '~/stores/remittance'
 
+const userRepo = userRepository()
 const sourcesStore = useSourcesStore()
 const remittanceStore = useRemittanceStore()
-
 const banks = ref([])
-const bank = ref(null)
 const form = ref({
   bank: null,
   accountNumber: '',
@@ -92,17 +101,16 @@ const isFormValid = computed(() => {
 
 
 
-
-
 const handleSubmit = async () => {
   console.log("hola perro")
+  
   // Here you can handle the form submission
   // For example, save to store or emit event
-  //emit('next');
-  const userRepo = userRepository();
-  console.log(bank.value)
+  
+  const bank_id = form.value.bank
+  
   const response = await userRepo.createBankAccount({
-    "bank_id": bank.value,
+    "bank_id": bank_id,
     "district_id": null,
     "currency_id": remittanceStore.form.destination_currency_id,
     "type": "corriente",
@@ -110,8 +118,11 @@ const handleSubmit = async () => {
     "alias": form.value.accountAlias,
     "is_joint_account": false
   });
-  console.log(response)
-  //const bankAccount = await userRepository.createBankAccount()
+
+  
+  remittanceStore.form.destination_user_account_id = response.data.id
+
+  emit('next');
 };
 
 const emit = defineEmits<{
@@ -121,9 +132,16 @@ const emit = defineEmits<{
 
 // Add onMounted hook
 onMounted(async () => {
-  const response = await sourcesStore.fetchBanksByCountry(1); // You might want to pass the actual country_id
-  if (response.success) {
-    banks.value = Object.entries(response.data.banks).map(([id, name]) => ({
+  //Deuda: Se debe obtener el pais de la orden de remesa sin perderlo al actualizar
+  const banksByCountry = await sourcesStore.fetchBanksByCountry(remittanceStore.form.source_country_id?remittanceStore.form.source_country_id:1); // You might want to pass the actual country_id
+  const destinataryBanksAccounts = await userRepo.fetchBankAccounts();
+
+  if(destinataryBanksAccounts) {
+    console.log(destinataryBanksAccounts.data)
+  }
+
+  if (banksByCountry.success) {
+    banks.value = Object.entries(banksByCountry.data.banks).map(([id, name]) => ({
       value: id,
       label: name
     }));

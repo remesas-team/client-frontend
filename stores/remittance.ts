@@ -1,3 +1,5 @@
+import {operationsRepository} from "~/repositories/v1/platform/operationsRepository";
+
 export const useRemittanceStore = defineStore('remittance', {
   state: () => ({
     form: {
@@ -11,13 +13,19 @@ export const useRemittanceStore = defineStore('remittance', {
       destination_bank_account_id: 1,
       destination_amount: 95.00,
       exchange_rate: 1.87,
+      send_cost: 1,
       destination_origin_fund_id: 3,
       coupon_id: null,
       timezone: "America/Lima",
       payment_method: "transferencia",
       source_country_id: 0,
-      destination_country_id: 0
+      destination_country_id: 0,
+      source_currency_symbol: '',
+      destination_currency_symbol: ''
     },
+    currentOperation: {
+      
+    }
   }),
 
   getters: {},
@@ -38,6 +46,14 @@ export const useRemittanceStore = defineStore('remittance', {
         alias: accountData.accountAlias || 'Cuenta principal',
         is_joint_account: false
       };
+    },
+    async createOperation() {
+      const remittance = operationsRepository()
+      const responseRemittance = await remittance.postOperation(this.form)
+      
+      if (!responseRemittance.success) {return false}
+      
+      return responseRemittance
     }
   },
 });

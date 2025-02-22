@@ -11,7 +11,7 @@
             @next="nextStep"
             @back="goBack"
         />
-        <pre> order: {{ useRemittanceStore().form }}</pre>
+        <pre> {{ useRemittanceStore().form }}</pre>
       </div>
     </div>
   </main>
@@ -34,8 +34,6 @@ const currentComponent = computed(() => {
     case 3:
       return resolveComponent('WizardStepConfirmation');
     case 4:
-      return resolveComponent('WizardStepBank');
-    case 5:
       return resolveComponent('WizardStepUpload');
     default:
       return null;

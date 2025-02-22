@@ -24,6 +24,8 @@ export const useAuthStore = defineStore('auth', {
 
       if (tokenCookie.value) {
         this.token = tokenCookie.value;
+        const {$api} = useNuxtApp()
+        $api.setHeader('Authorization', `Bearer ${this.token}`)
       }
 
       if (userCookie.value) {
@@ -42,6 +44,8 @@ export const useAuthStore = defineStore('auth', {
     setAuth(token: string, user: User) {
       this.token = token;
       this.user = user;
+      
+
 
       const tokenCookie = useCookie('auth_token', {
         maxAge: 604800,

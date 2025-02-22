@@ -203,7 +203,7 @@
         </button>
       </UForm>
     </div>
-    <pre> {{ remittanceStore }} </pre>
+    
   </div>
 </template>
 
@@ -319,7 +319,12 @@ const startOperation = () => {
   remittanceStore.form.coupon_id = formRemittance.value.coupon?.toUpperCase()
   remittanceStore.form.source_country_id = fromCountry.value.id
   remittanceStore.form.destination_country_id = toCountry.value.id
-
+  remittanceStore.form.source_currency_symbol = estimate.value.from
+  remittanceStore.form.destination_currency_symbol = estimate.value.to
+  remittanceStore.form.send_cost = estimate.value.send_cost
+  remittanceStore.form.send_tax = estimate.value.tax
+  remittanceStore.form.amount_to_send = estimate.value.amount_to_send
+  
   console.log(remittanceStore)
   router.push('/wizard/1');
 }

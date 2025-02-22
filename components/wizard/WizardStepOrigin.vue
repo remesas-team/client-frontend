@@ -1,216 +1,150 @@
 <template>
   <div class="space-y-6">
-    <h2 class="text-xl font-semibold mb-6">Cuenta de origen</h2>
-
-    <!-- Account Type Selection -->
-    <div class="space-y-4 mb-8">
-      <label 
-        class="block p-4 border-2 rounded-lg cursor-pointer transition-colors"
-        :class="[
-          accountType === 'bank' 
-            ? 'border-blue-600 bg-blue-50'
-            : 'border-gray-200 hover:border-gray-300'
-        ]"
-      >
-        <div class="flex items-center">
-          <input
-            type="radio"
-            v-model="accountType"
-            value="bank"
-            class="sr-only"
-          />
-          <div 
-            class="w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3"
-            :class="[
-              accountType === 'bank'
-                ? 'border-blue-600'
-                : 'border-gray-300'
-            ]"
-          >
-            <div
-              v-if="accountType === 'bank'"
-              class="w-2.5 h-2.5 rounded-full bg-blue-600"
-            ></div>
-          </div>
-          <span class="font-medium">Cuenta bancaria</span>
-        </div>
-      </label>
-
-      <label 
-        class="block p-4 border-2 rounded-lg cursor-pointer transition-colors"
-        :class="[
-          accountType === 'pix' 
-            ? 'border-blue-600 bg-blue-50'
-            : 'border-gray-200 hover:border-gray-300'
-        ]"
-      >
-        <div class="flex items-center">
-          <input
-            type="radio"
-            v-model="accountType"
-            value="pix"
-            class="sr-only"
-          />
-          <div 
-            class="w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3"
-            :class="[
-              accountType === 'pix'
-                ? 'border-blue-600'
-                : 'border-gray-300'
-            ]"
-          >
-            <div
-              v-if="accountType === 'pix'"
-              class="w-2.5 h-2.5 rounded-full bg-blue-600"
-            ></div>
-          </div>
-          <span class="font-medium">PIX</span>
-        </div>
-      </label>
-    </div>
-
+    <h2 class="text-xl font-semibold mb-6">Configura una cuenta de origen</h2>
     <!-- Bank Account Form -->
-    <div v-if="accountType === 'bank'" class="space-y-4">
-      <select
-        v-model="form.bank"
-        class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg"
-      >
-        <option value="">Selecciona un banco</option>
-        <option value="bradesco">Bradesco</option>
-        <option value="itau">Itaú</option>
-        <option value="bancodobrasil">Banco do Brasil</option>
-        <option value="caixa">Caixa Econômica Federal</option>
-      </select>
+    <UForm id="refFormRemittance" ref="refFormRemittance" :state="form" @submit="handleSubmit">
+      <div class="space-y-4 w-full">
+        <div class="w-full">
+          <label for="" >Destinatarios guardados:</label>
+          <USelect 
+            v-model="form.bank"
+            :items="banks"
+            value-attribute="id"
+            placeholder="Selecciona un banco"
+            size="xl"
+            class="w-full text-xl"
+          />
+          <label for="">Nuevo destinatario:</label>
+          <USelect 
+            v-model="form.bank"
+            :items="banks"
+            value-attribute="id"
+            placeholder="Selecciona un banco"
+            size="xl"
+            class="w-full text-xl"
+          />
+        </div>
+        <div class="w-full">
+          <UInput
+            v-model="form.accountNumber"
+            type="text"
+            pattern="[0-9]*"
+            inputmode="numeric"
+            placeholder="Número de cuenta interbancario"
+            size="xl"
+            class="w-full text-xl"
+            @input="form.accountNumber = form.accountNumber.replace(/\D/g, '')"
+          />
+        </div>
+        <div class="w-full">
+          <UInput
+            v-model="form.recipientName"
+            type="text"
+            placeholder="Nombre del destinatario"
+            size="xl"
+            class="w-full text-xl"
+          />
+        </div>
+      </div>
 
-      <input
-        v-model="form.accountNumber"
-        type="text"
-        pattern="[0-9]*"
-        inputmode="numeric"
-        placeholder="Número de cuenta interbancario"
-        class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg"
-        @input="form.accountNumber = form.accountNumber.replace(/\D/g, '')"
-      />
+      <!-- Save Account -->
+      <div class="mt-6">
+        <label class="flex items-center">
+          <input v-model="form.saveAccount" type="checkbox"
+            class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+          <span class="ml-2 text-sm text-gray-600">
+            Guardar como cuenta frecuente
+          </span>
+        </label>
+      </div>
 
-      <input
-        v-model="form.recipientName"
-        type="text"
-        placeholder="Nombre del titular"
-        class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg"
-      />
-    </div>
+      <!-- Save Account Name -->
+      <div v-if="form.saveAccount" class="mt-4 w-full">
+        <input v-model="form.accountAlias" type="text" placeholder="Nombre para esta cuenta (ej: Cuenta principal)"
+          class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg" />
+      </div>
 
-    <!-- PIX Form -->
-    <div v-if="accountType === 'pix'" class="space-y-4">
-      <input
-        v-model="form.phone"
-        type="tel"
-        placeholder="Número de celular"
-        class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg"
-      />
-
-      <input
-        v-model="form.recipientName"
-        type="text"
-        placeholder="Nombre del titular"
-        class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg"
-      />
-    </div>
-
-    <!-- Save Account -->
-    <div class="mt-6">
-      <label class="flex items-center">
-        <input
-          v-model="form.saveAccount"
-          type="checkbox"
-          class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        />
-        <span class="ml-2 text-sm text-gray-600">
-          Guardar como cuenta frecuente
-        </span>
-      </label>
-    </div>
-
-    <!-- Save Account Name -->
-    <div v-if="form.saveAccount" class="mt-4">
-      <input
-        v-model="form.accountAlias"
-        type="text"
-        placeholder="Nombre para esta cuenta (ej: Mi cuenta principal)"
-        class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg"
-      />
-    </div>
-
-    <!-- Navigation Buttons -->
-    <div class="space-y-3">
-      <button
-        @click="handleSubmit"
-        class="w-full bg-blue-600 text-white py-4 rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium h-14"
-        :disabled="!isFormValid"
+      <!-- Submit Button -->
+      <UButton
+        type="submit"
+        size="xl"
+        color="primary"
+        class="w-full mt-8 text-lg font-medium h-14"
       >
         Continuar
-      </button>
-      
-      <button
-        @click="$emit('back')"
-        class="w-full bg-gray-100 text-gray-600 py-4 rounded-lg hover:bg-gray-200 transition-colors text-lg font-medium h-14"
-      >
-        Atrás
-      </button>
-    </div>
+      </UButton>
+    </UForm>
+    
   </div>
 </template>
 
 <script setup lang="ts">
-interface Form {
-  accountType: 'bank' | 'pix';
-  bank: string;
-  accountNumber: string;
-  phone: string;
-  recipientName: string;
-  saveAccount: boolean;
-  accountAlias: string;
-}
-
-const accountType = ref<'bank' | 'pix'>('bank');
-
-const form = reactive<Form>({
-  accountType: 'bank',
-  bank: '',
+import {userRepository} from "~/repositories/v1/platform/userRepository"
+import {useRemittanceStore} from '~/stores/remittance'
+ 
+const userRepo = userRepository()
+const sourcesStore = useSourcesStore()
+const remittanceStore = useRemittanceStore()
+const banks = ref([])
+const form = ref({
+  bank: null,
   accountNumber: '',
-  phone: '',
   recipientName: '',
   saveAccount: false,
   accountAlias: ''
-});
+})
 
 const isFormValid = computed(() => {
-  if (accountType.value === 'bank') {
-    return form.bank && form.accountNumber && form.recipientName;
-  } else {
-    return form.phone && form.recipientName;
-  }
+  return form.bank && form.accountNumber && form.recipientName;
 });
 
-const handleSubmit = () => {
-  if (!isFormValid.value) return;
+
+
+const handleSubmit = async () => {
+  console.log("hola perro")
   
-  form.accountType = accountType.value;
+  // Here you can handle the form submission
+  // For example, save to store or emit event
+  
+  const bank_id = form.value.bank
+  
+  const response = await userRepo.createBankAccount({
+    "bank_id": bank_id,
+    "district_id": null,
+    "currency_id": remittanceStore.form.destination_currency_id,
+    "type": "corriente",
+    "account_number": form.value.accountNumber,
+    "alias": form.value.accountAlias,
+    "is_joint_account": false
+  });
+
+  
+  remittanceStore.form.source_user_account_id = response.data.id
+
   emit('next');
 };
 
 const emit = defineEmits<{
   (e: 'next'): void;
-  (e: 'back'): void;
 }>();
 
-// Reset form values when switching account types
-watch(accountType, (newType) => {
-  if (newType === 'bank') {
-    form.phone = '';
-  } else {
-    form.bank = '';
-    form.accountNumber = '';
+
+// Add onMounted hook
+onMounted(async () => {
+  //Deuda: Se debe obtener el pais de la orden de remesa sin perderlo al actualizar
+  const banksByCountry = await sourcesStore.fetchBanksByCountry(remittanceStore.form.destination_country_id?remittanceStore.form.destination_country_id:1); // You might want to pass the actual country_id
+  const destinataryBanksAccounts = await userRepo.fetchBankAccounts();
+
+  if(destinataryBanksAccounts) {
+    console.log(destinataryBanksAccounts.data)
+  }
+
+  if (banksByCountry.success) {
+    banks.value = Object.entries(banksByCountry.data.banks).map(([id, name]) => ({
+      value: id,
+      label: name
+    }));
   }
 });
+
 </script>

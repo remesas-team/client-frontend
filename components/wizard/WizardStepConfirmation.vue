@@ -20,13 +20,12 @@
     <!-- Exchange Rate Info -->
     <div class="space-y-4">
       <div class="flex justify-between items-center">
-        <span class="text-gray-600">Tipo de cambio</span>
-        <span class="text-xl font-bold">1 Sol → 1.5 BRL</span>
-      </div>
-
-      <div class="flex justify-between items-center">
         <span class="text-gray-600">Recibe en destino:</span>
-        <span class="text-3xl font-bold">2500 BRL</span>
+        <span class="text-3xl font-bold">{{remittanceStore.form.destination_amount}} {{remittanceStore.form.destination_currency_symbol}}</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Tipo de cambio</span>
+        <span class="text-xl font-bold">1 {{ remittanceStore.form.source_currency_symbol }} = {{ remittanceStore.form.exchange_rate }} {{ remittanceStore.form.destination_currency_symbol }}</span>
       </div>
     </div>
 
@@ -36,16 +35,12 @@
       
       <div class="space-y-3">
         <div class="flex justify-between">
-          <span class="text-gray-600">Costo de envío</span>
-          <span class="font-medium">20 USD</span>
+          <span class="text-gray-600">Costo de envío (+igv)</span>
+          <span class="font-medium">{{ remittanceStore.form.send_cost + remittanceStore.form.send_tax }} {{ remittanceStore.form.source_currency_symbol }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-600">Monto convertido</span>
-          <span class="font-medium">180 USD</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-gray-600">Tipo de cambio</span>
-          <span class="font-medium">1USD = 3.77 BRL</span>
+          <span class="text-gray-600">Total a enviar</span>
+          <span class="font-medium">{{ remittanceStore.form.amount_to_send }} {{ remittanceStore.form.source_currency_symbol }}</span>
         </div>
       </div>
     </div>
@@ -66,6 +61,9 @@
 </template>
 
 <script setup lang="ts">
+import {useRemittanceStore} from '~/stores/remittance';
+
+const remittanceStore = useRemittanceStore()
 const TIME_LIMIT = 15 * 60; // 15 minutes in seconds
 const timeRemaining = ref(TIME_LIMIT);
 
@@ -97,7 +95,10 @@ const emit = defineEmits<{
   (e: 'next'): void;
 }>();
 
-const handleConfirm = () => {
+const handleConfirm = async () => {
+  const responseOperation = await remittanceStore.createOperation()  
+  remittanceStore.currentOperation = responseOperation.data
+
   emit('next');
 };
 </script>
