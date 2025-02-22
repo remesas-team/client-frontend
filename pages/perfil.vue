@@ -3,13 +3,13 @@
     <div class="max-w-3xl mx-auto">
       <!-- Header -->
       <div class="mb-8">
-        <h1 class="text-2xl font-bold">Mi Perfil</h1>
+        <h1 class="text-2xl font-bold">Configura tu perfil</h1>
         <p class="text-gray-600">Gestiona tu información personal y preferencias</p>
       </div>
 
       <form @submit.prevent="saveProfile" class="space-y-6">
-        <!-- Avatar Section -->
-        <ProfileAvatar v-model="avatar"/>
+        <!-- Avatar Section 
+        <ProfileAvatar v-model="avatar"/> -->
 
         <!-- Personal Information -->
         <ProfilePersonalInfo ref="personalInfo"/>

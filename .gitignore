@@ -129,3 +129,6 @@ node_modules
 # Editor directories and files
 .idea
 .vscode-test
+
+# Local Netlify folder
+.netlify

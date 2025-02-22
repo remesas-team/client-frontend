@@ -11,7 +11,7 @@
             @next="nextStep"
             @back="goBack"
         />
-        <pre> {{ useRemittanceStore().form }}</pre>
+        <!-- <pre> {{ useRemittanceStore().form }}</pre> -->
       </div>
     </div>
   </main>
@@ -42,20 +42,20 @@ const currentComponent = computed(() => {
 
 const nextStep = () => {
   if (currentStep.value < 5) {
-    router.push(`/wizard/${currentStep.value + 1}`);
+    router.push(`/operacion/${currentStep.value + 1}`);
   }
 };
 
 const goBack = () => {
   if (currentStep.value > 1) {
-    router.push(`/wizard/${currentStep.value - 1}`);
+    router.push(`/operacion/${currentStep.value - 1}`);
   }
 };
 
 // Redirect to step 1 if invalid step
 onMounted(() => {
   if (![1, 2, 3, 4, 5].includes(currentStep.value)) {
-    router.replace('/wizard/1');
+    router.replace('/operacion/1');
   }
 });
 </script>

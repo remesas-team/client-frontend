@@ -11,7 +11,7 @@
           required
           class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg appearance-none"
         >
-          <option value="dni">DNI</option>
+          <option value="dni" selected>DNI</option>
           <option value="passport">Pasaporte</option>
           <option value="ce">Carnet de Extranjería</option>
         </select>
@@ -21,7 +21,7 @@
           Número de Documento
         </label>
         <input
-          v-model="form.documentNumber"
+          v-model="form.doc_value"
           type="text"
           required
           class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
@@ -33,13 +33,7 @@
 </template>
 
 <script setup lang="ts">
-interface DocumentInfo {
-  documentType: string;
-  documentNumber: string;
-}
-
-const form = reactive<DocumentInfo>({
-  documentType: 'dni',
-  documentNumber: '12345678'
-});
+import { useAuthStore } from '@/stores/auth';
+const authStore = useAuthStore()
+const form = ref(authStore.user);
 </script>

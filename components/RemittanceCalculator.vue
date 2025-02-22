@@ -326,7 +326,7 @@ const startOperation = () => {
   remittanceStore.form.amount_to_send = estimate.value.amount_to_send
   
   console.log(remittanceStore)
-  router.push('/wizard/1');
+  router.push('/operacion/1');
 }
 
 onMounted(async () => {

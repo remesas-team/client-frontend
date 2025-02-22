@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   ssr: true,
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
+  sourcemap: true,
   modules: ['@vueuse/nuxt', '@nuxt/ui', '@pinia/nuxt'],
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
@@ -13,11 +14,11 @@ export default defineNuxtConfig({
   },
   generate: {
     routes: [
-      '/wizard/1',
-      '/wizard/2',
-      '/wizard/3',
-      '/wizard/4',
-      '/wizard/5',
+      '/operacion/1',
+      '/operacion/2',
+      '/operacion/3',
+      '/operacion/4',
+      '/operacion/5',
       '/tracking/74112',
       '/transferencias',
       '/perfil'

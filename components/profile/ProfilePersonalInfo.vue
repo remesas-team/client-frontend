@@ -7,7 +7,7 @@
           Nombre
         </label>
         <input
-          v-model="form.firstName"
+          v-model="form.name"
           type="text"
           required
           class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
@@ -19,7 +19,7 @@
           Apellido
         </label>
         <input
-          v-model="form.lastName"
+          v-model="form.last_name"
           type="text"
           required
           class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
@@ -55,17 +55,11 @@
 </template>
 
 <script setup lang="ts">
-interface PersonalInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-}
+import { useAuthStore } from '@/stores/auth';
+const authStore = useAuthStore()
+const form = ref(authStore.user);
 
-const form = reactive<PersonalInfo>({
-  firstName: 'Juan',
-  lastName: 'Pérez',
-  email: 'juan.perez@example.com',
-  phone: '+51 999 888 777'
-});
+
+
+
 </script>
