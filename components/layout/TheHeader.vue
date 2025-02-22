@@ -41,13 +41,13 @@
               to="/login"
               class="text-gray-600 hover:text-gray-900"
             >
-              Iniciar sesión
+              Inicia sesión
             </NuxtLink>
             <NuxtLink
               to="/registro"
-              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              class="bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700"
             >
-              Crear cuenta
+              Regístrate
             </NuxtLink>
           </template>
         </div>

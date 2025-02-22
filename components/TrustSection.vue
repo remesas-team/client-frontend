@@ -1,18 +1,9 @@
 <template>
   <section class="text-center mb-16">
-    <h3 class="text-2xl font-bold mb-8">Respaldados por</h3>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-      <div class="bg-white p-4 rounded-lg shadow-md flex items-center justify-center">
-        <span class="text-gray-400">Banco Central</span>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md flex items-center justify-center">
-        <span class="text-gray-400">FinTech Association</span>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md flex items-center justify-center">
-        <span class="text-gray-400">ISO 27001</span>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md flex items-center justify-center">
-        <span class="text-gray-400">PCI DSS</span>
+    <h3 class="text-2xl font-bold mb-8">Respaldados por:</h3>
+    <div class="flex justify-center items-center">
+      <div class="p-4 rounded-lg w-70">
+        <span class="text-gray-400"><img src="public/images/capece.png" alt=""></span>
       </div>
     </div>
   </section>

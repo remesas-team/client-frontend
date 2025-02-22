@@ -98,7 +98,7 @@ const emit = defineEmits<{
 const handleConfirm = async () => {
   const responseOperation = await remittanceStore.createOperation()  
   remittanceStore.currentOperation = responseOperation.data
-
+  
   emit('next');
 };
 </script>

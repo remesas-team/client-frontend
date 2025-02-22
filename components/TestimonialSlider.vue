@@ -3,11 +3,11 @@
     <div class="max-w-6xl mx-auto px-4">
       <div class="grid grid-cols-12 gap-4 md:gap-8 items-center">
         <!-- Title and Controls Column -->
-        <div class="col-span-4">
+        <div class="col-span-5">
           <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8">
-            Para que te sientas cerca de los tuyos
+            Sientete cerca de los tuyos
           </h2>
-          <p class="mb-8">Hemos creado la forma de que puedas hacer transferencias inmediatas anque estés lejos de casa.</p>
+          <p class="mb-8">La forma de poder cuidarlos anque estés lejos de casa.</p>
           
           <div class="flex gap-2 md:gap-4">
             <button 
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Slider Column -->
-        <div class="col-span-8">
+        <div class="col-span-7">
           <div 
             class="overflow-hidden rounded-xl"
             @mouseenter="pauseAutoplay"
@@ -40,7 +40,7 @@
           >
             <div 
               class="flex transition-transform duration-500 ease-in-out"
-              :style="{ transform: `translateX(-${currentSlide * 50}%)` }"
+              :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
             >
               <div 
                 v-for="(slide, index) in slides" 
@@ -135,7 +135,7 @@ const autoplayInterval = ref<number | null>(null);
 const AUTOPLAY_DELAY = 5000;
 
 const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % slides.value.length;
+  currentSlide.value = (currentSlide.value + 1) % slides.value.length;  
 };
 
 const prevSlide = () => {

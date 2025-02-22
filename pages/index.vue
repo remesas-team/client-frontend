@@ -6,11 +6,12 @@
       <p class="text-gray-600 max-w-2xl mx-auto">Transferencias rápidas y seguras con las mejores tasas del mercado. Sin
         comisiones ocultas.</p>
     </div>
-
     <RemittanceCalculator/>
-    <TestimonialSlider/>
-    <FeaturesSection/>
-    <TrustSection/>
+    <div class="px-5">
+      <TestimonialSlider/>
+      <FeaturesSection/>
+      <TrustSection/>
+  </div>
   </main>
 </template>
 
