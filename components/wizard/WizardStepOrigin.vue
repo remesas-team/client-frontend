@@ -69,7 +69,7 @@
         type="submit"
         size="xl"
         color="primary"
-        class="w-full mt-8 text-lg font-medium h-14"
+        class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center"
       >
         Continuar
       </UButton>

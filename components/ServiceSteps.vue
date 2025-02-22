@@ -1,6 +1,6 @@
 <template>
   <div class="mt-16">
-    <h3 class="text-4xl text-center font-bold mb-8">Envía dinero a casa en <br> 
+    <h3 class="text-4xl text-center font-bold mb-8">Envía dinero a casa en 
       <span class="text-blue w-full text-green-wather">3 simples pasos</span>
     </h3>
     <div class="grid md:grid-cols-2 gap-8">
@@ -28,8 +28,8 @@ const steps = [
   {
     image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3',
     alt: 'Persona usando una calculadora',
-    title: '1. Registro Simple',
-    description: 'Crea tu cuenta en minutos con datos básicos'
+    title: '1. Registra tus datos',
+    description: 'Para cumplir con las normativas y leyes de cada país te vamos a pedir información para que puedas enviar dineros de forma segura'
   },
   {
     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c',
