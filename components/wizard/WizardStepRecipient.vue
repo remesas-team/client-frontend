@@ -95,7 +95,6 @@ const handleSubmit = async () => {
     "tag": "destination",
   });
 
-
   remittanceStore.form.destination_user_account_id = response.data.id
 
   emit('next');

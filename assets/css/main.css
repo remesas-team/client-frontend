@@ -3,4 +3,8 @@
 
 @theme {
   --font-sans: 'DM Sans', system-ui, sans-serif;
+  --color-green-wather: #0EB2AC;
+  --color-green-grass: #004441;
+  --color-green-dark: #262625;
+  --color-green-white: #EEF5FF;
 }

@@ -6,7 +6,7 @@
           <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m4 0v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <span class="text-xs md:text-sm font-medium">Remesas.com es una entidad regulada</span>
+      <span class="text-xs md:text-sm font-medium">Cotiza y envía con la mejor tasa del mercado</span>
     </div>
 
     <div class="hidden md:block w-px h-16 bg-gray-200 self-center"></div>

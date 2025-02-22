@@ -1,7 +1,7 @@
 <template>
   <div class="mt-16">
-    <h3 class="text-2xl text-center font-bold mb-8">Envía dinero a casa en <br> 
-      <span class="text-blue w-full" style="color: #5162fe">3 simples pasos</span>
+    <h3 class="text-4xl text-center font-bold mb-8">Envía dinero a casa en <br> 
+      <span class="text-blue w-full text-green-wather">3 simples pasos</span>
     </h3>
     <div class="grid md:grid-cols-2 gap-8">
       <div

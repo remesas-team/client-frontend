@@ -2,9 +2,8 @@
   <main class="container mx-auto py-6">
     <!-- Hero Section -->
     <div class="text-center mb-8 mt-2 px-4">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Envía dinero a Brasil</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">Transferencias rápidas y seguras con las mejores tasas del mercado. Sin
-        comisiones ocultas.</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Envios de dinero el mismo día a todo el Perú y Brasil</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto"></p>
     </div>
     <RemittanceCalculator/>
     <div class="px-5">

@@ -8,39 +8,74 @@
     </div>
 
     <div class="p-8 py-6 text-center">
-      <h3 class="text-xl font-medium mb-2">Tiempo de envío</h3>
-      <p class="text-4xl font-bold mb-2">2 a 3 Horas</p>
+      <h3 class="text-xl font-medium mb-2">Tus remesas</h3>
+      <p class="text-4xl font-bold mb-2">El mismo día</p>
       <p class="text-gray-600 mb-8">Trabajamos con los bancos más grandes de Perú y Brasil</p>
 
       <!-- Bank Logos -->
-      <div class="grid grid-cols-4 gap-4">
-        <div class="flex items-center justify-center">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg/2560px-Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg.png" 
-            alt="Banco do Brasil"
-            class="h-8 object-contain"
-          />
+      <div class="space-y-6">
+        <!-- Brazilian Banks -->
+        <div class="grid grid-cols-4 gap-4">
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg/2560px-Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg.png" 
+              alt="PIX"
+              class="h-8 object-contain"
+            />
+          </div>
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banco_Bradesco_logo.svg/2560px-Banco_Bradesco_logo.svg.png" 
+              alt="Bradesco"
+              class="h-8 object-contain"
+            />
+          </div>
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Banco_do_Brasil_logo.svg/2560px-Banco_do_Brasil_logo.svg.png" 
+              alt="Banco do Brasil"
+              class="h-8 object-contain"
+            />
+          </div>
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Caixa_Econ%C3%B4mica_Federal_logo.svg/2560px-Caixa_Econ%C3%B4mica_Federal_logo.svg.png" 
+              alt="Caixa"
+              class="h-8 object-contain"
+            />
+          </div>
         </div>
-        <div class="flex items-center justify-center">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banco_Bradesco_logo.svg/2560px-Banco_Bradesco_logo.svg.png" 
-            alt="Bradesco"
-            class="h-8 object-contain"
-          />
-        </div>
-        <div class="flex items-center justify-center">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Banco_do_Brasil_logo.svg/2560px-Banco_do_Brasil_logo.svg.png" 
-            alt="Banco de Brasil"
-            class="h-8 object-contain"
-          />
-        </div>
-        <div class="flex items-center justify-center">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Caixa_Econ%C3%B4mica_Federal_logo.svg/2560px-Caixa_Econ%C3%B4mica_Federal_logo.svg.png" 
-            alt="Caixa Econômica Federal"
-            class="h-8 object-contain"
-          />
+
+        <!-- Peruvian Banks -->
+        <div class="grid grid-cols-4 gap-4">
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://cdn.worldvectorlogo.com/logos/bcp-4.svg" 
+              alt="BCP"
+              class="h-8 object-contain"
+            />
+          </div>
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://cdn.worldvectorlogo.com/logos/bbva-2.svg" 
+              alt="BBVA"
+              class="h-8 object-contain"
+            />
+          </div>
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Interbank_logo.svg/2560px-Interbank_logo.svg.png" 
+              alt="Interbank"
+              class="h-8 object-contain"
+            />
+          </div>
+          <div class="flex items-center justify-center">
+            <img 
+              src="https://d31dn7nfpuwjnm.cloudfront.net/images/valoraciones/0010/8340/Banco-Sctiabank-mejores-depositos.jpg?1366299854" 
+              alt="Scotiabank"
+              class="h-8 object-contain"
+            />
+          </div>
         </div>
       </div>
     </div>

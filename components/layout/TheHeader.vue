@@ -45,7 +45,7 @@
             </NuxtLink>
             <NuxtLink
               to="/registro"
-              class="bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-700"
+              class="bg-green-dark text-white px-2 py-1 rounded-lg hover:bg-green-700"
             >
               Regístrate
             </NuxtLink>

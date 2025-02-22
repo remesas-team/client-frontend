@@ -185,7 +185,7 @@
                 </div>
 
                 <div class="flex-shrink-0">
-                  <UButton type="button" color="success" size="2xl" @click="applyCoupon">
+                  <UButton type="button" class="px-5 py-4 bg-green-dark text-white hover:bg-green-grass" @click="applyCoupon">
                     Aplicar
                   </UButton>
                 </div>
@@ -197,7 +197,7 @@
         <!-- Compare Button -->
         <button
             type="submit"
-            class="w-full bg-[#E87234] text-white py-4 rounded-xl text-[17px] font-medium hover:bg-[#D66024] transition-colors"
+            class="w-full bg-green-dark text-white py-4 rounded-xl text-[17px] font-medium hover:bg-green-grass transition-colors"
         >
           Iniciar transferencia
         </button>
