@@ -1,16 +1,16 @@
 <template>
   <div class="mb-8 px-4">
     <!-- Progress Steps -->
-    <div class="flex w-full items-center justify-between">
+    <div class="flex w-full items-center">
       <template v-for="(step, index) in steps" :key="step.number">
-        <div class="flex items-center">
+        <div class="flex items-center flex-1 last:flex-none">
           <!-- Circle -->
           <button
             @click="handleStepClick(step.number)"
-            class="w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-sm sm:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            class="shrink-0 w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-sm sm:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-grass focus:ring-offset-2"
             :class="[
               currentStep >= step.number
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                ? 'bg-green-grass text-white hover:bg-green-wather'
                 : 'bg-gray-200 text-gray-600'
             ]"
           >
@@ -20,10 +20,10 @@
           <!-- Connecting Line -->
           <div
             v-if="index < steps.length - 1"
-            class="h-0.5 w-full min-w-[2rem] sm:min-w-[4rem] mx-2 sm:mx-3"
+            class="h-0.5 flex-1 mx-2 sm:mx-3"
             :class="[
               currentStep > step.number
-                ? 'bg-blue-600'
+                ? 'bg-green-grass'
                 : 'bg-gray-200'
             ]"
           ></div>

@@ -107,7 +107,7 @@
         
         <button
           @click="$refs.fileInput.click()"
-          class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          class="px-6 py-3 bg-green-wather text-white rounded-lg hover:bg-green-grass transition-colors"
         >
           Seleccionar archivo
         </button>
@@ -133,7 +133,7 @@
     <div class="space-y-4">
       <button
         @click="confirmTransaction"
-        class="w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium"
+        class="w-full bg-green-dark text-white py-4 rounded-lg hover:bg-green-grass transition-colors text-lg font-medium"
         :disabled="!selectedFile"
       >
         Confirmar transacción
