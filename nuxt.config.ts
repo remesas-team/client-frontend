@@ -14,7 +14,7 @@ export default defineNuxtConfig({
         name_cookie_token: process.env.NUXT_AUTH_COOKIE_TOKEN || 'auth.localhost.remesas.token',
         name_cookie_redirect: process.env.NUXT_AUTH_COOKIE_REDIRECT || 'auth.localhost.remesas.redirect',
         name_cookie_domain: process.env.NUXT_AUTH_COOKIE_DOMAIN || 'localhost',
-        max_age: process.env.NUXT_AUTH_COOKIE_MAX_AGE || 60 * 60 * 24 * 365, // un año de expiración
+        max_age: Number(process.env.NUXT_AUTH_COOKIE_MAX_AGE) || 60 * 60 * 24 * 365, // un año de expiración
       },
     }
   },
