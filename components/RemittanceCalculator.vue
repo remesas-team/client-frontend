@@ -203,7 +203,7 @@
         </button>
       </UForm>
     </div>
-    
+
   </div>
 </template>
 
@@ -236,7 +236,7 @@ const formRemittance = ref({
 const getCountries = computed(() => {
   console.log(sourcesStore.countries)
   if (!sourcesStore.countries) return []
-  
+
   return sourcesStore.countries.map(item => ({
     id: item.id,
     label: item.name,
@@ -313,7 +313,7 @@ const applyCoupon = () => {
 
 const startOperation = () => {
   loadingSubmit.value = true
-  
+
   remittanceStore.form.source_currency_id = fromCurrency.value.id
   remittanceStore.form.source_amount = formRemittance.value.amount // Fixed: added .value
   remittanceStore.form.destination_currency_id = toCurrency.value.id
@@ -327,8 +327,7 @@ const startOperation = () => {
   remittanceStore.form.send_cost = estimate.value.send_cost
   remittanceStore.form.send_tax = estimate.value.tax
   remittanceStore.form.amount_to_send = estimate.value.amount_to_send
-  
-  console.log(remittanceStore)
+
   router.push('/operacion/1');
 }
 
@@ -340,9 +339,9 @@ onMounted(async () => {
 
   if (sourcesStore.countries?.length > 0) {
     await calculateEstimate();
+    fromCountry.value = getCountries.value[0]
+    toCountry.value = getCountries.value[1]
   }
-  fromCountry.value = getCountries.value[0]
-  toCountry.value = getCountries.value[1]
 });
 
 watch(fromCountry, () => {

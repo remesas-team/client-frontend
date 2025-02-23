@@ -7,13 +7,15 @@
     </div>
     <RemittanceCalculator/>
     <div class="px-5">
-      <TestimonialSlider/>
-      <FeaturesSection/>
-      <TrustSection/>
-  </div>
+        <TestimonialSlider/>
+        <FeaturesSection/>
+        <TrustSection/>
+    </div>
   </main>
 </template>
 
-<script setup>
-// Page level logic can go here if needed
+<script setup lang="ts">
+definePageMeta({
+  auth: false,
+})
 </script>
