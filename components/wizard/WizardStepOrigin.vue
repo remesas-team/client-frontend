@@ -1,20 +1,14 @@
 <template>
   <div class="space-y-6">
     <h2 class="text-xl font-semibold mb-6">Configura una cuenta de origen</h2>
+    <p>Esto nos ayudará a poder regresarte el dinero en caso de que no se pueda realizar tu transacción. 
+      Esto lo vas a realizar solo una vez. Para modificar tu cuenta de origen puedes hacerlo en 
+      <a href="" class="text-green-wather"><UIcon name="i-lucide:link"></UIcon>  Perfil > cuentas de origen</a></p>
     <!-- Bank Account Form -->
     <UForm id="refFormRemittance" ref="refFormRemittance" :state="form" @submit="handleSubmit">
       <div class="space-y-4 w-full">
         <div class="w-full">
-          <label for="" >Destinatarios guardados:</label>
-          <USelect 
-            v-model="form.bank"
-            :items="banks"
-            value-attribute="id"
-            placeholder="Selecciona un banco"
-            size="xl"
-            class="w-full text-xl"
-          />
-          <label for="">Nuevo destinatario:</label>
+          <label for="">Crea una cuenta de origen:</label>
           <USelect 
             v-model="form.bank"
             :items="banks"

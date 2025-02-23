@@ -13,8 +13,7 @@
               class="w-full text-xl mt-1" />
           </div>
         </div>
-        {{infoSelectedAccount}}
-          <div v-if="infoSelectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
+          <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
             <h3 class="font-medium mb-2">Información de la cuenta:</h3>
             <ul class="space-y-2 text-sm">
               <li><span class="font-medium">Nombre:</span> {{ infoSelectedAccount?.recipientName }}</li>
@@ -22,6 +21,7 @@
               <li><span class="font-medium">Banco:</span> {{ infoSelectedAccount?.bank?.name }}</li>
               <li><span class="font-medium">Moneda:</span> {{ infoSelectedAccount?.currency?.name }}</li>
             </ul>
+            <a href="#" class="underline decoration-solid mt-5 block" @click="selectedAccount = null"> + Crear nuevo destinatario</a>
           </div>
       </div>
 
@@ -98,19 +98,19 @@ const form = ref({
 const handleSubmit = async () => {
   const bank_id = form.value.bank
 
-  const response = await userRepo.createBankAccount({
-    "bank_id": bank_id,
-    "district_id": null,
-    "currency_id": remittanceStore.form.destination_currency_id,
-    "type": "corriente",
-    "account_number": form.value.accountNumber,
-    "alias": form.value.accountAlias,
-    "is_joint_account": false,
-    "is_saved": form.value.saveAccount,
-    "tag": "destination",
-  });
-
   if (selectedAccount.value) {
+    const response = await userRepo.createBankAccount({
+      "bank_id": bank_id,
+      "district_id": null,
+      "currency_id": remittanceStore.form.destination_currency_id,
+      "type": "corriente",
+      "account_number": form.value.accountNumber,
+      "alias": form.value.accountAlias,
+      "is_joint_account": false,
+      "is_saved": form.value.saveAccount,
+      "tag": "destination",
+    });
+
     remittanceStore.form.destination_user_account_id = selectedAccount.value.id
   } else {
     remittanceStore.form.destination_user_account_id = response.data.id
@@ -149,5 +149,6 @@ onMounted(async () => {
   })
 
 });
+
 
 </script>
