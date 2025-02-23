@@ -206,7 +206,7 @@ const confirmTransaction = async () => {
     return;
   }
 
-  router.push('/success');
+  router.push('/operacion/success');
 };
 
 // Timer countdown

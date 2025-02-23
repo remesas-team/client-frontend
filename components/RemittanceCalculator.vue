@@ -234,21 +234,11 @@ const formRemittance = ref({
 })
 
 const getCountries = computed(() => {
-  console.log(sourcesStore.countries)
   if (!sourcesStore.countries) return []
 
   return sourcesStore.countries.map(item => ({
     id: item.id,
     label: item.name,
-    emoji: item.emoji,
-    currency_id: item.currency_id
-  }))
-})
-
-const getCountryCurrencies = computed(() => {
-  return sourcesStore.countries.map(item => ({
-    id: item.currency.id,
-    label: item.currency.code,
     emoji: item.emoji,
     currency_id: item.currency_id
   }))
@@ -314,17 +304,22 @@ const applyCoupon = () => {
 const startOperation = () => {
   loadingSubmit.value = true
 
+  // Origin
+  remittanceStore.form.source_country_id = fromCountry.value.id
   remittanceStore.form.source_currency_id = fromCurrency.value.id
-  remittanceStore.form.source_amount = formRemittance.value.amount // Fixed: added .value
+  remittanceStore.form.source_currency_symbol = estimate.value.from
+
+  // Destination
+  remittanceStore.form.destination_country_id = toCountry.value.id
   remittanceStore.form.destination_currency_id = toCurrency.value.id
+  remittanceStore.form.destination_currency_symbol = estimate.value.to
+
+  // Result remittance
+  remittanceStore.form.source_amount = formRemittance.value.amount
   remittanceStore.form.destination_amount = estimate.value.exchange_result
   remittanceStore.form.exchange_rate = estimate.value.exchange_unit
-  remittanceStore.form.coupon_id = formRemittance.value.coupon?.toUpperCase()
-  remittanceStore.form.source_country_id = fromCountry.value.id
-  remittanceStore.form.destination_country_id = toCountry.value.id
-  remittanceStore.form.source_currency_symbol = estimate.value.from
-  remittanceStore.form.destination_currency_symbol = estimate.value.to
   remittanceStore.form.send_cost = estimate.value.send_cost
+  remittanceStore.form.coupon_id = formRemittance.value.coupon?.toUpperCase() || null
   remittanceStore.form.send_tax = estimate.value.tax
   remittanceStore.form.amount_to_send = estimate.value.amount_to_send
 

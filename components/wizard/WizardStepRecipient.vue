@@ -14,7 +14,6 @@
                 :items="savedAccounts"
                 :search-input="false"
                 label-Key="alias"
-                @change="setDestinataryInfo"
                 placeholder="Selecciona un destinatario"
                 size="xl"
                 class="w-full"
@@ -100,9 +99,9 @@ const emit = defineEmits<{
   (e: 'next'): void;
 }>();
 
-const userRepo = userRepository()
-const remittanceStore = useRemittanceStore()
-const requestSources = sourcesRepository();
+const userRequest = userRepository();
+const sourcesRequest = sourcesRepository();
+const remittanceStore = useRemittanceStore();
 
 const banks = ref([])
 const savedAccounts = ref([])
@@ -120,7 +119,7 @@ const handleSubmit = async () => {
   const {bank_id, account_number, is_saved, alias} = formState.value
 
   if (!selectedAccount.value) {
-    const response = await userRepo.createBankAccount({
+    const response = await userRequest.createBankAccount({
       "bank_id": bank_id,
       "district_id": null,
       "currency_id": remittanceStore.form.destination_currency_id,
@@ -140,13 +139,8 @@ const handleSubmit = async () => {
   emit('next');
 };
 
-const setDestinataryInfo = (value) => {
-  console.log("selectedAccount", value)
-  // infoSelectedAccount.value = savedAccounts.value.find((item) => item.id === selectedAccount.value)
-}
-
 const getBanks = async () => {
-  const response = await requestSources.getBanksByCountry({
+  const response = await sourcesRequest.getBanksByCountry({
     country_id: remittanceStore.form.source_country_id
   });
 
@@ -158,7 +152,7 @@ const getBanks = async () => {
 }
 
 const getBankAccounts = async () => {
-  const response = await userRepo.getBankAccounts();
+  const response = await userRequest.getBankAccounts();
 
   if (!response.success) {
     return
