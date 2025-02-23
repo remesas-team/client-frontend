@@ -8,7 +8,7 @@
       </div>
 
       <form @submit.prevent="saveProfile" class="space-y-6">
-        <!-- Avatar Section 
+        <!-- Avatar Section
         <ProfileAvatar v-model="avatar"/> -->
 
         <!-- Personal Information -->
@@ -57,11 +57,6 @@
 <script setup lang="ts">
 const authStore = useAuthStore();
 const router = useRouter();
-
-// Redirect if not authenticated
-if (!authStore.isAuthenticated) {
-  router.push('/login');
-}
 
 const avatar = ref<string | null>(null);
 const termsAccepted = ref(false);

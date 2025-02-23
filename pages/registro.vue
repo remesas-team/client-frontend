@@ -167,9 +167,16 @@
 </template>
 
 <script setup lang="ts">
+import {useAuthStore} from "~/stores/auth";
+
+const { $auth } = useNuxtApp();
 const router = useRouter();
-const {setAuth} = useAuth();
 const config = useRuntimeConfig();
+const authStore = useAuthStore();
+
+definePageMeta({
+  auth: 'guest',
+})
 
 const isLoading = ref(false);
 const errorMessage = ref('');
@@ -248,9 +255,8 @@ const handleRegister = async () => {
       return;
     }
 
-    // Save auth token and initial user data, then fetch complete profile
-    await setAuth(data.data.access_token, data.data.user);
-    console.log("Aca logeado", data.data.user)
+    $auth.setToken(data.data.access_token);
+    authStore.user = data.data.user;
 
     // Redirect to profile completion
     router.push('/perfil');

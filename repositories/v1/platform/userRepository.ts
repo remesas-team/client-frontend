@@ -8,7 +8,7 @@ export const userRepository = () => {
             return fetch.post('/v1/platform/user-accounts/create', params)
         },
         async fetchBankAccounts() {
-            return fetch.get('/v1/platform/user-accounts/')
+            return fetch.get('/v1/platform/user-accounts')
         }
     }
 }

@@ -9,25 +9,19 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: process.env.BASE_URL || "https://remesas.com" ,
-      apiBase: process.env.API_BASE || "https://test-api.remesas.com/api"
+      apiBase: process.env.API_BASE || "https://test-api.remesas.com/api",
+      auth: {
+        name_cookie_token: process.env.NUXT_AUTH_COOKIE_TOKEN || 'auth.localhost.remesas.token',
+        name_cookie_redirect: process.env.NUXT_AUTH_COOKIE_REDIRECT || 'auth.localhost.remesas.redirect',
+        name_cookie_domain: process.env.NUXT_AUTH_COOKIE_DOMAIN || 'localhost',
+        max_age: process.env.NUXT_AUTH_COOKIE_MAX_AGE || 60 * 60 * 24 * 365, // un año de expiración
+      },
     }
   },
   generate: {
-    routes: [
-      '/operacion/1',
-      '/operacion/2',
-      '/operacion/3',
-      '/operacion/4',
-      '/operacion/5',
-      '/tracking/74112',
-      '/transferencias',
-      '/perfil'
-    ]
+    routes: []
   },
-  routeRules: {
-    '/perfil/**': { appMiddleware: ['auth'] },
-    '/wizard/**': { appMiddleware: ['auth'] }
-  },
+  routeRules: {},
   app: {
     head: {
       link: [

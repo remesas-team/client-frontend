@@ -84,15 +84,5 @@ export const useSourcesStore = defineStore('sources', {
 
         return response;
     },
-    async fetchBanksByCountry(country_id: number) {
-        const requestSources = sourcesRepository();
-        const response = await requestSources.getBanksByCountry({country_id: country_id});
-
-        if (response.success) {
-          this.countries = response.data;
-        }
-
-        return response;
-    },
   },
 });

@@ -62,6 +62,10 @@
 const router = useRouter();
 const authStore = useAuthStore();
 
+definePageMeta({
+  auth: 'guest',
+})
+
 // Initialize form data with ref instead of reactive to avoid SSR issues
 const form = ref({
   email: '',
@@ -71,25 +75,18 @@ const form = ref({
 const isLoading = ref(false);
 const errorMessage = ref('');
 
-// If already authenticated, redirect to profile
-onMounted(() => {
-  if (authStore.isAuthenticated) {
-    router.push('/perfil');
-  }
-});
-
 const handleLogin = async () => {
   errorMessage.value = '';
+  isLoading.value = true;
 
-  try {
-    isLoading.value = true;
-    await authStore.login(form.value.email, form.value.password);
-    router.push('/perfil');
-  } catch (error) {
-    console.error('Login error:', error);
-    errorMessage.value = error instanceof Error ? error.message : 'Error al iniciar sesión';
-  } finally {
+  const response = await authStore.login(form.value);
+
+  if (!response.success) {
+    errorMessage.value = response.message;
     isLoading.value = false;
+    return;
   }
+
+  router.push('/perfil');
 };
 </script>
