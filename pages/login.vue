@@ -11,7 +11,7 @@
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
-                Correo electrónico
+                Correo electrónico:
               </label>
               <input
                   v-model="form.email"
@@ -23,7 +23,7 @@
 
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">
-                Contraseña
+                Contraseña:
               </label>
               <input
                   v-model="form.password"
@@ -87,11 +87,15 @@ const handleLogin = async () => {
 
   const response = await authStore.login(form.value);
 
+  
+
   if (!response.success) {
     errorMessage.value = response.message;
     isLoading.value = false;
     return;
   }
+
+  console.log(response)
 
   router.push('/perfil');
 };
