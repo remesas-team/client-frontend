@@ -1,14 +1,16 @@
 export default defineNuxtPlugin(({ provide, $config }) => {
 	const commonHeaders = new Headers({
-		'Content-Type': 'application/json',
-		'Accept': 'application/json'
+		// 'Content-Type': 'application/json',
+		// 'Accept': 'application/json'
 	})
 
 	const $api = $fetch.create({
 		baseURL: $config.public.apiBase,
-		onRequest({ options }) {
+		onRequest({  options }) {
 			commonHeaders.forEach((value, key) => {
-				options.headers.set(key, value)
+				if(options.headers.get(key) === null) {
+					options.headers.set(key, value)
+				}
 			})
 		},
 		// async onResponse({ response}) {

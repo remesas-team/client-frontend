@@ -61,11 +61,11 @@ export const handleApi = () => {
     }
 
     return {
-        get: <T>(endpoint: string, params?: Record<string, string>) =>
-            request<T>(endpoint, { method: 'GET', params }),
+        get: <T>(endpoint: string, params?: Record<string, string>, headers?: Record<string, string>) =>
+            request<T>(endpoint, { method: 'GET', params, headers }),
 
-        post: <T>(endpoint: string, body: any) =>
-            request<T>(endpoint, { method: 'POST', body }),
+        post: <T>(endpoint: string, body: any, headers?: Record<string, string>) =>
+            request<T>(endpoint, { method: 'POST', body, headers }),
 
         put: <T>(endpoint: string, body?: any) =>
             request<T>(endpoint, { method: 'PUT', body }),

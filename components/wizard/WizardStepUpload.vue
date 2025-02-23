@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <!-- Transfer Method Selection 
+    <!-- Transfer Method Selection
     <div class="bg-white rounded-lg border p-4">
       <div class="flex items-center gap-3">
         <svg class="w-6 h-6 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -24,7 +24,7 @@
       </div>
     </div>
     -->
-    
+
     <!-- Transfer Details -->
     <div class="space-y-4">
       <h3 class="text-lg font-medium">Datos para la transferencia</h3>
@@ -33,8 +33,8 @@
           <span class="text-gray-600">Cuenta bancaria BCP</span>
           <div class="flex items-center gap-2">
             <span class="font-medium">204010203010111</span>
-            <button 
-              class="text-blue-600 hover:text-blue-700" 
+            <button
+              class="text-blue-600 hover:text-blue-700"
               @click="copyToClipboard('204010203010111')"
               title="Copiar número de cuenta"
             >
@@ -49,8 +49,8 @@
           <span class="text-gray-600">Destinatario</span>
           <div class="flex items-center gap-2">
             <span class="font-medium">Remesas.com S.A.C</span>
-            <button 
-              class="text-blue-600 hover:text-blue-700" 
+            <button
+              class="text-blue-600 hover:text-blue-700"
               @click="copyToClipboard('Remesas.com S.A.C')"
               title="Copiar nombre del destinatario"
             >
@@ -65,8 +65,8 @@
           <span class="text-gray-600">Total a Transferir</span>
           <div class="flex items-center gap-2">
             <span class="font-medium">240 PEN</span>
-            <button 
-              class="text-blue-600 hover:text-blue-700" 
+            <button
+              class="text-blue-600 hover:text-blue-700"
               @click="copyToClipboard('240')"
               title="Copiar monto"
             >
@@ -82,8 +82,8 @@
     <!-- Upload Section -->
     <div class="space-y-4">
       <h3 v-if="!selectedFile" class="text-xl font-bold text-center">Para confirmar tu transacción<br>sube el comprobante del depósito</h3>
-      
-      <div 
+
+      <div
         class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center space-y-4"
         :class="{ 'border-blue-500 bg-blue-50': isDragging }"
         @dragover.prevent="isDragging = true"
@@ -96,7 +96,7 @@
           <p class="text-gray-600">o</p>
           <p class="text-gray-600">Foto del voucher de depósito</p>
         </div>
-        
+
         <input
           type="file"
           ref="fileInput"
@@ -104,7 +104,7 @@
           accept="image/*"
           @change="handleFileSelect"
         />
-        
+
         <button
           @click="$refs.fileInput.click()"
           class="px-6 py-3 bg-green-wather text-white rounded-lg hover:bg-green-grass transition-colors"
@@ -138,7 +138,7 @@
       >
         Confirmar transacción
       </button>
-      
+
       <p class="text-center text-gray-600">
         Tu dinero estará disponible en máximo 6h
       </p>
@@ -147,7 +147,14 @@
 </template>
 
 <script setup lang="ts">
+import {operationsRepository} from "~/repositories/v1/platform/operationsRepository";
+import {useRemittanceStore} from "~/stores/remittance";
+
 const router = useRouter();
+const requestOperations = operationsRepository();
+const remittanceStore = useRemittanceStore();
+
+const timer = ref();
 const TIME_LIMIT = 15 * 60; // 15 minutes in seconds
 const timeRemaining = ref(TIME_LIMIT);
 const isDragging = ref(false);
@@ -186,26 +193,34 @@ const handleDrop = (event: DragEvent) => {
   }
 };
 
-const confirmTransaction = () => {
-  if (selectedFile.value) {
-    router.push('/success');
+const confirmTransaction = async () => {
+  const operation_id = remittanceStore.currentOperation.operation_id
+
+  const formData = new FormData();
+  formData.append('user_voucher_file', selectedFile.value);
+  formData.append('operation_id', operation_id.toString());
+
+  const response = await requestOperations.postUploadVoucher(formData);
+
+  if (!response.success) {
+    return;
   }
+
+  router.push('/success');
 };
 
 // Timer countdown
 onMounted(() => {
-  const timer = setInterval(() => {
+  timer.value = setInterval(() => {
     if (timeRemaining.value > 0) {
       timeRemaining.value--;
     } else {
-      clearInterval(timer);
-      // Handle timeout - maybe show a message or redirect
+      clearInterval(timer.value);
     }
   }, 1000);
+});
 
-  // Clean up timer on component unmount
-  onUnmounted(() => {
-    clearInterval(timer);
-  });
+onUnmounted(() => {
+  clearInterval(timer.value);
 });
 </script>
