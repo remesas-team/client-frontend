@@ -1,20 +1,9 @@
 <template>
   <div class="space-y-8">
     <!-- Header -->
-    <div class="text-center space-y-2">
-      <h2 class="text-3xl font-bold">Confirma tu transferencia</h2>
-      <p class="text-gray-600">Move your money where it matters</p>
-    </div>
-
-    <!-- Timer Section -->
-    <div class="text-center space-y-2">
-      <p class="text-gray-600">Tipo de cambio garantizado durante:</p>
-      <div class="flex items-center justify-center gap-2">
-        <svg class="w-6 h-6 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span class="text-4xl font-bold">{{ formattedTimeRemaining }}</span>
-      </div>
+    <div class="text-center space-y-2 my-5 mb-10">
+      <h2 class="text-3xl font-bold">Todo listo para realizar la transferencia</h2>
+      <p class="text-gray-600">Revisa bien los datos de la transacción. Recuerda que tienes un tiempo limitado para mantener el mejor tipo de cambio garantizado.</p>
     </div>
 
     <!-- Exchange Rate Info -->
@@ -44,12 +33,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Delivery Time Notice -->
-    <p class="text-center text-gray-600">
-      Tu dinero estará disponible en máximo 6h
-    </p>
-
     <!-- Action Button -->
     <button
       @click="handleConfirm"
@@ -57,6 +40,10 @@
     >
       Realiza la tranferencia
     </button>
+        <!-- Delivery Time Notice -->
+        <p class="text-center text-gray-600 flex items-center justify-center gap-2">
+          <UIcon name="i-mdi:run-fast"></UIcon> <span> Tu dinero estará disponible el mismo día</span>
+    </p>
   </div>
 </template>
 
@@ -64,7 +51,7 @@
 import {useRemittanceStore} from '~/stores/remittance';
 
 const remittanceStore = useRemittanceStore()
-const TIME_LIMIT = 15 * 60; // 15 minutes in seconds
+const TIME_LIMIT = 15 * 60; // 15 minutes in seconds  
 const timeRemaining = ref(TIME_LIMIT);
 
 // Format remaining time as MM:SS

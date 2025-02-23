@@ -11,10 +11,10 @@
 <script setup lang="ts">
   useSeoMeta({
     title: 'Remesas.com',
-    description: '[description]',
-    ogTitle: '[og:title]',
-    ogDescription: '[og:description]',
-    ogImage: '/thumbnail.png',
+    description: 'Envíos de dinero a todo Perú y Brasil',
+    ogTitle: 'Remesas.com',
+    ogDescription: 'Envíos de dinero a todo Perú y Brasil',
+    ogImage: 'https://remesas.com/thumbnail.png',
   })
 
   useHead({
@@ -25,7 +25,7 @@
       {
         rel: 'icon',
         type: 'image/png',
-        href: '/favicon.png'
+        href: 'https://remesas.com/favicon.png'
       }
     ]
   })

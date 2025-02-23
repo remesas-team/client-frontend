@@ -3,7 +3,6 @@
     <div class="w-full max-w-2xl">
       <!-- Progress Steps -->
       <WizardProgress :current-step="currentStep"/>
-
       <!-- Step Content -->
       <div class="bg-white rounded-xl shadow-lg p-8">
         <component
@@ -21,6 +20,7 @@
 const route = useRoute();
 const router = useRouter();
 import {useRemittanceStore} from '~/stores/remittance';
+const remittanceSTore = useRemittanceStore()
 
 const currentStep = computed(() => parseInt(route.params.step as string));
 
