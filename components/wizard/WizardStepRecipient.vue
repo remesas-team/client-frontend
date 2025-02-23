@@ -114,9 +114,9 @@ const handleSubmit = async () => {
 
     remittanceStore.form.destination_user_account_id = response.data.id
   } else {
-    remittanceStore.form.destination_user_account_id = selectedAccount.value.id
+    remittanceStore.form.destination_user_account_id = selectedAccount.value
   }
-
+  console.log("selectedAccount", selectedAccount.value)
   console.log("Destination user account id",remittanceStore.form.destination_user_account_id)
 
   emit('next');
