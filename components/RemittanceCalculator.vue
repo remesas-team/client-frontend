@@ -229,7 +229,7 @@ const loadingSubmit = ref(false)
 const formRemittance = ref({
   from: 'PEN',
   to: 'BRL',
-  amount: 10,
+  amount: 1500,
   coupon: null
 })
 

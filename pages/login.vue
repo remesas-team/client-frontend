@@ -40,7 +40,7 @@
 
           <button
               type="submit"
-              class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium"
+              class="w-full bg-green-dark text-white py-3 rounded-lg hover:bg-green-wather transition-colors text-lg font-medium"
               :disabled="isLoading"
           >
             {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
@@ -66,14 +66,6 @@ const authStore = useAuthStore();
 useSeoMeta({
     title: 'Login | Remesas.com',
     description: 'Inicia sesión para empezar a enviar dinero a cualquier parte del Perú y Brasil',
-    ogTitle: 'Login | Remesas.com',
-    ogDescription: 'Inicia sesión para empezar a enviar dinero a cualquier parte del Perú y Brasil',
-    ogImage: '[og:image]',
-    ogUrl: '[og:url]',
-    twitterTitle: '[twitter:title]',
-    twitterDescription: '[twitter:description]',
-    twitterImage: '[twitter:image]',
-    twitterCard: 'summary'
   })
 
 // Initialize form data with ref instead of reactive to avoid SSR issues

@@ -7,7 +7,7 @@ export const useRemittanceStore = defineStore('remittance', {
       source_user_account_id: 1,
       destination_user_account_id: 2,
       source_currency_id: 2,
-      source_amount: 100.00,
+      source_amount: 1500.00,
       collection_system_account_id: 1,
       destination_currency_id: 3,
       destination_bank_account_id: 1,
