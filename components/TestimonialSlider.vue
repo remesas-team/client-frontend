@@ -115,18 +115,11 @@ const slides = ref<Slide[]>([
     location: 'Rio de Janeiro, Brasil'
   },
   {
-    image: 'https://images.unsplash.com/photo-1581952976147-5a2d15560349',
+    image: '/images/historia4.png',
     imageAlt: 'Familia celebrando juntos',
     testimonial: 'Me encanta la transparencia y la rapidez del servicio. Ahora puedo ayudar a mi familia sin complicaciones.',
     author: 'Marina Costa',
     location: 'Florianópolis, Brasil'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1609220136736-443140cffec6',
-    imageAlt: 'Familia feliz reunida en la sala de estar',
-    testimonial: 'Gracias a este servicio puedo mantener a mi familia en Brasil sin preocupaciones. Las transferencias son rápidas y seguras.',
-    author: 'Ana Silva',
-    location: 'São Paulo, Brasil'
   }
 ]);
 

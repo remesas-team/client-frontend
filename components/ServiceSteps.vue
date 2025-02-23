@@ -12,7 +12,7 @@
         <img 
           :src="step.image"
           :alt="step.alt"
-          class="w-full h-40 object-cover"
+          class="w-full h-40 object-cover object-top"
         />
         <div class="p-6">
           <h4 class="text-lg mb-2 font-bold">{{ step.title }}</h4>
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 const steps = [
   {
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3',
+    image: '/images/fill-form.png',
     alt: 'Persona usando una calculadora',
     title: '1. Registra tus datos',
     description: 'Para cumplir con las normativas y leyes de cada país te vamos a pedir información para que puedas enviar dineros de forma segura'
