@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   sourcemap: true,
-  modules: ['@vueuse/nuxt', '@nuxt/ui', '@pinia/nuxt'],
+  modules: ['@vueuse/nuxt', '@nuxt/ui', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {

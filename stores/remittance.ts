@@ -24,7 +24,7 @@ export const useRemittanceStore = defineStore('remittance', {
       destination_currency_symbol: ''
     },
     currentOperation: {
-      
+
     }
   }),
 
@@ -50,10 +50,12 @@ export const useRemittanceStore = defineStore('remittance', {
     async createOperation() {
       const remittance = operationsRepository()
       const responseRemittance = await remittance.postOperation(this.form)
-      
+
       if (!responseRemittance.success) {return false}
-      
+
       return responseRemittance
     }
   },
+
+  persist: true,
 });
