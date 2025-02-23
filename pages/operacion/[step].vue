@@ -10,7 +10,6 @@
             @next="nextStep"
             @back="goBack"
         />
-        <!-- <pre> {{ useRemittanceStore().form }}</pre> -->
       </div>
     </div>
   </main>
@@ -19,8 +18,6 @@
 <script setup lang="ts">
 const route = useRoute();
 const router = useRouter();
-import {useRemittanceStore} from '~/stores/remittance';
-const remittanceSTore = useRemittanceStore()
 
 const currentStep = computed(() => parseInt(route.params.step as string));
 

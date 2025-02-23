@@ -2,23 +2,23 @@
   <div class="space-y-6">
     <h2 class="text-xl font-semibold mb-6">¿Dónde vas a recibir el dinero?</h2>
 
-    <!-- Bank Account Form -->
-    <UForm id="refFormRemittance" ref="refFormRemittance" :state="formState" @submit="handleSubmit">
-      <div class="space-y-4 w-full">
+    <div v-if="loadingInfo" class="flex items-center justify-center h-[308px]">
+      <CircleLoader class="size-10"/>
+    </div>
 
-        <div class="w-full">
-          <div class="mb-2" v-if="savedAccounts.length">
-            <label for="">Destinatarios guardados:</label>
-            <USelectMenu
-                v-model="selectedAccount"
-                :items="savedAccounts"
-                :search-input="false"
-                label-Key="alias"
-                placeholder="Selecciona un destinatario"
-                size="xl"
-                class="w-full"
-            />
-          </div>
+    <div v-else>
+      <div class="space-y-4 w-full">
+        <div class="mb-2" v-if="savedAccounts.length">
+          <label for="">Destinatarios guardados:</label>
+          <USelectMenu
+              v-model="selectedAccount"
+              :items="savedAccounts"
+              :search-input="false"
+              label-Key="alias"
+              placeholder="Selecciona un destinatario"
+              size="xl"
+              class="w-full"
+          />
         </div>
 
         <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
@@ -34,59 +34,64 @@
         </div>
       </div>
 
-      <!-- Save Account -->
-      <div v-if="!selectedAccount">
-        <div class="w-full mb-2">
-          <label for="">Nuevo destinatario:</label>
-          <USelectMenu
-              v-model="formState.bank_id"
-              :items="banks"
-              :search-input="false"
-              value-key="id"
-              label-key="name"
-              placeholder="Selecciona un banco"
-              size="xl"
-              class="w-full"
-          />
-        </div>
+      <!-- Bank Account Form -->
+      <UForm id="refFormRemittance" ref="refFormRemittance" :state="formState" @submit="handleSubmit">
+        <!-- Save Account -->
+        <div v-if="!selectedAccount">
+          <div class="w-full mb-2">
+            <label for="">Nuevo destinatario:</label>
+            <USelectMenu
+                v-model="formState.bank_id"
+                :items="banks"
+                :search-input="false"
+                value-key="id"
+                label-key="name"
+                placeholder="Selecciona un banco"
+                size="xl"
+                class="w-full"
+            />
+          </div>
 
-        <div class="w-full mb-2">
-          <UInput v-model="formState.account_number" type="text" pattern="[0-9]*" inputmode="numeric"
-                  placeholder="Número de cuenta interbancario" size="xl" class="w-full text-xl"
-                  @input="formState.account_number = formState.account_number.replace(/\D/g, '')"/>
-        </div>
-        <div class="w-full">
-          <UInput v-model="formState.recipientName" type="text" placeholder="Nombre del destinatario" size="xl"
-                  class="w-full text-xl"/>
-        </div>
+          <div class="w-full mb-2">
+            <UInput v-model="formState.account_number" type="text" pattern="[0-9]*" inputmode="numeric"
+                    placeholder="Número de cuenta interbancario" size="xl" class="w-full text-xl"
+                    @input="formState.account_number = formState.account_number.replace(/\D/g, '')"/>
+          </div>
 
-        <div class="mt-6">
-          <label class="flex items-center">
-            <input v-model="formState.is_saved" type="checkbox"
-                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
-            <span class="ml-2 text-sm text-gray-600">
+          <div class="w-full">
+            <UInput v-model="formState.recipientName" type="text" placeholder="Nombre del destinatario" size="xl"
+                    class="w-full text-xl"/>
+          </div>
+
+          <div class="mt-6">
+            <label class="flex items-center">
+              <input v-model="formState.is_saved" type="checkbox"
+                     class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
+              <span class="ml-2 text-sm text-gray-600">
               Guardar como cuenta frecuente
             </span>
-          </label>
+            </label>
+          </div>
+
+          <!-- Save Account Name -->
+          <div v-if="formState.is_saved" class="mt-4 w-full">
+            <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
+                    class="w-full text-xl"/>
+          </div>
         </div>
 
-        <!-- Save Account Name -->
-        <div v-if="formState.is_saved" class="mt-4 w-full">
-          <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
-                  class="w-full text-xl"/>
-        </div>
-      </div>
-      <!-- Submit Button -->
-      <UButton
-          type="submit"
-          size="xl"
-          color="primary"
-          block
-          class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center">
-        Continuar
-      </UButton>
-    </UForm>
-
+        <!-- Submit Button -->
+        <UButton
+            type="submit"
+            size="xl"
+            color="primary"
+            block
+            :loading="loadingSubmit"
+            class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center">
+          Continuar
+        </UButton>
+      </UForm>
+    </div>
   </div>
 </template>
 
@@ -94,6 +99,7 @@
 import {userRepository} from "~/repositories/v1/platform/userRepository"
 import {useRemittanceStore} from '~/stores/remittance'
 import {sourcesRepository} from "~/repositories/v1/platform/sourcesRepository";
+import CircleLoader from "~/components/CircleLoader.vue";
 
 const emit = defineEmits<{
   (e: 'next'): void;
@@ -103,6 +109,8 @@ const userRequest = userRepository();
 const sourcesRequest = sourcesRepository();
 const remittanceStore = useRemittanceStore();
 
+const loadingInfo = ref(true)
+const loadingSubmit = ref(false)
 const banks = ref([])
 const savedAccounts = ref([])
 
@@ -116,6 +124,8 @@ const formState = ref({
 })
 
 const handleSubmit = async () => {
+  loadingSubmit.value = true
+
   const {bank_id, account_number, is_saved, alias} = formState.value
 
   if (!selectedAccount.value) {
@@ -130,6 +140,11 @@ const handleSubmit = async () => {
       "is_saved": is_saved,
       "tag": "destination",
     });
+
+    if (!response.success) {
+      loadingSubmit.value = false
+      return
+    }
 
     remittanceStore.form.destination_user_account_id = response.data.id
   } else {
@@ -161,10 +176,21 @@ const getBankAccounts = async () => {
   savedAccounts.value = response.data.filter(item => item.tag === "destination")
 }
 
+const setFormState = () => {
+  if (savedAccounts.value.length > 0) {
+    selectedAccount.value = savedAccounts.value[0]
+  }
+}
+
 onMounted(async () => {
+  loadingInfo.value = true
+
   await Promise.all([
-    getBanks(),
-    getBankAccounts()
+    getBankAccounts(),
+    getBanks()
   ]);
+  setFormState()
+
+  loadingInfo.value = false
 });
 </script>
