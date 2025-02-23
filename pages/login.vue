@@ -66,6 +66,20 @@ definePageMeta({
   auth: 'guest',
 })
 
+
+useSeoMeta({
+    title: 'Login | Remesas.com',
+    description: 'Inicia sesión para empezar a enviar dinero a cualquier parte del Perú y Brasil',
+    ogTitle: 'Login | Remesas.com',
+    ogDescription: 'Inicia sesión para empezar a enviar dinero a cualquier parte del Perú y Brasil',
+    ogImage: '[og:image]',
+    ogUrl: '[og:url]',
+    twitterTitle: '[twitter:title]',
+    twitterDescription: '[twitter:description]',
+    twitterImage: '[twitter:image]',
+    twitterCard: 'summary'
+  })
+
 // Initialize form data with ref instead of reactive to avoid SSR issues
 const form = ref({
   email: '',
