@@ -117,7 +117,7 @@ const handleSubmit = async () => {
     remittanceStore.form.destination_user_account_id = selectedAccount.value
   }
   console.log("selectedAccount", selectedAccount.value)
-  console.log("Destination user account id",remittanceStore.form.destination_user_account_id)
+  console.log("Destination usr account id",remittanceStore.form.destination_user_account_id)
 
   emit('next');
 };

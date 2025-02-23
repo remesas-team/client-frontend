@@ -29,6 +29,19 @@ export const useAuthStore = defineStore('auth', {
       $api.setHeader('Authorization', `Bearer ${token}`)
     },
 
+
+    async logout() {
+      // Clear auth state
+      this.user = null
+      this.token = null
+
+      // Clear cookies
+      this.removeToken()
+
+      // Navigate to login
+      navigateTo('/login')
+    },
+
     removeToken() {
       const { $api, $config } = useNuxtApp()
 
