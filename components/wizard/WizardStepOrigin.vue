@@ -15,7 +15,7 @@
             value-attribute="id"
             placeholder="Selecciona un banco"
             size="xl"
-            class="w-full text-xl"
+            class="w-full text-xl mt-2"
           />
         </div>
         <div class="w-full">
@@ -34,28 +34,22 @@
           <UInput
             v-model="form.recipientName"
             type="text"
-            placeholder="Nombre del destinatario"
+            placeholder="Nombre completo del titular"
             size="xl"
             class="w-full text-xl"
           />
         </div>
       </div>
 
-      <!-- Save Account -->
-      <div class="mt-6">
-        <label class="flex items-center">
-          <input v-model="form.saveAccount" type="checkbox"
-            class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
-          <span class="ml-2 text-sm text-gray-600">
-            Guardar como cuenta frecuente
-          </span>
-        </label>
-      </div>
-
       <!-- Save Account Name -->
-      <div v-if="form.saveAccount" class="mt-4 w-full">
-        <input v-model="form.accountAlias" type="text" placeholder="Nombre para esta cuenta (ej: Cuenta principal)"
-          class="w-full h-14 px-4 rounded-lg border-2 border-gray-200 bg-white shadow-sm focus:border-blue-500 focus:ring-blue-500 text-lg" />
+      <div class="mt-4 w-full">
+        <UInput
+          v-model="form.accountAlias"
+          type="text"
+          placeholder="Asigna un Alias para esta cuenta (ej: Cuenta principal)"
+          size="xl"
+          class="w-full text-xl"
+        />
       </div>
 
       <!-- Submit Button -->
@@ -75,17 +69,21 @@
 <script setup lang="ts">
 import {userRepository} from "~/repositories/v1/platform/userRepository"
 import {useRemittanceStore} from '~/stores/remittance'
+import {sourcesRepository} from "~/repositories/v1/platform/sourcesRepository"
  
 const userRepo = userRepository()
 const sourcesStore = useSourcesStore()
 const remittanceStore = useRemittanceStore()
+const sourcesRepo = sourcesRepository()
+
 const banks = ref([])
 const form = ref({
   bank: null,
   accountNumber: '',
   recipientName: '',
-  saveAccount: false,
-  accountAlias: ''
+  saveAccount: true,
+  accountAlias: '',
+  tag:"origin"
 })
 
 const isFormValid = computed(() => {
@@ -95,11 +93,6 @@ const isFormValid = computed(() => {
 
 
 const handleSubmit = async () => {
-  console.log("hola perro")
-  
-  // Here you can handle the form submission
-  // For example, save to store or emit event
-  
   const bank_id = form.value.bank
   
   const response = await userRepo.createBankAccount({
@@ -109,7 +102,9 @@ const handleSubmit = async () => {
     "type": "corriente",
     "account_number": form.value.accountNumber,
     "alias": form.value.accountAlias,
-    "is_joint_account": false
+    "is_joint_account": false,
+    "tag": form.value.tag,
+    "is_saved": form.value.saveAccount
   });
 
   
@@ -126,8 +121,10 @@ const emit = defineEmits<{
 // Add onMounted hook
 onMounted(async () => {
   //Deuda: Se debe obtener el pais de la orden de remesa sin perderlo al actualizar
-  const banksByCountry = await sourcesStore.fetchBanksByCountry(remittanceStore.form.destination_country_id?remittanceStore.form.destination_country_id:1); // You might want to pass the actual country_id
-  const destinataryBanksAccounts = await userRepo.fetchBankAccounts();
+  const banksByCountry = await sourcesRepo.getBanksByCountry({
+    country_id: remittanceStore.form.destination_country_id?remittanceStore.form.destination_country_id:1
+  }); // You might want to pass the actual country_id
+  const destinataryBanksAccounts = await userRepo.getBankAccounts();
 
   if(destinataryBanksAccounts) {
     console.log(destinataryBanksAccounts.data)

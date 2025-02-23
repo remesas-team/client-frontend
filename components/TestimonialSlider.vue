@@ -101,14 +101,14 @@ interface Slide {
 
 const slides = ref<Slide[]>([
   {
-    image: 'https://images.unsplash.com/photo-1609220136736-443140cffec6',
+    image: '/images/historia1.png',
     imageAlt: 'Familia feliz reunida en la sala de estar',
     testimonial: 'Gracias a este servicio puedo mantener a mi familia en Brasil sin preocupaciones. Las transferencias son rápidas y seguras.',
     author: 'Ana Silva',
     location: 'São Paulo, Brasil'
   },
   {
-    image: 'https://images.unsplash.com/photo-1623091411395-09e79fdbfcf3',
+    image: '/images/seño1.png',
     imageAlt: 'Madre e hija compartiendo un momento especial',
     testimonial: 'La mejor manera de enviar dinero a mi madre. El proceso es simple y la atención al cliente es excelente.',
     author: 'Carlos Santos',

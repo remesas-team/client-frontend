@@ -97,8 +97,9 @@ const form = ref({
 
 const handleSubmit = async () => {
   const bank_id = form.value.bank
+  
 
-  if (selectedAccount.value) {
+  if (!selectedAccount.value) {
     const response = await userRepo.createBankAccount({
       "bank_id": bank_id,
       "district_id": null,
@@ -111,18 +112,19 @@ const handleSubmit = async () => {
       "tag": "destination",
     });
 
-    remittanceStore.form.destination_user_account_id = selectedAccount.value.id
-  } else {
     remittanceStore.form.destination_user_account_id = response.data.id
+  } else {
+    remittanceStore.form.destination_user_account_id = selectedAccount.value.id
   }
 
+  console.log("Destination user account id",remittanceStore.form.destination_user_account_id)
 
   emit('next');
 };
 
 const setDestinataryInfo = () => {
   infoSelectedAccount.value = infoAccounts.value.find((item) => item.id === selectedAccount.value)
-  console.log(infoSelectedAccount.value)
+  
   return
 }
 
@@ -138,15 +140,17 @@ onMounted(async () => {
     }));
   }
 
-  const destinataryBanksAccounts = await userRepo.fetchBankAccounts();
+  const destinataryBanksAccounts = await userRepo.getBankAccounts();
   infoAccounts.value = destinataryBanksAccounts.data
 
-  savedAccounts.value = destinataryBanksAccounts.data.map((item) => {
-    return {
-      value: item.id,
-      label: item.alias
-    }
-  })
+  savedAccounts.value = destinataryBanksAccounts.data
+    .filter(item => item.tag === "destination")
+    .map((item) => {
+      return {
+        value: item.id,
+        label: item.alias
+      }
+    })
 
 });
 
