@@ -129,15 +129,27 @@
       </div>
     </div>
 
+    <UAlert
+        v-if="errorGeneral"
+        :description="errorGeneral"
+        color="error"
+        variant="soft"
+    />
+
     <!-- Action Buttons -->
     <div class="space-y-4">
-      <button
-        @click="confirmTransaction"
-        class="w-full bg-green-dark text-white py-4 rounded-lg hover:bg-green-grass transition-colors text-lg font-medium"
-        :disabled="!selectedFile"
+      <UButton
+          type="submit"
+          size="xl"
+          color="primary"
+          block
+          class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center"
+          :loading="loadingSubmit"
+          @click="confirmTransaction"
+
       >
         Confirmar transacción
-      </button>
+      </UButton>
 
       <p class="text-center text-gray-600">
         Tu dinero estará disponible en máximo 6h
@@ -154,12 +166,15 @@ const router = useRouter();
 const requestOperations = operationsRepository();
 const remittanceStore = useRemittanceStore();
 
-const timer = ref();
 const TIME_LIMIT = 15 * 60; // 15 minutes in seconds
+
+const timer = ref();
 const timeRemaining = ref(TIME_LIMIT);
 const isDragging = ref(false);
 const selectedFile = ref<File | null>(null);
 const fileInput = ref<HTMLInputElement | null>(null);
+const loadingSubmit = ref(false)
+const errorGeneral = ref('')
 
 // Format remaining time as MM:SS
 const formattedTimeRemaining = computed(() => {
@@ -194,6 +209,9 @@ const handleDrop = (event: DragEvent) => {
 };
 
 const confirmTransaction = async () => {
+  errorGeneral.value = ''
+  loadingSubmit.value = true
+
   const operation_id = remittanceStore.currentOperation.operation_id
 
   const formData = new FormData();
@@ -203,6 +221,8 @@ const confirmTransaction = async () => {
   const response = await requestOperations.postUploadVoucher(formData);
 
   if (!response.success) {
+    loadingSubmit.value = false
+    errorGeneral.value = response.message
     return;
   }
 

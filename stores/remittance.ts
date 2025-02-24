@@ -44,7 +44,9 @@ export const useRemittanceStore = defineStore('remittance', {
       const remittance = operationsRepository()
       const response = await remittance.postOperation(this.form)
 
-      if (!response.success) return false
+      if (response.success) {
+        this.currentOperation = response.data
+      }
 
       return response
     }

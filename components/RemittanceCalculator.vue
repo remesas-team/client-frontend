@@ -304,6 +304,8 @@ const applyCoupon = () => {
 const startOperation = () => {
   loadingSubmit.value = true
 
+  remittanceStore.$reset()
+
   // Origin
   remittanceStore.form.source_country_id = fromCountry.value.id
   remittanceStore.form.source_currency_id = fromCurrency.value.id

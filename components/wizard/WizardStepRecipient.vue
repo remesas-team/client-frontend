@@ -177,9 +177,14 @@ const getBankAccounts = async () => {
 }
 
 const setFormState = () => {
-  if (savedAccounts.value.length > 0) {
+  const {destination_user_account_id} = remittanceStore.form
+
+  if (savedAccounts.value.length > 0 && destination_user_account_id === null) {
     selectedAccount.value = savedAccounts.value[0]
+    return
   }
+
+  selectedAccount.value = savedAccounts.value.find(item => item.id === destination_user_account_id)
 }
 
 onMounted(async () => {
