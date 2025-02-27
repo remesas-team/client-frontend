@@ -28,12 +28,11 @@
         </div>
 
         <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
-          <h3 class="font-medium mb-2">Información de la cuenta:</h3>
+          <h3 class="font-bold mb-2">Información de la cuenta:</h3>
           <ul class="space-y-2 text-sm">
-            <li><span class="font-medium">Nombre:</span> {{ selectedAccount?.recipientName }}</li>
             <li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
-            <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank?.name }}</li>
-            <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency?.name }}</li>
+            <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
+            <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
           </ul>
           <a href="#" class="underline decoration-solid mt-5 block" @click="selectedAccount = null"> + Crear nuevo
             destinatario</a>
@@ -97,7 +96,7 @@
             size="xl"
             color="primary"
             block
-            class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center"
+            class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center hover:bg-green-grass"
         >
           Continuar
         </UButton>

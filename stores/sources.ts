@@ -31,22 +31,33 @@ export const useSourcesStore = defineStore('sources', {
         const response = await requestSources.getGenders();
 
         if (response.success) {
-          this.genders = response.data;
+          const formattedResponse = response.data.map((item) => ({
+            'value': item.id,
+            'label': item.name
+          }));
+          this.genders = formattedResponse
+          return formattedResponse
+        } else {
+          return response;
         }
-
-        return response;
     },
     async fetchOccupations() {
         if (this.occupations.length > 0) return { success: true, data: this.occupations };
 
         const requestSources = sourcesRepository();
         const response = await requestSources.getOccupations();
-
+        
         if (response.success) {
-          this.occupations = response.data;
+          const formattedResponse = response.data.map((item) => ({
+            'value': item.id,
+            'label': item.name
+          }));
+          this.occupations = formattedResponse;
+          return formattedResponse;
+        } else {
+          return response;
         }
 
-        return response;
     },
     async fetchCivilStatuses() {
         if (this.civil_statuses.length > 0) return { success: true, data: this.civil_statuses };

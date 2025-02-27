@@ -7,264 +7,245 @@
           <p class="text-gray-600 mt-2">Únete a nuestra plataforma de envíos</p>
         </div>
 
-        <form @submit.prevent="handleRegister" class="space-y-6">
+        <UForm :state="form" @submit="handleRegister" @error="handleError" class="space-y-6" :schema="v.safeParser(schemaRemittance)">
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Nombre
-              </label>
-              <input
-                  v-model="form.name"
-                  type="text"
-                  required
-                  class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-              />
+              <UFormField label="Nombre completo" name="name">
+                <UInput v-model="form.name" placeholder="Nombre" size="xl" class="w-full"  />
+              </UFormField>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Apellido
-              </label>
-              <input
-                  v-model="form.last_name"
-                  type="text"
-                  required
-                  class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-              />
+              <UFormField label="Apellido completo" name="last_name">
+                <UInput v-model="form.last_name" placeholder="Apellido completo" size="xl" class="w-full" />
+              </UFormField>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Correo electrónico
-              </label>
-              <input
-                  v-model="form.email"
-                  type="email"
-                  required
-                  class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-              />
+              <UFormField label="Correo electrónico" name="email">
+                <UInput v-model="form.email" type="email"  placeholder="Correo electrónico" size="xl" class="w-full" />
+              </UFormField>
+            </div>
+            <div>
+              <UFormField label="Ocupación" name="occupation_id">
+                <USelectMenu v-model="form.occupation_id" value-key="value" :items="sourcesStore.occupations" placeholder="selecciona.." size="xl" class="w-full" />
+              </UFormField>
+            </div>
+            
+            <div class="flex gap-2">
+              <UFormField label="Código" name="phone_code" class="w-24">
+                <USelect v-model="form.phone_code" :items="[{ label: '+51', value: '+51' }]" placeholder="+1" size="xl" />
+              </UFormField>
+
+              <UFormField label="Teléfono" name="phone" class="w-full">
+                <UInput v-model="form.phone" type="number"  placeholder="Número de celular" size="xl" class="w-full" />
+              </UFormField>
+            </div>
+
+            <div class="flex gap-2">
+              <UFormField label="Tipo doc." name="doc_type_id" class="w-[35%]">
+                <USelect v-model="form.doc_type_id" :items="[{ label: 'DNI', value: 1 }]" placeholder="Tipo de documento" size="xl" class="w-full" />
+              </UFormField>
+              <UFormField label="Número de documento" name="doc_value" class="w-full">
+                <UInput v-model="form.doc_value"  placeholder="Número de documento" size="xl" class="w-full" />
+              </UFormField>
+            </div>
+
+
+            <div>
+              <UFormField label="Género" name="genre">
+                <URadioGroup v-model="form.genre" :items="[
+                  { label: 'Hombre', value: 'hombre' },
+                  { label: 'Mujer', value: 'mujer' }
+                ]" class="flex gap-4" size="xl" />
+              </UFormField>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Teléfono
-              </label>
-              <div class="flex gap-2">
-                <select
-                    v-model="form.phone_code"
-                    class="w-24 h-12 px-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-                >
-                  <option value="+51">+51</option>
-                </select>
-                <input
-                    v-model="form.phone"
-                    type="tel"
-                    required
-                    class="flex-1 w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-                />
-              </div>
+              <UFormField label="Fecha de nacimiento" name="birth_date">
+                <UInput v-model="form.birth_date" type="date"  size="xl" class="w-full" />
+              </UFormField>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Tipo de documento
-              </label>
-              <select
-                  v-model="form.doc_type_id"
-                  class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-              >
-                <option value="1">DNI</option>
-              </select>
+              <UFormField label="Contraseña" name="password">
+                <UInput v-model="form.password" type="password"  placeholder="Contraseña" size="xl" class="w-full" />
+              </UFormField>
+            </div>
+            
+            <div>
+              <UFormField label="Confirmar contraseña" name="password_confirmation">
+                <UInput v-model="form.password_confirmation" type="password" placeholder="Confirmar contraseña"  size="xl" class="w-full" />
+              </UFormField>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Número de documento
-              </label>
-              <input
-                  v-model="form.doc_value"
-                  type="text"
-                  required
-                  class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-              />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Contraseña
-              </label>
-              <input
-                  v-model="form.password"
-                  type="password"
-                  required
-                  class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-              />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
-                Confirmar contraseña
-              </label>
-              <input
-                  v-model="form.password_confirmation"
-                  type="password"
-                  required
-                  class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
-              />
+              <UFormField name="acceptTerms">
+                <UCheckbox v-model="form.acceptTerms" 
+                  label="Acepto los términos y condiciones y la política de privacidad">
+                  <template #label>
+                    <span class="text-sm text-gray-700">
+                      Acepto los
+                      <a href="#" class="text-blue-600 hover:underline">términos y condiciones</a>
+                      y la
+                      <a href="#" class="text-blue-600 hover:underline">política de privacidad</a>
+                    </span>
+                  </template>
+                </UCheckbox>
+              </UFormField>
             </div>
           </div>
-
-          <div class="flex items-start">
-            <div class="flex items-center h-5">
-              <input
-                  v-model="form.acceptTerms"
-                  type="checkbox"
-                  required
-                  class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-              />
-            </div>
-            <div class="ml-3">
-              <label class="text-sm text-gray-700">
-                Acepto los
-                <a href="#" class="text-blue-600 hover:underline">términos y condiciones</a>
-                y la
-                <a href="#" class="text-blue-600 hover:underline">política de privacidad</a>
-              </label>
-            </div>
+          <div v-for="(index, field) in validationErrors">
+            <UAlert
+              v-for="error in index"
+              icon="i-heroicons-command-line"
+              color="error"
+              variant="soft"
+              title="Error"
+              :description="error"
+            />
           </div>
-
-          <div v-if="errorMessage || Object.keys(validationErrors).length > 0" class="space-y-2">
-            <div v-if="errorMessage" class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
-              {{ errorMessage }}
-            </div>
-
-            <div v-if="Object.keys(validationErrors).length > 0"
-                 class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg space-y-2">
-              <div v-for="(errors, field) in validationErrors" :key="field">
-                <p v-for="error in errors" :key="error">{{ error }}</p>
-              </div>
-            </div>
-          </div>
-
-          <button
-              type="submit"
-              class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium"
-              :disabled="isLoading"
-          >
+          <UButton type="submit" size="xl" color="primary" block :loading="isLoading"
+            class="w-full text-lg font-medium h-14 bg-green-dark text-center hover:bg-green-grass hover:cursor-pointer">
             {{ isLoading ? 'Registrando...' : 'Crear cuenta' }}
-          </button>
-
-          <p class="text-center text-sm text-gray-600">
-            ¿Ya tienes una cuenta?
-            <NuxtLink to="/login" class="text-blue-600 hover:underline font-medium">
-              Iniciar sesión
-            </NuxtLink>
-          </p>
-        </form>
+          </UButton>
+        </UForm>
+        <p class="text-center text-sm text-gray-600 mt-5">
+          ¿Ya tienes una cuenta?
+          <NuxtLink to="/login" class="text-blue-600 hover:underline font-medium">
+            Iniciar sesión
+          </NuxtLink>
+        </p>
       </div>
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import {useAuthStore} from "~/stores/auth";
+import { useAuthStore } from "~/stores/auth";
+import { useSourcesStore } from '~/stores/sources'
+import * as v from 'valibot';
 
 const { $auth } = useNuxtApp();
 const router = useRouter();
-const config = useRuntimeConfig();
 const authStore = useAuthStore();
+const sourcesStore = useSourcesStore()
+const isLoading = ref(false);
+const errorMessage = ref('');
+const validationErrors = ref<Record<string, string[]>>({});
 
 definePageMeta({
   auth: 'guest',
 })
 
-const isLoading = ref(false);
-const errorMessage = ref('');
-const validationErrors = ref<Record<string, string[]>>({});
+
+onMounted(async () => {
+  await sourcesStore.fetchOccupations()
+  await sourcesStore.fetchGenders()
+})
+
+
 
 const form = reactive({
-  name: 'John',
-  last_name: 'Doe',
-  email: 'john.doe@example.com',
-  phone_code: '+51',
-  phone: '987654321',
-  doc_type_id: 1,
-  doc_value: '12345678',
+  name: null,
+  last_name: null,
+  email: null,
+  phone_code: null,
+  phone: null,
+  doc_type_id: null,
+  doc_value: null,
   is_pep: false,
   is_pep_familiar: false,
-  occupation_id: 5,
+  occupation_id: null,
   genre: 'hombre',
-  birth_date: '1990-01-01',
+  birth_date: '1993-07-04',
   civil_status: 'soltero',
   address: '123 Main Street, Springfield',
   geo_district_id: 10,
-  password: 'Password123!',
-  password_confirmation: 'Password123!',
-  acceptTerms: false
+  password_confirmation: null,
+  password: null,
+  acceptTerms: null
 });
 
+const schemaRemittance = v.object({
+  name: v.string('Required'),
+  last_name: v.string('Required'),
+  email: v.string('Required'),
+  phone_code: v.string('Required'),
+  phone: v.number('Required'),
+  doc_type_id: v.number('Required'),
+  doc_value: v.string('Required'),
+  //is_pep: v.string('Required'),
+  //is_pep_familiar: v.string('Required'),
+  occupation_id: v.number('Required'),
+  genre: v.string('Required'),
+  birth_date: v.string('Required'),
+  //civil_status: v.string('Required'),
+  //address: v.string('Required'),
+  password: v.string('Required'),
+  password_confirmation: v.string('Required'),
+  acceptTerms: v.pipe(v.boolean(), v.literal(true, "Este campo es obligatorio")),
+})
+
 const handleRegister = async () => {
-  errorMessage.value = '';
-  validationErrors.value = {};
 
   if (form.password !== form.password_confirmation) {
     errorMessage.value = 'Las contraseñas no coinciden';
     return;
   }
 
-  try {
-    isLoading.value = true;
-    const apiUrl = `${config.public.baseUrl}/api/v1/platform/auth/register`;
+  isLoading.value = true;
 
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        name: form.name,
-        last_name: form.last_name,
-        email: form.email,
-        phone_code: form.phone_code,
-        phone: parseInt(form.phone),
-        doc_type_id: form.doc_type_id,
-        doc_value: form.doc_value,
-        is_pep: form.is_pep,
-        is_pep_familiar: form.is_pep_familiar,
-        occupation_id: form.occupation_id,
-        genre: form.genre,
-        birth_date: form.birth_date,
-        civil_status: form.civil_status,
-        address: form.address,
-        geo_district_id: form.geo_district_id,
-        password: form.password,
-        password_confirmation: form.password_confirmation
-      })
-    });
+  console.log(form);
 
-    const data = await response.json();
+  const registerData = {
+    name: form.name,
+    last_name: form.last_name,
+    email: form.email,
+    phone_code: form.phone_code,
+    phone: parseInt(form.phone),
+    doc_type_id: form.doc_type_id,
+    doc_value: form.doc_value,
+    is_pep: form.is_pep,
+    is_pep_familiar: form.is_pep_familiar,
+    occupation_id: form.occupation_id,
+    genre: form.genre,
+    birth_date: form.birth_date,
+    civil_status: form.civil_status,
+    address: form.address,
+    geo_district_id: form.geo_district_id,
+    password: form.password,
+    password_confirmation: form.password_confirmation
 
-    if (!response.ok) {
-      if (data.errors) {
-        validationErrors.value = data.errors;
-        errorMessage.value = data.message;
-      } else {
-        throw new Error(data.message || 'Error al registrar usuario');
-      }
-      return;
-    }
+  };
+  
+  const response = await authStore.registerUser(registerData)
 
-    $auth.setToken(data.data.access_token);
-    authStore.user = data.data.user;
+  console.log('response', response)
 
-    // Redirect to profile completion
-    router.push('/perfil');
-  } catch (error) {
-    console.error('Error:', error);
-    errorMessage.value = error instanceof Error ? error.message : 'Error al registrar usuario';
-  } finally {
+  if (!response.success) {
     isLoading.value = false;
+    if (response.errors) {
+      validationErrors.value = response.errors;
+      errorMessage.value = response.message;
+    } else {
+    }
+    return;
   }
+
+  $auth.setToken(response.data.access_token);
+  authStore.user = response.data.user;
+
+
+  router.push('/perfil');
+
 };
+
+const handleError = async (error) => {
+  console.log('handleError', error)
+}
+
+
+
+
 </script>

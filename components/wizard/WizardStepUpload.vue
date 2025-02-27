@@ -226,6 +226,8 @@ const confirmTransaction = async () => {
     return;
   }
 
+  
+
   router.push('/operacion/success');
 };
 

@@ -24,10 +24,10 @@
         <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
           <h3 class="font-medium mb-2">Información de la cuenta:</h3>
           <ul class="space-y-2 text-sm">
-            <li><span class="font-medium">Nombre:</span> {{ selectedAccount?.recipientName }}</li>
+            <li><span class="font-medium">Nombre:</span> {{ selectedAccount?.alias }}</li>
             <li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
-            <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank?.name }}</li>
-            <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency?.name }}</li>
+            <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
+            <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
           </ul>
           <a href="#" class="underline decoration-solid mt-5 block" @click="selectedAccount = null"> + Crear nuevo
             destinatario</a>
@@ -59,7 +59,7 @@
           </div>
 
           <div class="w-full">
-            <UInput v-model="formState.recipientName" type="text" placeholder="Nombre del destinatario" size="xl"
+            <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
                     class="w-full text-xl"/>
           </div>
 
@@ -73,11 +73,6 @@
             </label>
           </div>
 
-          <!-- Save Account Name -->
-          <div v-if="formState.is_saved" class="mt-4 w-full">
-            <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
-                    class="w-full text-xl"/>
-          </div>
         </div>
 
         <!-- Submit Button -->
@@ -173,7 +168,7 @@ const getBankAccounts = async () => {
     return
   }
 
-  savedAccounts.value = response.data.filter(item => item.tag === "destination")
+  savedAccounts.value = response.data.filter(item => item.tag === "destination" && item.is_saved)
 }
 
 const setFormState = () => {

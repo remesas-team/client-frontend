@@ -35,6 +35,7 @@ export const useRemittanceStore = defineStore('remittance', {
       // destination_origin_fund_id: null,
     },
     currentOperation: null,
+    newOperation: null,
   }),
 
   getters: {},
@@ -49,7 +50,15 @@ export const useRemittanceStore = defineStore('remittance', {
       }
 
       return response
-    }
+    },
+    async getOperationTracking(id) {
+      const remittance = operationsRepository()
+      const response = await remittance.getTrackingOperationById(id)
+      if (response.success) {
+        this.currentOperation = response.data
+      }
+      return response
+    },
   },
 
   persist: true,

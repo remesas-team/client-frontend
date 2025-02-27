@@ -75,5 +75,16 @@ export const useAuthStore = defineStore('auth', {
 
       return response;
     },
+
+    async registerUser(params) {
+      const requestAuth = authRepository();
+      const response = await requestAuth.postRegister(params);
+      
+      if (response.success) {
+        console.log('store response', response)
+      }
+
+      return response;
+    }
   }
 })

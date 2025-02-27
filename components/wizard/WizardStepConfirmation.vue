@@ -57,7 +57,7 @@
         size="xl"
         color="primary"
         block
-        class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center"
+        class="w-full mt-2 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-grass cursor-pointer"
         :loading="loadingSubmit"
         @click="handleConfirm"
 
@@ -66,7 +66,7 @@
     </UButton>
 
     <!-- Delivery Time Notice -->
-    <p class="text-center text-gray-600 flex items-center justify-center gap-2">
+    <p class="text-center text-gray-600 flex items-center justify-center gap-2 text-[#2e7d6b]">
       <UIcon name="i-mdi:run-fast"></UIcon>
       <span> Tu dinero estará disponible el mismo día</span>
     </p>
@@ -98,6 +98,9 @@ const handleConfirm = async () => {
     errorGeneral.value = response.message
     return
   }
+
+  console.log(response.data)
+  remittanceStore.newOperation = ref(response.data);
 
   emit('next');
 };

@@ -13,38 +13,54 @@
               <div class="icon-fix"></div>
             </div>
           </div>
-          <h1 class="text-3xl font-bold">Transacción exitosa</h1>
-          <p class="text-gray-600">Move your money where it matters</p>
+          <h1 class="text-3xl font-bold mt-8">Transacción exitosa</h1>
+          <p class="text-gray-600">Nos estamos haciendo cargo de que tu dinero llegue a destino lo már pronto posible</p>
         </div>
 
         <!-- Transaction Details -->
         <div class="space-y-4">
           <div class="flex justify-between items-center">
-            <span class="text-gray-600">Dinero transferido</span>
-            <span class="font-medium">S/300</span>
+            <span class="text-gray-600">Tiempo de transferencia</span>
+            <span class="font-medium">6 - 8 días</span>
           </div>
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Impuestos</span>
-            <span class="font-medium">S/20</span>
+            <span class="font-medium">{{ remittanceStore.form.source_currency_symbol }} {{ remittanceStore.form.send_tax }}</span>
           </div>
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Comisión</span>
-            <span class="font-medium">S/20</span>
+            <span class="font-medium">{{ remittanceStore.form.source_currency_symbol }} {{ remittanceStore.form.send_cost }}</span>
           </div>
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Dinero en destino</span>
-            <span class="font-medium">BRL3300</span>
+            <span class="font-medium">{{ remittanceStore.form.destination_currency_symbol }} {{ remittanceStore.form.destination_amount }}</span>
           </div>
-          <div class="flex justify-between items-center">
+          <div class="flex justify-between items-center relative">
             <span class="text-gray-600">Código de operación</span>
-            <span class="font-medium">74112</span>
+            <span 
+              @click="copyToClipboard(remittanceStore.form.operation_id)" 
+              class="font-medium text-lg cursor-pointer group flex items-center gap-2 hover:text-gray-600 transition-colors"
+            >
+              {{ remittanceStore.currentOperation.operation_id }}
+              <UIcon 
+                :name="copied ? 'i-lucide:check' : 'i-lucide:copy'" 
+                class="transition-all duration-300"
+                :class="copied ? 'text-green-500 scale-110' : ''"
+              />
+              <span 
+                class="text-sm text-green-500 absolute -bottom-6 right-0 opacity-0 transition-all duration-300"
+                :class="{ 'opacity-100': copied }"
+              >
+                ¡Copiado!
+              </span>
+            </span>
           </div>
         </div>
 
         <!-- Action Button -->
         <div class="space-y-4">
           <NuxtLink
-              to="/tracking/74112"
+              :to="`/tracking/${remittanceStore.currentOperation.operation_id}`"
               class="block w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium text-center"
           >
             Dale seguimiento
@@ -58,7 +74,22 @@
     </div>
   </main>
 </template>
+<script setup>
+const remittanceStore = useRemittanceStore()
+const copied = ref(false)
 
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text)
+    copied.value = true
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
+  } catch (err) {
+    console.error('Failed to copy:', err)
+  }
+}
+</script>
 <style scoped>
 .success-checkmark {
   width: 80px;

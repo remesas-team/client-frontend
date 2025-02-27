@@ -77,13 +77,19 @@
 </template>
 
 <script setup lang="ts">
+import { useRemittanceStore } from '@/stores/remittance'
+import { useRoute } from 'vue-router'
+
 interface Step {
   title: string;
   status: 'completed' | 'pending';
   date?: string;
 }
 
-// Mock data - In a real app, this would come from an API
+const route = useRoute()
+const remittanceStore = useRemittanceStore()
+
+
 const steps = ref<Step[]>([
   {
     title: 'Recolectado dinero en origen',
@@ -109,4 +115,8 @@ const openSupportChat = () => {
   // Here you would implement the logic to open the support chat
   console.log('Opening support chat...');
 };
+
+onMounted(async () => {
+  await remittanceStore.getOperationTracking(route.params.id)
+})
 </script>
