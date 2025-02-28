@@ -147,6 +147,7 @@ const dateRange = shallowRef({
   start: null,
   end: null
 });
+
 const currentPage = ref(1);
 const itemsPerPage = 10;
 const operations = ref<Operation[]>([]);

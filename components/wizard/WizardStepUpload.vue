@@ -32,10 +32,10 @@
         <div class="flex justify-between items-center">
           <span class="text-gray-600">Cuenta bancaria BCP</span>
           <div class="flex items-center gap-2">
-            <span class="font-medium">204010203010111</span>
+            <span v-if="newOperation" class="font-medium">{{newOperation.collection_system_account.account_number}}</span>
             <button
               class="text-blue-600 hover:text-blue-700"
-              @click="copyToClipboard('204010203010111')"
+              @click="copyToClipboard(newOperation.collection_system_account.account_number)"
               title="Copiar número de cuenta"
             >
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -46,9 +46,9 @@
         </div>
 
         <div class="flex justify-between items-center">
-          <span class="text-gray-600">Destinatario</span>
+          <span class="text-gray-600">Banco:</span>
           <div class="flex items-center gap-2">
-            <span class="font-medium">Remesas.com S.A.C</span>
+            <span v-if="newOperation" class="font-medium">{{newOperation.collection_system_account.account_name}}</span>
             <button
               class="text-blue-600 hover:text-blue-700"
               @click="copyToClipboard('Remesas.com S.A.C')"
@@ -64,10 +64,10 @@
         <div class="flex justify-between items-center">
           <span class="text-gray-600">Total a Transferir</span>
           <div class="flex items-center gap-2">
-            <span class="font-medium">240 PEN</span>
+            <span v-if="newOperation" class="font-medium">{{newOperation.collection_system_account.currency.code}} {{newOperation.source_amount_to_send}}</span>
             <button
               class="text-blue-600 hover:text-blue-700"
-              @click="copyToClipboard('240')"
+              @click="copyToClipboard(newOperation.source_amount_to_send)"
               title="Copiar monto"
             >
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -112,7 +112,7 @@
           Seleccionar archivo
         </button>
       </div>
-
+      
       <!-- Selected File Preview -->
       <div v-if="selectedFile" class="bg-green-50 p-4 rounded-lg flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -175,6 +175,13 @@ const selectedFile = ref<File | null>(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 const loadingSubmit = ref(false)
 const errorGeneral = ref('')
+const newOperation = ref({
+  collection_system_account:{
+    account_name: null,
+    account_number: null,
+    currency_symbol: null
+  }
+})
 
 // Format remaining time as MM:SS
 const formattedTimeRemaining = computed(() => {
@@ -232,9 +239,10 @@ const confirmTransaction = async () => {
 };
 
 // Timer countdown
-onMounted(() => {
-  console.log(remittanceStore.currentOperation.operation_id)
-  remittanceStore.getOperation(remittanceStore.currentOperation.operation_id)
+onMounted(async ()=> {
+  const newOperationResponse = await remittanceStore.getOperation(remittanceStore.currentOperation.operation_id)
+  newOperation.value = newOperationResponse.data.operation
+
   timer.value = setInterval(() => {
     if (timeRemaining.value > 0) {
       timeRemaining.value--;
