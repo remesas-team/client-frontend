@@ -23,13 +23,12 @@
 
         <!-- Timeline Steps -->
         <div class="space-y-8">
-          <div v-for="(step, index) in steps" :key="index" class="flex items-start gap-6">
+          <div v-for="(step, index) in tracking" :key="index" class="flex items-start gap-6">
             <!-- Circle -->
             <div
                 class="relative z-10 w-[30px] h-[30px] rounded-full flex items-center justify-center"
                 :class="[
-                  step.status === 'completed' ? 'bg-green-500' :
-                  step.status === 'pending' ? 'bg-gray-300' : 'bg-gray-300'
+                  step.status != 'pendiente' ? 'bg-green-500' : 'bg-gray-300'
                 ]"
             >
               <span class="text-white font-medium">{{ index + 1 }}</span>
@@ -41,14 +40,13 @@
               <div class="flex items-center gap-2">
                   <span
                       :class="[
-                      step.status === 'completed' ? 'text-green-600' :
-                      step.status === 'pending' ? 'text-gray-500' : 'text-gray-500'
+                      step.status != 'pendiente' ? 'text-green-600' : 'text-gray-500'
                     ]"
                   >
-                    {{ step.status === 'completed' ? step.date : 'Pendiente' }}
+                    {{ step.status }}
                   </span>
                 <svg
-                    v-if="step.status === 'completed'"
+                    v-if="step.status != 'pendiente'"
                     class="w-5 h-5 text-green-500"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -67,9 +65,9 @@
       <div class="mt-12">
         <button
             @click="openSupportChat"
-            class="w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium"
+            class="w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium flex justify-center items-center"
         >
-          Contactar con soporte
+          <UIcon name="i-lucide:headset mr-2"></UIcon> <span>Contactar con soporte</span>
         </button>
       </div>
     </div>
@@ -86,9 +84,11 @@ interface Step {
   date?: string;
 }
 
+
+
 const route = useRoute()
 const remittanceStore = useRemittanceStore()
-
+const tracking = ref();
 
 const steps = ref<Step[]>([
   {
@@ -115,8 +115,51 @@ const openSupportChat = () => {
   // Here you would implement the logic to open the support chat
   console.log('Opening support chat...');
 };
+function objectMap(object, mapFn) {
+  return Object.keys(object).reduce(function(result, key) {
+    result[key] = mapFn(object[key])
+    return result
+  }, {})
+}
+
+function formatDate(dateString: string) {
+  if (!dateString || dateString === 'pendiente') return 'pendiente'
+  
+  const date = new Date(dateString)
+  const months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ]
+  
+  const day = date.getDate()
+  const month = months[date.getMonth()]
+  const year = date.getFullYear()
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+  
+  return `${day} de ${month} ${year} a las ${hours}:${minutes}`
+}
 
 onMounted(async () => {
-  await remittanceStore.getOperationTracking(route.params.id)
+  const responseTracking = await remittanceStore.getOperationTracking(route.params.id)
+  
+  tracking.value = [
+    {
+      title: 'Inicio de la operación',
+      status: responseTracking.tracking.start_operation ? formatDate(responseTracking.tracking.start_operation) : 'pendiente'
+    },
+    {
+      title: 'Operación verificada',
+      status: responseTracking.tracking.verified_at ? formatDate(responseTracking.tracking.verified_at) : 'pendiente'
+    },
+    {
+      title: 'Su orden está siendo procesada',
+      status: responseTracking.tracking.processed_at ? formatDate(responseTracking.tracking.processed_at) : 'pendiente'
+    },
+    {
+      title: 'Dinero desembolsado en destino',
+      status: responseTracking.tracking.finised ? formatDate(responseTracking.tracking.finised) : 'pendiente'
+    },
+  ]
 })
 </script>

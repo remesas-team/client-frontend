@@ -21,22 +21,15 @@
         <div class="space-y-4">
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Tiempo de transferencia</span>
-            <span class="font-medium">6 - 8 días</span>
+            <span class="font-medium">6 - 8 horas</span>
           </div>
+
           <div class="flex justify-between items-center">
-            <span class="text-gray-600">Impuestos</span>
-            <span class="font-medium">{{ remittanceStore.form.source_currency_symbol }} {{ remittanceStore.form.send_tax }}</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-600">Comisión</span>
-            <span class="font-medium">{{ remittanceStore.form.source_currency_symbol }} {{ remittanceStore.form.send_cost }}</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-600">Dinero en destino</span>
+            <span class="text-gray-600">Dinero a recibir</span>
             <span class="font-medium">{{ remittanceStore.form.destination_currency_symbol }} {{ remittanceStore.form.destination_amount }}</span>
           </div>
           <div class="flex justify-between items-center relative">
-            <span class="text-gray-600">Código de operación</span>
+            <span class="text-gray-600">Código de tracking</span>
             <span 
               @click="copyToClipboard(remittanceStore.form.operation_id)" 
               class="font-medium text-lg cursor-pointer group flex items-center gap-2 hover:text-gray-600 transition-colors"
@@ -66,9 +59,6 @@
             Dale seguimiento
           </NuxtLink>
 
-          <p class="text-center text-gray-600">
-            Tu dinero estará disponible en máximo 6h
-          </p>
         </div>
       </div>
     </div>

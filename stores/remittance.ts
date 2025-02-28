@@ -55,9 +55,9 @@ export const useRemittanceStore = defineStore('remittance', {
       const remittance = operationsRepository()
       const response = await remittance.getTrackingOperationById(id)
       if (response.success) {
-        this.currentOperation = response.data
-      }
-      return response
+        return response.data
+      } else {
+        return null}
     },
     async getOperation(id) {
       const remittance = operationsRepository()
