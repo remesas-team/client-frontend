@@ -69,25 +69,19 @@
           </div>
 
           <div class="w-full">
+
+            <!-- Save Account Name -->
+          <div class="mt-4 w-full">
             <UInput
-                v-model="formState.recipientName"
+                v-model="formState.alias"
                 type="text"
                 placeholder="Nombre completo del titular"
                 size="xl"
                 class="w-full text-xl"
             />
           </div>
-
-          <!-- Save Account Name -->
-          <div class="mt-4 w-full">
-            <UInput
-                v-model="formState.alias"
-                type="text"
-                placeholder="Asigna un Alias para esta cuenta (ej: Cuenta principal)"
-                size="xl"
-                class="w-full text-xl"
-            />
           </div>
+
         </div>
 
         <!-- Submit Button -->

@@ -59,6 +59,14 @@ export const useRemittanceStore = defineStore('remittance', {
       }
       return response
     },
+    async getOperation(id) {
+      const remittance = operationsRepository()
+      const response = await remittance.getOperationById(id)
+      if (response.success) {
+        this.newOperation = response.data
+      }
+      return response
+    }
   },
 
   persist: true,

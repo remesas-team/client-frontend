@@ -233,6 +233,8 @@ const confirmTransaction = async () => {
 
 // Timer countdown
 onMounted(() => {
+  console.log(remittanceStore.currentOperation.operation_id)
+  remittanceStore.getOperation(remittanceStore.currentOperation.operation_id)
   timer.value = setInterval(() => {
     if (timeRemaining.value > 0) {
       timeRemaining.value--;

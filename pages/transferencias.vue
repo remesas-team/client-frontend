@@ -6,7 +6,7 @@
       <p class="text-gray-600">Historial de todas tus operaciones</p>
     </div>
 
-    <!-- Stats Overview -->
+    <!-- Stats Overview 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
       <div class="bg-white p-4 rounded-lg shadow-sm">
         <div class="text-sm text-gray-600 mb-1">Total enviado (30 días)</div>
@@ -24,8 +24,7 @@
         <div class="text-sm text-gray-600 mb-1">Ahorro en comisiones</div>
         <div class="text-2xl font-bold text-blue-600">$345</div>
       </div>
-    </div>
-
+    </div> -->
     <!-- Transfers List -->
     <div class="bg-white rounded-lg shadow-sm overflow-hidden">
       <!-- Filters -->
@@ -115,6 +114,31 @@
 </template>
 
 <script setup lang="ts">
+import { operationsRepository } from '~/repositories/v1/platform/operationsRepository';
+const loading = ref(true);
+
+const operations = ref([]);
+
+const fetchOperations = async () => {
+  loading.value = true;
+  try {
+    const response = await operationsRepository().getOperations();
+    if (response?.success) {
+      operations.value = response.data;
+    }
+  } catch (error) {
+    console.error('Error fetching operations:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Initial fetch
+onMounted(() => {
+  fetchOperations();
+});
+
+
 interface Transfer {
   id: string;
   date: Date;
