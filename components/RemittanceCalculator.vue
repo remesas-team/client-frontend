@@ -10,7 +10,7 @@
           @submit="startOperation"
       >
         <!-- Country Selection Grid -->
-        <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="grid md:grid-cols-2 gap-1 md:gap-6 mb-8">
           <!-- From Country -->
           <div class="relative">
             <label class="block text-[15px] font-medium text-gray-700 mb-2">
@@ -18,7 +18,7 @@
             </label>
 
             <USelectMenu
-                  class="w-full"
+                  class="w-full mb-0"
                   :searchInput="false"
                   v-model="fromCountry"
                   :items="getCountries"
@@ -49,7 +49,7 @@
 
           <!-- To Country -->
           <div class="relative">
-            <label class="block text-[15px] font-medium text-gray-700 mb-2">
+            <label class="absolute shadow-md rounded-lg left-[10px] top-[-15px] z-10 bg-white px-3 py-1 block text-[12px] font-medium text-gray-700 mb-2">
               HACIA
             </label>
 
@@ -187,7 +187,7 @@
                 </div>
 
                 <div class="flex-shrink-0">
-                  <UButton type="button" class="px-5 py-4 bg-green-dark text-white hover:bg-green-grass" @click="applyCoupon">
+                  <UButton type="button" class="hover:cursor-pointer px-5 py-4 bg-green-dark text-white hover:bg-green-grass" @click="applyCoupon">
                     Aplicar
                   </UButton>
                 </div>
@@ -199,7 +199,7 @@
         <!-- Compare Button -->
         <button
             type="submit"
-            class="w-full bg-green-dark text-white py-4 rounded-xl text-[17px] font-medium hover:bg-green-grass transition-colors"
+            class="w-full bg-green-dark text-white py-4 rounded-xl text-[17px] font-medium hover:bg-green-grass transition-colors hover:cursor-pointer"
         >
           Iniciar transferencia
         </button>
@@ -260,7 +260,7 @@ const getToCurrency = computed(() => {
   const currentCountry = sourcesStore.countries.find(country => country.id === toCountry.value.id)
   return currentCountry.currencies.map((item) => ({
     id: item.id,
-    label: item.code,
+    label: item.code
   }))
 })
 
@@ -271,12 +271,16 @@ const schemaRemittance = v.object({
   coupon: v.nullable(v.string('Invalid coupon')),
 })
 
-const debouncedRequest = useDebounceFn(() => 'response', 3000)
 
-const handleAmountInput = async (value: number) => {
+const handleAmountInput = (value: number) => {
   if (!value) return
-  await debouncedRequest()
-  await calculateEstimate()
+  let debounceTimer;
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(async () => {
+    await calculateEstimate();
+  }, 1000);
+
+  
 }
 
 const calculateEstimate = async () => {
@@ -309,12 +313,13 @@ const startOperation = () => {
   remittanceStore.$reset()
   // Origin
   remittanceStore.form.source_country_id = fromCountry.value.id
-  remittanceStore.form.source_currency_id = getToCurrency.value.find((item) => item.label === formRemittance.value.to).id
+  remittanceStore.form.source_currency_id = getFromCurrency.value.find((item) => item.label === formRemittance.value.from).id
   remittanceStore.form.source_currency_symbol = estimate.value.from
 
   // Destination
   remittanceStore.form.destination_country_id = toCountry.value.id
-  remittanceStore.form.destination_currency_id = getToCurrency.value.find((item) => item.label === formRemittance.value.from).id
+  console.log(formRemittance.value.from, getToCurrency.value)
+  remittanceStore.form.destination_currency_id = getToCurrency.value.find((item) => item.label === formRemittance.value.to).id
   remittanceStore.form.destination_currency_symbol = estimate.value.to
 
   // Result remittance
@@ -332,14 +337,27 @@ const startOperation = () => {
 const initCalculator = () => {
   fromCountry.value = getCountries.value[0]
   toCountry.value = getCountries.value[1]
-  console.log('init', formRemittance.value.from)
   formRemittance.value.from = getFromCurrency.value[0].label;
   formRemittance.value.to = getToCurrency.value[0].label;
 }
 
 const setFromCurrencies = () => {
-  fromCurrency.value = getFromCurrency.value[0];
-  toCurrency.value = getToCurrency.value[0];
+
+// If countries are the same, set destination to next available country
+if (fromCountry.value.id === toCountry.value.id) {
+  const availableCountries = getCountries.value.filter(country => 
+    country.id !== fromCountry.value.id
+  );
+  toCountry.value = availableCountries[0] || getCountries.value[1];
+}
+
+
+  formRemittance.value.from = getFromCurrency.value[0].label;
+  formRemittance.value.to = getToCurrency.value[0].label;
+
+  console.log(fromCountry.value, toCountry.value)
+  
+
   calculateEstimate();
 }
 
@@ -350,11 +368,9 @@ onMounted(async () => {
   ]);
 
   if (sourcesStore.countries?.length > 0) {
-    console.log(getCountries.value[0])
     initCalculator();
     await calculateEstimate();
   }
 });
-
 
 </script>
