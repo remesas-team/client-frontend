@@ -34,8 +34,7 @@
             <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
             <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
           </ul>
-          <a href="#" class="underline decoration-solid mt-5 block" @click="selectedAccount = null"> + Crear nuevo
-            destinatario</a>
+          <a href="#" class="underline decoration-solid mt-5 block" @click="selectedAccount = null"> + Configurar nueva cuenta de origen</a>
         </div>
       </div>
 

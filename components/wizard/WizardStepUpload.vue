@@ -64,7 +64,7 @@
         <div class="flex justify-between items-center">
           <span class="text-gray-600">Total a Transferir</span>
           <div class="flex items-center gap-2">
-            <span v-if="newOperation.collection_system_account.currency" class="font-medium">{{newOperation.collection_system_account.currency.code}} {{newOperation.source_amount_to_send}}</span>
+            <span v-if="newOperation.collection_system_account.currency" class="font-medium">{{newOperation.collection_system_account.currency.code}} {{ parseFloat(newOperation.source_amount).toFixed(2)}}</span>
             <button
               class="text-blue-600 hover:text-blue-700"
               @click="copyToClipboard(newOperation.source_amount_to_send)"

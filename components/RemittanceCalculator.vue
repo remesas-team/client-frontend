@@ -246,20 +246,20 @@ const getCountries = computed(() => {
 
 const getFromCurrency = computed(() => {
   if (!fromCountry.value) return null
-  const returnCurrency = useSourcesStore().currencies.find(currency => currency.id === fromCountry.value.currency_id)
-  return [{
-    id: returnCurrency?.id,
-    label: returnCurrency?.code,
-  }]
+  const currentCountry = sourcesStore.countries.find(country => country.id === fromCountry.value.id)
+  return currentCountry.currencies.map((item) => [{
+    id: item.id,
+    label: item.code,
+  }])
 })
 
 const getToCurrency = computed(() => {
-  if (!toCountry.value) return null
-  const returnCurrency = useSourcesStore().currencies.find(currency => currency.id === toCountry.value.currency_id)
-  return [{
-    id: returnCurrency?.id,
-    label: returnCurrency?.code,
-  }]
+  if (!fromCountry.value) return null
+  const currentCountry = sourcesStore.countries.find(country => country.id === toCountry.value.id)
+  return currentCountry.currencies.map((item) => [{
+    id: item.id,
+    label: item.code,
+  }])
 })
 
 const schemaRemittance = v.object({
@@ -331,7 +331,7 @@ const startOperation = () => {
 onMounted(async () => {
   await Promise.all([
     sourcesStore.fetchCurrencies(),
-    sourcesStore.fetchCountries(),
+    sourcesStore.fetchSystemAccounts(),
   ]);
 
   if (sourcesStore.countries?.length > 0) {
@@ -342,6 +342,7 @@ onMounted(async () => {
 });
 
 watch(fromCountry, () => {
+  console.log('fromcountry',getFromCurrency.value[0]);
   fromCurrency.value = getFromCurrency.value[0];
 });
 

@@ -30,13 +30,17 @@
 
       <div class="space-y-3">
         <div class="flex justify-between">
+          <span class="text-gray-600">Total enviado</span>
+          <span class="font-medium">{{ remittanceStore.form.source_amount }} {{ remittanceStore.form.source_currency_symbol }}</span>
+        </div>
+        <div class="flex justify-between">
           <span class="text-gray-600">Costo de envío (+igv)</span>
           <span class="font-medium">{{
               remittanceStore.form.send_cost + remittanceStore.form.send_tax
             }} {{ remittanceStore.form.source_currency_symbol }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-600">Total a enviar</span>
+          <span class="text-gray-600">Total a convertir</span>
           <span class="font-medium">{{
               remittanceStore.form.amount_to_send
             }} {{ remittanceStore.form.source_currency_symbol }}</span>

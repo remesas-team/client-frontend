@@ -21,6 +21,6 @@ export const operationsRepository = () => {
         },
         postUploadVoucher(body) {
             return fetch.post('/v1/platform/operations/upload-voucher', body)
-        },
+        }
     }
 }
