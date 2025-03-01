@@ -160,7 +160,7 @@ const handleSubmit = async () => {
 
 const getBanks = async () => {
   const response = await sourcesRequest.getBanksByCountry({
-    country_id: remittanceStore.form.destination_country_id
+    country_id: remittanceStore.form.source_country_id
   });
 
   if (!response.success) {
