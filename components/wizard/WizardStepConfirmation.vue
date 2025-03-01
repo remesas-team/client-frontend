@@ -12,7 +12,7 @@
       <div class="flex justify-between items-center">
         <span class="text-gray-600">Recibe en destino:</span>
         <span
-            class="text-3xl font-bold">{{
+            class="text-2xl font-bold">{{
             remittanceStore.form.destination_amount
           }} {{ remittanceStore.form.destination_currency_symbol }}</span>
       </div>
@@ -70,7 +70,7 @@
     </UButton>
 
     <!-- Delivery Time Notice -->
-    <p class="text-center text-gray-600 flex items-center justify-center gap-2 text-[#2e7d6b]">
+    <p class="text-center text-gray-600 flex flex-col direction-column items-center justify-center gap-2 text-[#2e7d6b]">
       <UIcon name="i-mdi:run-fast"></UIcon>
       <span> Tu dinero estará disponible el mismo día</span>
     </p>

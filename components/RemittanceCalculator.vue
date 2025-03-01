@@ -318,7 +318,6 @@ const startOperation = () => {
 
   // Destination
   remittanceStore.form.destination_country_id = toCountry.value.id
-  console.log(formRemittance.value.from, getToCurrency.value)
   remittanceStore.form.destination_currency_id = getToCurrency.value.find((item) => item.label === formRemittance.value.to).id
   remittanceStore.form.destination_currency_symbol = estimate.value.to
 
