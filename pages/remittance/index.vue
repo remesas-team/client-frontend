@@ -50,8 +50,8 @@
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
               <tr v-for="operation in operations" :key="operation.id" class="hover:bg-gray-50">
-                <td class="px-4 py-2 text-sm text-gray-900">#{{ operation.id }}</td>
-                <td class="px-4 py-2">
+                <td class="px-4 py-5 text-sm text-gray-900">#{{ operation.id }}</td>
+                <td class="px-4 py-5">
                   <span
                     class="px-3 py-1 rounded-full text-sm font-medium"
                     :class="{
@@ -63,15 +63,15 @@
                     {{ operation.status.user_label }}
                   </span>
                 </td>
-                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">
+                <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">
                   USD {{ parseFloat(operation.source_amount_to_send).toFixed(2) }}
                 </td>
-                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">
+                <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">
                   PEN {{ parseFloat(operation.destination_amount).toFixed(2) }}
                 </td>
-                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">{{ operation.destination_user_account.alias }}</td>
-                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">{{ formatDate(operation.created_at) }}</td>
-                <td class="px-4 py-2 text-sm">
+                <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">{{ operation.destination_user_account.alias }}</td>
+                <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">{{ formatDate(operation.created_at) }}</td>
+                <td class="px-4 py-5 text-sm">
                   <UButton
                     color="gray"
                     variant="ghost"
