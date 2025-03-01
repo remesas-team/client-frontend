@@ -24,6 +24,7 @@
                   :items="getCountries"
                   variant="soft"
                   size="xl"
+                  @change="setFromCurrencies"
                   :ui="{ base: 'bg-gray-100 hover:bg-gray-200 focus:bg-gray-200' }"
               >
                 <template #default="{ modelValue }">
@@ -59,6 +60,7 @@
                 :items="getCountries"
                 variant="soft"
                 size="xl"
+                @change="setFromCurrencies"
                 :ui="{ base: 'bg-gray-100 hover:bg-gray-200 focus:bg-gray-200' }"
             >
               <template #default="{ modelValue }">
@@ -98,7 +100,7 @@
                       type="number"
                       @update:modelValue="handleAmountInput"
                   />
-                <USelectMenu class="w-32" :search-input="false" v-model="fromCurrency" :items="getFromCurrency"/>
+                <USelectMenu class="w-32" @change="calculateEstimate" :search-input="false" v-model="formRemittance.from"  value-key="label" :items="getFromCurrency"/>
               </UButtonGroup>
             </UFormField>
           </div>
@@ -110,7 +112,7 @@
             </label>
 
             <UFormField name="to">
-              <USelectMenu size="2xl" class="w-full" :search-input="false" v-model="toCurrency" :items="getToCurrency"/>
+              <USelectMenu size="2xl" class="w-full" @change="calculateEstimate" :search-input="false" v-model="formRemittance.to" value-key="label"  :items="getToCurrency"/>
             </UFormField>
           </div>
         </div>
@@ -247,19 +249,19 @@ const getCountries = computed(() => {
 const getFromCurrency = computed(() => {
   if (!fromCountry.value) return null
   const currentCountry = sourcesStore.countries.find(country => country.id === fromCountry.value.id)
-  return currentCountry.currencies.map((item) => [{
+  return currentCountry.currencies.map((item) => ({
     id: item.id,
     label: item.code,
-  }])
+  }))
 })
 
 const getToCurrency = computed(() => {
   if (!fromCountry.value) return null
   const currentCountry = sourcesStore.countries.find(country => country.id === toCountry.value.id)
-  return currentCountry.currencies.map((item) => [{
+  return currentCountry.currencies.map((item) => ({
     id: item.id,
     label: item.code,
-  }])
+  }))
 })
 
 const schemaRemittance = v.object({
@@ -328,6 +330,20 @@ const startOperation = () => {
   router.push('/operacion/1');
 }
 
+const initCalculator = () => {
+  fromCountry.value = getCountries.value[0]
+  toCountry.value = getCountries.value[1]
+  console.log('init', formRemittance.value.from)
+  formRemittance.value.from = getFromCurrency.value[0].label;
+  formRemittance.value.to = getToCurrency.value[0].label;
+}
+
+const setFromCurrencies = () => {
+  fromCurrency.value = getFromCurrency.value[0];
+  toCurrency.value = getToCurrency.value[0];
+  calculateEstimate();
+}
+
 onMounted(async () => {
   await Promise.all([
     sourcesStore.fetchCurrencies(),
@@ -335,19 +351,10 @@ onMounted(async () => {
   ]);
 
   if (sourcesStore.countries?.length > 0) {
+    console.log(getCountries.value[0])
+    initCalculator();
     await calculateEstimate();
-    fromCountry.value = getCountries.value[0]
-    toCountry.value = getCountries.value[1]
   }
-});
-
-watch(fromCountry, () => {
-  console.log('fromcountry',getFromCurrency.value[0]);
-  fromCurrency.value = getFromCurrency.value[0];
-});
-
-watch(toCountry, () => {
-  toCurrency.value = getToCurrency.value[0];
 });
 
 
