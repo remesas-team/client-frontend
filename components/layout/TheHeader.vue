@@ -26,9 +26,15 @@
                 >
                   Mi Perfil
                 </NuxtLink>
+                <NuxtLink
+                  to="/remittance"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Mis operaciones
+                </NuxtLink>
                 <button
                   @click="handleLogout"
-                  class="block w-full text-left px-4 py-2 tex/Users/cristianvega/Documents/project 2/components/ProfilePersonalInfo.vuet-sm text-gray-700 hover:bg-gray-100"
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Cerrar sesión
                 </button>

@@ -39,44 +39,45 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">ID</th>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Estado</th>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Monto Enviado</th>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Monto a Recibir</th>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Destinatario</th>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Fecha</th>
-                <th class="px-6 py-4 text-left text-sm font-medium text-gray-500">Acciones</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">ID</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Estado</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Monto Enviado</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Monto a Recibir</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Destinatario</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Fecha</th>
+                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Acciones</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
               <tr v-for="operation in operations" :key="operation.id" class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-sm text-gray-900">#{{ operation.id }}</td>
-                <td class="px-6 py-4">
+                <td class="px-4 py-2 text-sm text-gray-900">#{{ operation.id }}</td>
+                <td class="px-4 py-2">
                   <span
                     class="px-3 py-1 rounded-full text-sm font-medium"
                     :class="{
-                      'bg-green-100 text-green-800': operation.status_id === 2,
-                      'bg-yellow-100 text-yellow-800': operation.status_id === 1,
-                      'bg-gray-100 text-gray-800': operation.status_id === 3
+                      'bg-green-100 text-green-800': operation.status_id in [8],
+                      'bg-yellow-100 text-yellow-800': operation.status_id in [1,2,4,6,7],
+                      'bg-red-100 text-white': operation.status_id in [3, 9, 10, 5]
                     }"
                   >
-                    {{ getStatusText(operation.status_id) }}
+                    {{ operation.status.user_label }}
                   </span>
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-900">
-                  USD {{ operation.source_amount_to_send }}
+                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">
+                  USD {{ parseFloat(operation.source_amount_to_send).toFixed(2) }}
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-900">
-                  PEN {{ operation.destination_amount }}
+                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">
+                  PEN {{ parseFloat(operation.destination_amount).toFixed(2) }}
                 </td>
-                <td class="px-6 py-4 text-sm text-gray-900">{{ operation.destination_user_account_id }}</td>
-                <td class="px-6 py-4 text-sm text-gray-900">{{ formatDate(operation.created_at) }}</td>
-                <td class="px-6 py-4 text-sm">
+                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">{{ operation.destination_user_account.alias }}</td>
+                <td class="px-4 py-2 text-sm text-gray-900 text-nowrap">{{ formatDate(operation.created_at) }}</td>
+                <td class="px-4 py-2 text-sm">
                   <UButton
                     color="gray"
                     variant="ghost"
                     :to="`/remittance/${operation.id}`"
                     icon="i-heroicons-eye"
+                    class="text-nowrap pl-0"
                   >
                     Ver detalles
                   </UButton>
@@ -86,7 +87,7 @@
           </table>
         </div>
 
-        <!-- Pagination -->
+        <!-- Pagination 
         <div class="px-6 py-4 flex items-center justify-between border-t border-gray-200">
           <div class="flex-1 flex justify-between sm:hidden">
             <UButton
@@ -126,7 +127,7 @@
               </nav>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </main>
@@ -147,7 +148,6 @@ const dateRange = shallowRef({
   start: null,
   end: null
 });
-
 const currentPage = ref(1);
 const itemsPerPage = 10;
 const operations = ref<Operation[]>([]);
@@ -176,59 +176,6 @@ onMounted(() => {
 const totalItems = computed(() => operations.value.length);
 const totalPages = computed(() => Math.ceil(totalItems.value / itemsPerPage));
 
-// Sample data
-const sampleRemittances = [
-  {
-    id: '1001',
-    status: 'completed',
-    source_amount: 1000.00,
-    source_currency_symbol: 'USD',
-    destination_amount: 3650.00,
-    destination_currency_symbol: 'PEN',
-    recipient_name: 'Juan Pérez',
-    created_at: '2024-01-15T10:30:00Z'
-  },
-  {
-    id: '1002',
-    status: 'in_progress',
-    source_amount: 500.00,
-    source_currency_symbol: 'USD',
-    destination_amount: 1825.00,
-    destination_currency_symbol: 'PEN',
-    recipient_name: 'María García',
-    created_at: '2024-01-14T15:45:00Z'
-  },
-  {
-    id: '1003',
-    status: 'pending',
-    source_amount: 750.00,
-    source_currency_symbol: 'USD',
-    destination_amount: 2737.50,
-    destination_currency_symbol: 'PEN',
-    recipient_name: 'Carlos Rodriguez',
-    created_at: '2024-01-14T09:15:00Z'
-  },
-  {
-    id: '1004',
-    status: 'completed',
-    source_amount: 2000.00,
-    source_currency_symbol: 'USD',
-    destination_amount: 7300.00,
-    destination_currency_symbol: 'PEN',
-    recipient_name: 'Ana Torres',
-    created_at: '2024-01-13T16:20:00Z'
-  },
-  {
-    id: '1005',
-    status: 'completed',
-    source_amount: 1500.00,
-    source_currency_symbol: 'USD',
-    destination_amount: 5475.00,
-    destination_currency_symbol: 'PEN',
-    recipient_name: 'Luis Mendoza',
-    created_at: '2024-01-13T11:10:00Z'
-  }
-];
 
 // Format date helper
 const formatDate = (date: string) => {
@@ -241,13 +188,5 @@ const formatDate = (date: string) => {
   });
 };
 
-// Get status text helper
-const getStatusText = (status: string) => {
-  const statusMap: { [key: string]: string } = {
-    completed: 'Completada',
-    in_progress: 'En proceso',
-    pending: 'Pendiente'
-  };
-  return statusMap[status] || status;
-};
+
 </script>
