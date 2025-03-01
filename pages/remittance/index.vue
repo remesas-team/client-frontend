@@ -64,10 +64,10 @@
                   </span>
                 </td>
                 <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">
-                  USD {{ parseFloat(operation.source_amount_to_send).toFixed(2) }}
+                  {{ operation.source_user_account?.currency.code }} {{ parseFloat(operation.source_amount_to_send).toFixed(2) }}
                 </td>
                 <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">
-                  PEN {{ parseFloat(operation.destination_amount).toFixed(2) }}
+                  {{ operation.destination_user_account?.currency.code }} {{ parseFloat(operation.destination_amount).toFixed(2) }}
                 </td>
                 <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">{{ operation.destination_user_account.alias }}</td>
                 <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">{{ formatDate(operation.created_at) }}</td>
@@ -159,7 +159,7 @@ const fetchOperations = async () => {
   try {
     const response = await operationsRepository().getOperations();
     if (response?.success) {
-      operations.value = response.data;
+      operations.value = response.data.reverse();
     }
   } catch (error) {
     console.error('Error fetching operations:', error);
