@@ -307,15 +307,14 @@ const startOperation = () => {
   loadingSubmit.value = true
 
   remittanceStore.$reset()
-
   // Origin
   remittanceStore.form.source_country_id = fromCountry.value.id
-  remittanceStore.form.source_currency_id = fromCurrency.value.id
+  remittanceStore.form.source_currency_id = getToCurrency.value.find((item) => item.label === formRemittance.value.to).id
   remittanceStore.form.source_currency_symbol = estimate.value.from
 
   // Destination
   remittanceStore.form.destination_country_id = toCountry.value.id
-  remittanceStore.form.destination_currency_id = toCurrency.value.id
+  remittanceStore.form.destination_currency_id = getToCurrency.value.find((item) => item.label === formRemittance.value.from).id
   remittanceStore.form.destination_currency_symbol = estimate.value.to
 
   // Result remittance
