@@ -103,14 +103,14 @@ const slides = ref<Slide[]>([
   {
     image: '/images/historia1.png',
     imageAlt: 'Familia feliz reunida en la sala de estar',
-    testimonial: 'Gracias a este servicio puedo mantener a mi familia en Brasil sin preocupaciones. Las transferencias son rápidas y seguras.',
-    author: 'Ana Silva',
+    testimonial: '',
+    author: 'Gabriel Rodrigues',
     location: 'São Paulo, Brasil'
   },
   {
     image: '/images/seño1.png',
     imageAlt: 'Madre e hija compartiendo un momento especial',
-    testimonial: 'La mejor manera de enviar dinero a mi madre. El proceso es simple y la atención al cliente es excelente.',
+    testimonial: 'Gracias a remesas.com puedo mantener a mi familia en Brasil sin preocupaciones.',
     author: 'Carlos Santos',
     location: 'Rio de Janeiro, Brasil'
   },
