@@ -3,8 +3,8 @@
     <div class="max-w-5xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold">Mis Remesas</h1>
-        <p class="text-gray-600 mt-2">Historial de todas tus transacciones</p>
+        <h1 class="text-3xl font-bold">Mis Operaciones</h1>
+        <p class="text-gray-600 mt-2">Historial de todas tus operaciones</p>
       </div>
 
       <!-- Filters -->

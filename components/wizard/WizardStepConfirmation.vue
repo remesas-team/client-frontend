@@ -1,46 +1,46 @@
 <template>
-  <div class="space-y-8">
+  <div class="mb-8">
     <!-- Header -->
-    <div class="text-center space-y-2 my-5 mb-10">
-      <h2 class="text-3xl font-bold">Todo listo para realizar la transferencia</h2>
+    <div class="text-center my-5 mb-10">
+      <h2 class="text-3xl font-bold mb-2">Todo listo para realizar la transferencia</h2>
       <p class="text-gray-600">Revisa bien los datos de la transacción. Recuerda que tienes un tiempo limitado para
         mantener el mejor tipo de cambio garantizado.</p>
     </div>
 
     <!-- Exchange Rate Info -->
-    <div class="space-y-4">
+    <div class="mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-gray-600 text-xl">Total a depositar</span>
+        <span class="text-2xl font-bold">{{ remittanceStore.form.source_amount }} {{ remittanceStore.form.source_currency_symbol }}</span>
+      </div>
       <div class="flex justify-between items-center">
-        <span class="text-gray-600">Recibe en destino:</span>
+        <span class="text-gray-600 text-xl">Recibe en destino:</span>
         <span
             class="text-2xl font-bold">{{
             remittanceStore.form.destination_amount
           }} {{ remittanceStore.form.destination_currency_symbol }}</span>
       </div>
-      <div class="flex justify-between items-center">
-        <span class="text-gray-600">Tipo de cambio</span>
-        <span class="text-xl font-bold">1 {{
-            remittanceStore.form.source_currency_symbol
-          }} = {{ remittanceStore.form.exchange_rate }} {{ remittanceStore.form.destination_currency_symbol }}</span>
-      </div>
     </div>
 
     <!-- Transfer Details -->
-    <div class="bg-gray-50 rounded-lg p-6 space-y-4">
-      <h3 class="text-lg font-bold text-gray-700">Detalles del envío</h3>
+    <div class="bg-gray-50 rounded-lg p-6 mb-8">
+      <h3 class="text-lg font-bold text-gray-700 mb-4">Detalles del envío</h3>
 
-      <div class="space-y-3">
-        <div class="flex justify-between">
-          <span class="text-gray-600">Total a enviar</span>
-          <span class="font-medium">{{ remittanceStore.form.source_amount }} {{ remittanceStore.form.source_currency_symbol }}</span>
+      <div>
+        <div class="flex justify-between mb-3">
+          <span class="text-gray-600">Tipo de cambio:</span>
+          <span class="font-medium">1 {{
+            remittanceStore.form.source_currency_symbol
+          }} = {{ remittanceStore.form.exchange_rate }} {{ remittanceStore.form.destination_currency_symbol }}</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-gray-600">Costo de envío (+igv)</span>
+        <div class="flex justify-between mb-3">
+          <span class="text-gray-600">Costo de envío (+igv):</span>
           <span class="font-medium">{{
               remittanceStore.form.send_cost + remittanceStore.form.send_tax
             }} {{ remittanceStore.form.source_currency_symbol }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-gray-600">Total a convertir</span>
+          <span class="text-gray-600">Total a convertir:</span>
           <span class="font-medium">{{
               remittanceStore.form.amount_to_send
             }} {{ remittanceStore.form.source_currency_symbol }}</span>
@@ -53,6 +53,7 @@
         :description="errorGeneral"
         color="error"
         variant="soft"
+        class="mb-8"
     />
 
     <!-- Action Button -->
@@ -61,10 +62,9 @@
         size="xl"
         color="primary"
         block
-        class="w-full mt-2 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-grass cursor-pointer"
+        class="w-full mt-2 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-grass cursor-pointer mb-8"
         :loading="loadingSubmit"
         @click="handleConfirm"
-
     >
       Realiza la transferencia
     </UButton>
