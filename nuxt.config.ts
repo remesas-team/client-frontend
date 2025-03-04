@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   sourcemap: true,
-  modules: ['@vueuse/nuxt', '@nuxt/ui', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+  modules: ['@vueuse/nuxt', '@nuxt/ui', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', 'mixpanel-nuxt'],
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
@@ -29,5 +29,12 @@ export default defineNuxtConfig({
   },
   ui: {
     colorMode: false
+  },
+  mixpanel: {
+    token: '56c0560cd5a8badb6bfd1c5f25e0891c',
+    disabled: false,
+    config: {
+      // Mixpanel config
+    }
   }
 })

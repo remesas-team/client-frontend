@@ -41,10 +41,10 @@
         </div>
 
         <!-- Submit Button -->
-        <div class="flex justify-end">
+        <div class="flex">
           <button
               type="submit"
-              class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-medium"
+              class="w-full bg-green-grass text-white px-8 py-3 rounded-lg hover:bg-green-dark transition-colors text-lg font-medium"
           >
             Guardar Cambios
           </button>
@@ -75,6 +75,6 @@ const saveProfile = () => {
 
   console.log('Profile data to save:', profileData);
   // Here you would implement the API call to save the profile
-  alert('Perfil actualizado correctamente');
+  
 };
 </script>

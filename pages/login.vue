@@ -7,9 +7,9 @@
           <p class="text-gray-600 mt-2">Accede a tu cuenta</p>
         </div>
 
-        <form @submit.prevent="handleLogin" class="space-y-6">
-          <div class="space-y-4">
-            <div>
+        <form @submit.prevent="handleLogin" class="gap-4">
+          <div class="">
+            <div class="mb-4">
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Correo electrónico:
               </label>
@@ -20,7 +20,7 @@
                   class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
               />
             </div>
-            <div>
+            <div class="mb-4">
               <label class="block text-sm font-medium text-gray-700 mb-1">
                 Contraseña:
               </label>
@@ -70,7 +70,7 @@
 
           <button
               type="submit"
-              class="w-full bg-green-dark text-white py-3 rounded-lg hover:bg-green-wather transition-colors text-lg font-medium"
+              class="w-full bg-green-dark text-white py-3 rounded-lg hover:bg-green-wather transition-colors text-lg font-medium mb-4"
               :disabled="isLoading"
           >
             {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}

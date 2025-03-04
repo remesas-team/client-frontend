@@ -2,9 +2,9 @@
   <main class="flex-1 flex items-center justify-center p-4">
     <div class="w-full max-w-lg">
       <!-- Success Card -->
-      <div class="bg-white rounded-xl shadow-lg p-8 space-y-8">
+      <div class="bg-white rounded-xl shadow-lg p-8">
         <!-- Title Section -->
-        <div class="text-center space-y-2">
+        <div class="text-center mb-8">
           <div class="success-checkmark">
             <div class="check-icon">
               <span class="icon-line line-tip"></span>
@@ -14,11 +14,11 @@
             </div>
           </div>
           <h1 class="text-3xl font-bold mt-8">Transacción exitosa</h1>
-          <p class="text-gray-600">Nos estamos haciendo cargo de que tu dinero llegue a destino lo más pronto posible</p>
+          <p class="text-gray-600 mt-2">Nos estamos haciendo cargo de que tu dinero llegue a destino lo más pronto posible</p>
         </div>
 
         <!-- Transaction Details -->
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 mb-8">
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Tiempo de transferencia</span>
             <span class="font-medium">6 - 8 horas</span>
@@ -31,7 +31,7 @@
           <div class="flex justify-between items-center relative">
             <span class="text-gray-600">Código de tracking</span>
             <span 
-              @click="copyToClipboard(remittanceStore.form.operation_id)" 
+              @click="copyToClipboard(remittanceStore.currentOperation.operation_id)" 
               class="font-medium text-lg cursor-pointer group flex items-center gap-2 hover:text-gray-600 transition-colors"
             >
               {{ remittanceStore.currentOperation.operation_id }}
@@ -51,14 +51,14 @@
         </div>
 
         <!-- Action Button -->
-        <div class="space-y-4">
+        <div>
           <NuxtLink
               :to="`/tracking/${remittanceStore.currentOperation.operation_id}`"
               class="block w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium text-center"
           >
             Dale seguimiento
           </NuxtLink>
-
+          
         </div>
       </div>
     </div>

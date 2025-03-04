@@ -14,6 +14,7 @@
     "@nuxt/ui": "^3.0.0-alpha.12",
     "@pinia/nuxt": "^0.9.0",
     "@vueuse/nuxt": "^12.7.0",
+    "mixpanel-nuxt": "^0.0.13",
     "nuxt": "^3.13.0",
     "pinia-plugin-persistedstate": "^4.2.0",
     "valibot": "^1.0.0-rc.0"

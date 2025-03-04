@@ -1,14 +1,14 @@
 <template>
-  <div class="max-w-[450px] mx-auto px-4 mb-16">
-    <div class="bg-white rounded-xl shadow-lg px-8 py-12">
+  <div class="max-w-[450px] mx-auto px-2 md:px-4 mb-16">
+    <div class="bg-white rounded-xl shadow-lg px-4 md:px-8 py-5 md:py-12">
       <UForm id="refFormRemittance" ref="refFormRemittance" :schema="v.safeParser(schemaRemittance)"
         :state="formRemittance" @submit="startOperation">
         <!-- Country Selection Grid -->
         <div class="grid gap-1  mb-4">
           <!-- From Country -->
           <div class="relative">
-            <USelectMenu class="w-full mb-0 bg-[#93f7f41c]" :searchInput="false" v-model="fromCountry" :items="getCountries"
-              variant="soft" size="xl" @change="setFromCurrencies"
+            <USelectMenu class="w-full mb-0 bg-[#93f7f41c]" :searchInput="false" v-model="fromCountry"
+              :items="getCountries" variant="soft" size="xl" @change="setFromCurrencies"
               :ui="{ base: 'bg-gray-100 hover:bg-gray-200 focus:bg-gray-200' }">
               <template #default="{ modelValue }">
                 <div v-if="modelValue" class="flex items-center gap-3 w-full px-2 py-1">
@@ -20,7 +20,6 @@
                   <div class="text-lg">Selecciona tu país</div>
                 </div>
               </template>
-
               <template #item="{ item }">
                 <div class="flex items-center gap-3 w-full px-2 py-1">
                   <div class="text-2xl">{{ item.emoji }}</div>
@@ -66,9 +65,9 @@
               Monto a enviar:
             </label>
             <UFormField name="amount">
-              <UButtonGroup  class="w-full">
-                <UInput size="2xl" v-model="formRemittance.amount" placeholder="Monto a enviar" class="flex-1" type="number"
-                  @update:modelValue="handleAmountInput" />
+              <UButtonGroup size="2xl" class="w-full">
+                <UInput size="2xl" v-model="formRemittance.amount" placeholder="Monto a enviar" class="flex-1"
+                  type="number" @update:modelValue="handleAmountInput" />
                 <USelectMenu class="w-32" @change="calculateEstimate" :search-input="false"
                   v-model="formRemittance.from" value-key="label" :items="getFromCurrency" />
               </UButtonGroup>
@@ -85,10 +84,10 @@
             </div>
             <UFormField name="destination_amount">
               <UButtonGroup size="2xl" class="w-full">
-                <UInput v-if="estimate" v-model="estimate.exchange_result" placeholder="Monto a enviar" class="flex-1" type="number"
-                  @update:modelValue="reverseAmount" />
-                  <USelectMenu size="2xl" class="w-32" @change="calculateEstimate" :search-input="false"
-                v-model="formRemittance.to" value-key="label" :items="getToCurrency" />
+                <UInput v-if="estimate" v-model="estimate.exchange_result" placeholder="Monto a enviar" class="flex-1"
+                  type="number" @update:modelValue="reverseAmount" />
+                <USelectMenu size="2xl" class="w-32" @change="calculateEstimate" :search-input="false"
+                  v-model="formRemittance.to" value-key="label" :items="getToCurrency" />
               </UButtonGroup>
             </UFormField>
           </div>
@@ -124,14 +123,14 @@
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Tipo de cambio:</span>
               <span class="text-[#E91E63] font-medium">1 {{ estimate.from }} = {{ estimate.exchange_unit }} {{
-                estimate.to
-                }}</span>
+        estimate.to
+      }}</span>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Comisión de envío:</span>
               <span class="text-[#E91E63] font-medium">{{
-                estimate.from
-                }} {{ (estimate.send_cost).toFixed(2) }}</span>
+          estimate.from
+        }} {{ (estimate.send_cost).toFixed(2) }}</span>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Impuestos:</span>
@@ -140,33 +139,33 @@
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Subtotal:</span>
               <span class="text-[#E91E63] font-medium">{{
-                estimate.from
-                }} {{ estimate.subtotal || (Number(estimate.send_cost) + Number(estimate.tax || 0)).toFixed(2) }}</span>
+        estimate.from
+      }} {{ estimate.subtotal || (Number(estimate.send_cost) + Number(estimate.tax || 0)).toFixed(2) }}</span>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Total a enviar:</span>
               <span class="text-[#E91E63] font-medium">{{
-                estimate.from
-                }} {{ estimate.amount_to_send.toFixed(2) }}</span>
+        estimate.from
+      }} {{ estimate.amount_to_send.toFixed(2) }}</span>
             </div>
             <div class="flex justify-between items-center font-bold">
               <span class="text-gray-600">Total a Recibir en destino:</span>
               <span class="text-[#E91E63]">{{ estimate.to }} {{ estimate.exchange_result.toFixed(2) }}</span>
             </div>
           </div>
-
-          <!-- Coupon Information -->
-          <div v-if="estimate.coupon !== 'not applied'" class="p-4 bg-green-50 rounded-xl">
-            <div class="flex items-center gap-2">
-              <svg class="w-5 h-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clip-rule="evenodd" />
-              </svg>
-              <span class="font-medium text-green-700">{{ estimate.coupon.code }}</span>
-            </div>
-            <p class="text-sm text-green-600 mt-1">{{ estimate.coupon.description }}</p>
+        </div>
+        <!-- Coupon Information -->
+        <div v-if="estimate && estimate.coupon !== 'not applied'" class="p-4 bg-green-50 rounded-xl mb-4">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+            </svg>
+            <span class="font-medium text-green-700">{{ estimate.coupon.code }}</span>
           </div>
+          <p class="text-sm text-green-600 mt-1">{{ estimate.coupon.description }}</p>
+          <p class="font-bold text-green-600">Ahorraste: {{ estimate.savings }} {{ estimate.from }}</p>
         </div>
         <!-- Compare Button -->
         <button type="submit"
@@ -181,9 +180,9 @@
 
 <script setup lang="ts">
 import * as v from 'valibot'
-import {useRemittanceStore} from '~/stores/remittance';
-import {useSourcesStore} from "~/stores/sources";
-import {operationsRepository} from "~/repositories/v1/platform/operationsRepository";
+import { useRemittanceStore } from '~/stores/remittance';
+import { useSourcesStore } from "~/stores/sources";
+import { operationsRepository } from "~/repositories/v1/platform/operationsRepository";
 
 const props = defineProps(['setCoupon'])
 
@@ -246,7 +245,7 @@ const schemaRemittance = v.object({
 })
 
 const reverseAmount = () => {
-  if(estimate.value){ 
+  if (estimate.value) {
     console.log(estimate.value)
     formRemittance.value.amount = Number((estimate.value.exchange_result / estimate.value.exchange_unit).toFixed(2))
   }
@@ -260,7 +259,7 @@ const handleAmountInput = (value: number) => {
     await calculateEstimate();
   }, 1000);
 
-  
+
 }
 
 const calculateEstimate = async () => {
@@ -322,20 +321,20 @@ const initCalculator = () => {
 
 const setFromCurrencies = () => {
 
-// If countries are the same, set destination to next available country
-if (fromCountry.value.id === toCountry.value.id) {
-  const availableCountries = getCountries.value.filter(country => 
-    country.id !== fromCountry.value.id
-  );
-  toCountry.value = availableCountries[0] || getCountries.value[1];
-}
+  // If countries are the same, set destination to next available country
+  if (fromCountry.value.id === toCountry.value.id) {
+    const availableCountries = getCountries.value.filter(country =>
+      country.id !== fromCountry.value.id
+    );
+    toCountry.value = availableCountries[0] || getCountries.value[1];
+  }
 
 
   formRemittance.value.from = getFromCurrency.value[0].label;
   formRemittance.value.to = getToCurrency.value[0].label;
 
   console.log(fromCountry.value, toCountry.value)
-  
+
 
   calculateEstimate();
 }

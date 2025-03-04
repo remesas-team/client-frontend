@@ -168,7 +168,7 @@ const getBankAccounts = async () => {
     return
   }
 
-  savedAccounts.value = response.data.filter(item => item.tag === "destination" && item.is_saved)
+  savedAccounts.value = response.data.filter(item => item.tag === "destination" && item.is_saved && item.currency_code === remittanceStore.form.destination_currency_symbol)
 }
 
 const setFormState = () => {
@@ -189,7 +189,7 @@ onMounted(async () => {
     getBankAccounts(),
     getBanks()
   ]);
-  setFormState()
+  //setFormState()
 
   loadingInfo.value = false
 });

@@ -257,15 +257,25 @@ const handleRegister = async () => {
 
   console.log('response', response)
 
+  // Handle unsuccessful registration
   if (!response.success) {
-    isLoading.value = false;
+    // Reset loading state
+    isLoading.value = false; 
+    // Set validation errors if they exist
     if (response.errors) {
       validationErrors.value = response.errors;
       errorMessage.value = response.message;
-    } else {
     }
     return;
   }
+  const mixpanel = useMixpanel();
+
+  mixpanel.people.set({
+      $email: response.data.email,
+      $first_name: response.data.name,
+      $last_name: response.data.last_name,
+      $phone: response.data.phone,
+    })
 
   $auth.setToken(response.data.access_token);
   authStore.user = response.data.user;
