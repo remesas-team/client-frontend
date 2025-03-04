@@ -5,7 +5,7 @@
       <div class="text-center mb-12">
         <h1 class="text-3xl font-bold mb-4">Operación N°{{ $route.params.id }}</h1>
         <p class="text-gray-600">
-          Tu transacción se encuentra en fase de transferencia puedes darle seguimiento a tu dinero paso a paso o
+          Tu operación se encuentra en fase de transferencia puedes darle seguimiento a tu dinero paso a paso o
           comunicarte con
           <button
               @click="openSupportChat"

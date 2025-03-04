@@ -1,4 +1,4 @@
-<template>
+ntra<template>
   <main class="flex-1 flex items-center justify-center p-4">
     <div class="w-full max-w-md">
       <div class="bg-white rounded-xl shadow-lg p-8">
@@ -69,13 +69,45 @@
 
             <div>
               <UFormField label="Contraseña" name="password">
-                <UInput v-model="form.password" type="password"  placeholder="Contraseña" size="xl" class="w-full" />
+                <UInput v-model="form.password" placeholder="Contraseña" size="xl" class="w-full"
+                    :type="showPassword ? 'text' : 'password'"
+                    :ui="{ trailing: 'pe-1' }"
+                  >
+                  <template #trailing>
+                    <UButton
+                      color="neutral"
+                      variant="link"
+                      size="sm"
+                      :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                      :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                      :aria-pressed="showPassword"
+                      aria-controls="password"
+                      @click="showPassword = !showPassword"
+                    />
+                  </template>
+                </UInput>
               </UFormField>
             </div>
             
             <div>
               <UFormField label="Confirmar contraseña" name="password_confirmation">
-                <UInput v-model="form.password_confirmation" type="password" placeholder="Confirmar contraseña"  size="xl" class="w-full" />
+                <UInput v-model="form.password_confirmation" placeholder="Contraseña" size="xl" class="w-full"
+                    :type="showPasswordConfirmation ? 'text' : 'password'"
+                    :ui="{ trailing: 'pe-1' }"
+                  >
+                  <template #trailing>
+                    <UButton
+                      color="neutral"
+                      variant="link"
+                      size="sm"
+                      :icon="showPasswordConfirmation ? 'i-lucide-eye-off' : 'i-lucide-eye'"
+                      :aria-label="showPasswordConfirmation ? 'Hide password' : 'Show password'"
+                      :aria-pressed="showPasswordConfirmation"
+                      aria-controls="password"
+                      @click="showPasswordConfirmation = !showPasswordConfirmation"
+                    />
+                  </template>
+                </UInput>
               </UFormField>
             </div>
 
@@ -133,6 +165,8 @@ const sourcesStore = useSourcesStore()
 const isLoading = ref(false);
 const errorMessage = ref('');
 const validationErrors = ref<Record<string, string[]>>({});
+const showPassword = ref(false)
+const showPasswordConfirmation = ref(false)
 
 definePageMeta({
   auth: 'guest',
@@ -237,7 +271,12 @@ const handleRegister = async () => {
   authStore.user = response.data.user;
 
 
-  router.push('/perfil');
+  const redirect = useCookie('auth.prod.remesas.redirect');
+  if (redirect.value) {
+    router.push(redirect.value);
+  } else {
+    router.push('/');
+  }
 
 };
 

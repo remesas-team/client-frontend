@@ -107,20 +107,10 @@
         <!-- Action Buttons -->
         <div class="mt-8 space-y-4">
           <UButton
-            v-if="remittance.status === 'pending'"
-            color="primary"
-            block
-            size="xl"
-            to="/operacion/upload"
-          >
-            Continuar transacción
-          </UButton>
-
-          <UButton
             variant="ghost"
             block
             size="xl"
-            to="/transferencias"
+            to="/remittance"
           >
             Volver a transferencias
           </UButton>

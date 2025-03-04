@@ -26,11 +26,11 @@
 
     <!-- Transfer Details -->
     <div class="bg-gray-50 rounded-lg p-6 space-y-4">
-      <h3 class="text-lg font-medium text-gray-700">Detalles del envío</h3>
+      <h3 class="text-lg font-bold text-gray-700">Detalles del envío</h3>
 
       <div class="space-y-3">
         <div class="flex justify-between">
-          <span class="text-gray-600">Total enviado</span>
+          <span class="text-gray-600">Total a enviar</span>
           <span class="font-medium">{{ remittanceStore.form.source_amount }} {{ remittanceStore.form.source_currency_symbol }}</span>
         </div>
         <div class="flex justify-between">

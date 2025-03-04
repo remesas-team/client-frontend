@@ -14,11 +14,11 @@
             </div>
           </div>
           <h1 class="text-3xl font-bold mt-8">Transacción exitosa</h1>
-          <p class="text-gray-600">Nos estamos haciendo cargo de que tu dinero llegue a destino lo már pronto posible</p>
+          <p class="text-gray-600">Nos estamos haciendo cargo de que tu dinero llegue a destino lo más pronto posible</p>
         </div>
 
         <!-- Transaction Details -->
-        <div class="space-y-4">
+        <div class="flex flex-col gap-4">
           <div class="flex justify-between items-center">
             <span class="text-gray-600">Tiempo de transferencia</span>
             <span class="font-medium">6 - 8 horas</span>

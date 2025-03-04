@@ -3,7 +3,7 @@
     <nav class="container mx-auto px-4 py-4">
       <div class="flex justify-between items-center">
         <NuxtLink to="/" class="text-xl font-bold text-gray-800">
-          <img src="/images/logo.png" alt="" class="w-32">
+          <img src="/images/logo.png" alt="" class="w-32 lg:w-45">
         </NuxtLink>
 
         <div class="flex items-center gap-4">
