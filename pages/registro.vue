@@ -268,14 +268,6 @@ const handleRegister = async () => {
     }
     return;
   }
-  const mixpanel = useMixpanel();
-
-  mixpanel.people.set({
-      $email: response.data.email,
-      $first_name: response.data.name,
-      $last_name: response.data.last_name,
-      $phone: response.data.phone,
-    })
 
   $auth.setToken(response.data.access_token);
   authStore.user = response.data.user;
