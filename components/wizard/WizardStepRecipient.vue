@@ -26,6 +26,7 @@
           <ul class="space-y-2 text-sm">
             <li><span class="font-medium">Nombre:</span> {{ selectedAccount?.alias }}</li>
             <li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
+            <li><span class="font-medium">Celular:</span> {{ selectedAccount?.phone_number }}</li>
             <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
             <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
           </ul>
@@ -56,6 +57,11 @@
             <UInput v-model="formState.account_number" type="text" pattern="[0-9]*" inputmode="numeric"
                     placeholder="Número de cuenta interbancario" size="xl" class="w-full text-xl"
                     @input="formState.account_number = formState.account_number.replace(/\D/g, '')"/>
+          </div>
+
+          <div class="w-full mb-2">
+            <UInput v-model="formState.phone_number" type="text" pattern="[0-9]*" inputmode="numeric"
+                    placeholder="N° Celular" size="xl" class="w-full text-xl" />
           </div>
 
           <div class="w-full">
@@ -115,13 +121,14 @@ const formState = ref({
   account_number: '',
   recipientName: '',
   is_saved: false,
-  alias: ''
+  alias: '',
+  phone_number: null
 })
 
 const handleSubmit = async () => {
   loadingSubmit.value = true
 
-  const {bank_id, account_number, is_saved, alias} = formState.value
+  const {bank_id, account_number, is_saved, alias, phone_number} = formState.value
 
   if (!selectedAccount.value) {
     const response = await userRequest.createBankAccount({
@@ -134,6 +141,7 @@ const handleSubmit = async () => {
       "is_joint_account": false,
       "is_saved": is_saved,
       "tag": "destination",
+      "phone_number": phone_number
     });
 
     if (!response.success) {

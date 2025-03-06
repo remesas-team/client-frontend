@@ -64,7 +64,7 @@
                   </span>
                 </td>
                 <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">
-                  {{ operation.source_user_account?.currency.code }} {{ parseFloat(operation.source_amount_to_send).toFixed(2) }}
+                  {{ operation.source_user_account?.currency.code }} {{ parseFloat(operation.source_amount).toFixed(2) }}
                 </td>
                 <td class="px-4 py-5 text-sm text-gray-900 text-nowrap">
                   {{ operation.destination_user_account?.currency.code }} {{ parseFloat(operation.destination_amount).toFixed(2) }}
