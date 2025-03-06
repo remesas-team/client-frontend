@@ -19,6 +19,6 @@
     "valibot": "^1.0.0-rc.0"
   },
   "devDependencies": {
-    "@rudderstack/analytics-js": "^3.0.0-beta.17"
+    "@rudderstack/analytics-js": "^3.13.0"
   }
 }
