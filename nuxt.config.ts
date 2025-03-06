@@ -15,50 +15,16 @@ export default defineNuxtConfig({
         name_cookie_domain: process.env.NUXT_AUTH_COOKIE_DOMAIN || 'localhost',
         max_age: Number(process.env.NUXT_AUTH_COOKIE_MAX_AGE) || 60 * 60 * 24 * 365, // un año de expiración
       },
+      data_integration_platform: {
+        enabled: true,
+        url: 'https://remesashouctyr.dataplane.rudderstack.com',
+        key: '2trwxpV2ixZiJzf1SIFsQF0lX55',
+      }
     }
   },
   app: {
     head: {
-      script: [
-        {
-          hid: 'Rudder-JS',
-          src: 'http://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js',
-          defer: true
-        },
-        {
-          hid: 'rudder-js',
-          innerHTML: `
-            rudderanalytics = window.rudderanalytics = [];
-            var  methods = [
-                'load',
-                'page',
-                'track',
-                'identify',
-                'alias',
-                'group',
-                'ready',
-                'reset',
-                'getAnonymousId',
-                'setAnonymousId'
-            ];
-            for (var i = 0; i < methods.length; i++) {
-                  var method = methods[i];
-                  rudderanalytics[method] = function (methodName) {
-                        return function () {
-                                           rudderanalytics.push([methodName].concat(Array.prototype.slice.call(arguments)));
-                        };
-                      }(method);
-            }
-            rudderanalytics.load("2trwxpV2ixZiJzf1SIFsQF0lX55", "https://remesashouctyr.dataplane.rudderstack.com");
-            rudderanalytics.ready(()=>{
-              console.log("We are all set");
-            });
-            rudderanalytics.page();
-            `,
-          type: 'text/javascript',
-          charset: 'utf-8'
-        }
-      ],
+      script: [],
       link: [
         {
           rel: 'stylesheet',
@@ -70,5 +36,4 @@ export default defineNuxtConfig({
   ui: {
     colorMode: false
   }
-
 })
