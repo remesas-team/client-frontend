@@ -63,6 +63,8 @@
 </template>
 
 <script setup lang="ts">
+import {trackLogOut} from "~/tracking/events/authEvents";
+
 const authStore = useAuthStore();
 const isDropdownOpen = ref(false);
 
@@ -76,6 +78,7 @@ const closeDropdown = () => {
 
 const handleLogout = async () => {
   await authStore.logout();
+  trackLogOut()
   closeDropdown();
 };
 

@@ -9,6 +9,12 @@
 </template>
 
 <script setup lang="ts">
+  import { trackPage } from '~/tracking/events/pagesEvents'
+  import { trackIdentify } from '~/tracking/events/authEvents'
+  import { trackExample } from "~/tracking/events/exampleEvents";
+
+  const route = useRoute()
+
   useSeoMeta({
     title: 'Remesas.com',
     description: 'Envíos de dinero a todo Perú y Brasil',
@@ -29,4 +35,22 @@
       }
     ]
   })
+
+  onMounted(() => {
+    if (import.meta.client) {
+      trackIdentify()
+      trackPage()
+
+      trackExample()
+    }
+  })
+
+  watch(
+      () => route.fullPath,
+      () => {
+        if (import.meta.client) {
+          trackPage()
+        }
+      },
+  )
 </script>
