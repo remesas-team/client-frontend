@@ -176,7 +176,7 @@ const getBankAccounts = async () => {
     return
   }
 
-  savedAccounts.value = response.data.filter(item => item.tag === "origin")
+  savedAccounts.value = response.data.filter(item => item.tag === "origin" && item.is_saved && item.currency_code === remittanceStore.form.source_currency_code)
 }
 
 const setFormState = () => {
