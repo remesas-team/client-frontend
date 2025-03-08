@@ -138,14 +138,16 @@ const handleLogin = async () => {
 		isLoading.value = false
 		return
 	}
+
 	const config = useRuntimeConfig()
 	const redirect = useCookie(config.public.auth.name_cookie_redirect)
-	console.log(redirect, redirect.value)
+
 	if (redirect.value) {
 		router.push(redirect.value)
 		redirect.value = null
-	} else {
-		router.push('/perfil')
+		return
 	}
+
+	router.push('/perfil')
 }
 </script>
