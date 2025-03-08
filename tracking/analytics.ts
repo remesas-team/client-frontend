@@ -1,43 +1,46 @@
 import { RudderAnalytics } from '@rudderstack/analytics-js'
 
-type ConfigProvide = {
+interface ConfigProvide {
 	key: string
 	url: string
 }
 
-type Properties = {
+interface Properties {
 	[key: string]: string | number | boolean
 }
 
-export const analytics = new RudderAnalytics()
+let analytics: RudderAnalytics | null = null
 
 const tracer = {
 	identify(userId: string, params?: Properties) {
-		analytics.identify(userId, params)
+		analytics?.identify(userId, params)
 	},
 	page() {
-		analytics.page()
+		analytics?.page()
 	},
 	track(name: string, params?: Properties) {
-		analytics.track(name?.toLowerCase(), params)
+		analytics?.track(name?.toLowerCase(), params)
 	},
 	alias(previousId: string, userId: string) {
-		analytics.alias(previousId, userId)
+		analytics?.alias(previousId, userId)
 	},
 	reset() {
-		analytics.reset()
+		analytics?.reset()
 	},
 	getUserId() {
-		return analytics.getUserId()
+		return analytics?.getUserId()
 	},
 	getAnonymousId() {
-		return analytics.getAnonymousId()
+		return analytics?.getAnonymousId()
 	},
 }
 
 export const tracerLoad = (config: ConfigProvide) => {
+	analytics = new RudderAnalytics()
 	window.rudderanalytics = analytics
 	analytics.load(config.key, config.url)
 }
+
+export { analytics }
 
 export default tracer
