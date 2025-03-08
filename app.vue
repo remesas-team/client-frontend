@@ -37,20 +37,15 @@
   })
 
   onMounted(() => {
-    if (import.meta.client) {
-      trackIdentify()
-      trackPage()
-
-      trackExample()
-    }
+    trackIdentify()
+    trackPage()
+    trackExample()
   })
 
   watch(
       () => route.fullPath,
       () => {
-        if (import.meta.client) {
-          trackPage()
-        }
+        trackPage()
       },
   )
 </script>
