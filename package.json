@@ -5,20 +5,28 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --host",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/eslint": "^1.2.0",
     "@nuxt/ui": "^3.0.0-beta.3",
     "@pinia/nuxt": "^0.9.0",
     "@vueuse/nuxt": "^12.7.0",
+    "eslint": "^9.22.0",
     "nuxt": "^3.16.0",
     "pinia-plugin-persistedstate": "^4.2.0",
     "valibot": "^1.0.0-rc.0"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.28",
-    "@rudderstack/analytics-js": "^3.16.1"
+    "@rudderstack/analytics-js": "^3.16.1",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
   }
 }
