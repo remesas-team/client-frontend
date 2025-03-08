@@ -187,12 +187,17 @@ const formState = ref({
 	phone_number: null,
 })
 
+const bankTypes = computed(() => {
+	const selectedType = formState.value.account_type_id
+	const selectedbanktype = bank_types.value.find((item) => item.id === selectedType)?.name || ''
+
+	return 'Ingresa tu ' + selectedbanktype
+})
+
 const handleSubmit = async () => {
 	loadingSubmit.value = true
 
 	const { bank_id, account_number, is_saved, alias, phone_number, account_type_id } = formState.value
-
-	console.log(formState.value)
 
 	if (!selectedAccount.value) {
 		const response = await userRequest.createBankAccount({
@@ -230,7 +235,8 @@ const getBanks = async () => {
 		return
 	}
 	banks.value = response.data
-	console.log(banks.value)
+
+	console.log('banks', banks.value)
 }
 
 const getBankAccounts = async () => {
@@ -254,17 +260,22 @@ const getBankTypes = async () => {
 	console.log(bank_types.value)
 }
 
-const bankTypes = computed(() => {
-	const selectedType = formState.value.account_type_id
-	const selectedbanktype = bank_types.value.find((item) => item.id === selectedType)?.name || ''
+const setFormState = () => {
+	const { destination_user_account_id } = remittanceStore.form
 
-	return 'Ingresa tu ' + selectedbanktype
-})
+	if (savedAccounts.value.length > 0 && destination_user_account_id === null) {
+		selectedAccount.value = savedAccounts.value[0]
+		return
+	}
+
+	selectedAccount.value = savedAccounts.value.find((item) => item.id === destination_user_account_id)
+}
 
 onMounted(async () => {
 	loadingInfo.value = true
 
 	await Promise.all([getBankAccounts(), getBanks()])
+	setFormState()
 
 	loadingInfo.value = false
 })
