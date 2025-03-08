@@ -78,16 +78,12 @@
               />  
           </div>
 
-          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos del destinatario:</label>
-
-          <div class="w-full mb-2">
-            <UInput v-model="formState.phone_number" type="text" pattern="[0-9]*" inputmode="numeric"
-                    placeholder="N° Celular" size="xl" class="w-full text-xl" />
-          </div>
+          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos del titular:</label>
 
           <div class="w-full">
             <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
-                    class="w-full text-xl"/>
+                    disabled
+                    class="w-full text-xl text-gray" />
           </div>
 
           <div class="mt-6">
@@ -119,6 +115,8 @@
 
 <script setup lang="ts">
 import {userRepository} from "~/repositories/v1/platform/userRepository"
+import {useAuthStore} from '~/stores/auth'
+
 import {useRemittanceStore} from '~/stores/remittance'
 import {sourcesRepository} from "~/repositories/v1/platform/sourcesRepository"
 import CircleLoader from "~/components/CircleLoader.vue";
@@ -130,6 +128,7 @@ const emit = defineEmits<{
 const userRequest = userRepository();
 const sourcesRequest = sourcesRepository();
 const remittanceStore = useRemittanceStore();
+const authStore = useAuthStore();
 
 const loadingInfo = ref(true)
 const loadingSubmit = ref(false)
@@ -222,14 +221,14 @@ const setFormState = () => {
 
     return
   }
-
+  
   selectedAccount.value = savedAccounts.value.find(item => item.id === source_user_account_id)
 }
 
 
 onMounted(async () => {
   loadingInfo.value = true
-
+  formState.value.alias = authStore.fullName
   await Promise.all([
     getBankAccounts(),
     getBanks()
