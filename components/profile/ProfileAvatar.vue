@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center space-y-4">
+  <div class="flex flex-col items-center [&>*]:mb-4">
     <div class="relative group">
       <div class="w-32 h-32 rounded-full overflow-hidden bg-gray-200 border-4 border-white shadow-lg">
         <img 

@@ -1,19 +1,19 @@
 <template>
-  <div class="space-y-6">
-    <h2 class="text-xl font-semibold mb-6">Configura una cuenta de origen</h2>
-    <p>Esto nos ayudará a poder regresarte el dinero en caso de que no se pueda realizar tu transacción.
-      Esto lo vas a realizar solo una vez. Para modificar tu cuenta de origen puedes hacerlo en
-      <a href="" class="text-green-wather">
-        <UIcon name="i-lucide:link"></UIcon>
-        Perfil > cuentas de origen</a></p>
-    <!-- Bank Account Form -->
+  <div class="[&>*]:mb-6">
+    <div class="[&>*]:mb-4 w-full">
+      <h2 class="text-xl font-semibold mb-6">Configura una cuenta de origen</h2>
+      <p>Esto nos ayudará a poder regresarte el dinero en caso de que no se pueda realizar tu transacción.
+        Esto lo vas a realizar solo una vez. Para modificar tu cuenta de origen puedes hacerlo en
+        <a href="" class="text-green-wather">
+          <UIcon name="i-lucide:link"></UIcon>
+          Perfil > cuentas de origen</a></p>
+      <!-- Bank Account Form -->
 
-    <div v-if="loadingInfo" class="flex items-center justify-center h-[308px]">
-      <CircleLoader class="size-10"/>
-    </div>
+      <div v-if="loadingInfo" class="flex items-center justify-center h-[308px]">
+        <CircleLoader class="size-10"/>
+      </div>
 
-    <div v-else>
-      <div class="space-y-4 w-full">
+      <div v-else>
         <div class="mb-2" v-if="savedAccounts.length">
           <label for="">Origen guardados:</label>
           <USelectMenu
@@ -29,7 +29,7 @@
 
         <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
           <h3 class="font-bold mb-2">Información de la cuenta:</h3>
-          <ul class="space-y-2 text-sm">
+          <ul class="[&>*]:mb-2 text-sm">
             <li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
             <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
             <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>

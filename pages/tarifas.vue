@@ -6,7 +6,7 @@
         Conoce nuestras tarifas transparentes sin costos ocultos
       </p>
 
-      <div class="space-y-6">
+      <div class="[&>*]:mb-6">
         <div class="border-b pb-4">
           <h2 class="text-xl font-semibold mb-2">Envíos a Brasil</h2>
           <p class="text-gray-600">Tarifa fija de 20 USD por transferencia</p>

@@ -1,117 +1,116 @@
 <template>
-  <div class="space-y-6">
-    <h2 class="text-xl font-semibold mb-6">¿Dónde vas a recibir el dinero?</h2>
+  <div class="[&>*]:mb-6">
+    <div class="[&>*]:mb-4 w-full">
+      <h2 class="text-xl font-semibold mb-6">Ingresa los datos del destinatario:</h2>
 
-    <div v-if="loadingInfo" class="flex items-center justify-center h-[308px]">
-      <CircleLoader class="size-10"/>
-    </div>
-
-    <div v-else>
-      <div class="space-y-4 w-full">
-        <div class="mb-2" v-if="savedAccounts.length">
-          <label for="">Destinatarios guardados:</label>
-          <USelectMenu
-              v-model="selectedAccount"
-              :items="savedAccounts"
-              :search-input="false"
-              label-Key="alias"
-              placeholder="Selecciona un destinatario"
-              size="xl"
-              class="w-full"
-          />
-        </div>
-
-        <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
-          <h3 class="font-medium mb-2">Información de la cuenta:</h3>
-          <ul class="space-y-2 text-sm">
-            <li><span class="font-medium">Nombre:</span> {{ selectedAccount?.alias }}</li>
-            <li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
-            <li><span class="font-medium">Celular:</span> {{ selectedAccount?.phone_number }}</li>
-            <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
-            <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
-          </ul>
-          <a href="#" class="underline decoration-solid mt-5 block" @click="selectedAccount = null"> + Crear nuevo
-            destinatario</a>
-        </div>
+      <div v-if="loadingInfo" class="flex items-center justify-center h-[308px]">
+        <CircleLoader class="size-10"/>
       </div>
 
-      <!-- Bank Account Form -->
-      <UForm id="refFormRemittance" ref="refFormRemittance" :state="formState" @submit="handleSubmit">
-        <!-- Save Account -->
-        <div v-if="!selectedAccount">
-          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos de la cuenta:</label>
-          <div class="w-full mb-2">
+      <div v-else>
+        <div class="space-y-4 w-full">
+          <div class="mb-2" v-if="savedAccounts.length">
+            <label for="">Destinatarios guardados:</label>
             <USelectMenu
-                v-model="formState.bank_id"
-                :items="banks"
+                v-model="selectedAccount"
+                :items="savedAccounts"
                 :search-input="false"
-                value-key="id"
-                label-key="name"
-                placeholder="Selecciona un banco"
-                size="xl"
-                class="w-full"
-                @change="getBankTypes"
-            />
-          </div>
-          
-          <div class="w-full mb-2">
-            <USelectMenu
-                v-model="formState.account_type_id"
-                :items="bank_types"
-                :search-input="false"
-                value-key="id"
-                label-key="name"
-                placeholder="Tipo de cuenta"
+                label-Key="alias"
+                placeholder="Selecciona un destinatario"
                 size="xl"
                 class="w-full"
             />
           </div>
 
-          <div class="w-full mb-2">
-            <UInput
-                v-model="formState.account_number"
-                :placeholder="bankTypes"
-                @input="formState.account_number = formState.account_number.replace(/\D/g, '')"
-                type="text"
-                size="xl" class="w-full text-xl"
-              />  
+          <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-medium mb-2">Información de la cuenta:</h3>
+            <ul class="[&>*]:mb-2 text-sm">
+              <li><span class="font-medium">Nombre:</span> {{ selectedAccount?.alias }}</li>
+              <li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
+              <li><span class="font-medium">Celular:</span> {{ selectedAccount?.phone_number }}</li>
+              <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
+              <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
+            </ul>
+            <a href="#" class="underline decoration-solid mt-5 block" @click="selectedAccount = null"> + Crear nuevo
+              destinatario</a>
           </div>
-
-          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos del destinatario:</label>
-
-          <div class="w-full mb-2">
-            <UInput v-model="formState.phone_number" type="text" pattern="[0-9]*" inputmode="numeric"
-                    placeholder="N° Celular" size="xl" class="w-full text-xl" />
-          </div>
-
-          <div class="w-full">
-            <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
-                    class="w-full text-xl"/>
-          </div>
-
-          <div class="mt-6">
-            <label class="flex items-center">
-              <input v-model="formState.is_saved" type="checkbox"
-                     class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
-              <span class="ml-2 text-sm text-gray-600">
-              Guardar como cuenta frecuente
-            </span>
-            </label>
-          </div>
-
         </div>
 
-        <!-- Submit Button -->
-        <UButton
-            type="submit"
-            size="xl"
-            color="primary"
-            block
-            :loading="loadingSubmit"
-            class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center">
-          Continuar
-        </UButton>
-      </UForm>
+        <!-- Bank Account Form -->
+        <UForm id="refFormRemittance" ref="refFormRemittance" :state="formState" @submit="handleSubmit">
+          <!-- Save Account -->
+          <div v-if="!selectedAccount">
+            <label for="" class="mb-2 mt-4 w-full block font-medium">Datos de la cuenta:</label>
+            <div class="w-full mb-2">
+              <USelectMenu
+                  v-model="formState.bank_id"
+                  :items="banks"
+                  :search-input="false"
+                  value-key="id"
+                  label-key="name"
+                  placeholder="Selecciona un banco"
+                  size="xl"
+                  class="w-full"
+                  @change="getBankTypes"
+              />
+            </div>
+            
+            <div class="w-full mb-2">
+              <USelectMenu
+                  v-model="formState.account_type_id"
+                  :items="bank_types"
+                  :search-input="false"
+                  value-key="id"
+                  label-key="name"
+                  placeholder="Tipo de cuenta"
+                  size="xl"
+                  class="w-full"
+              />
+            </div>
+
+            <div class="w-full mb-2">
+              <UInput
+                  v-model="formState.account_number"
+                  :placeholder="bankTypes"
+                  @input="formState.account_number = formState.account_number.replace(/\D/g, '')"
+                  type="text"
+                  size="xl" class="w-full text-xl"
+                />  
+            </div>
+
+            <label for="" class="mb-2 mt-4 w-full block font-medium">Datos de contacto:</label>
+            <div class="w-full mb-2">
+              <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
+                      class="w-full text-xl"/>
+            </div>
+            <div class="w-full">
+              <UInput v-model="formState.phone_number" type="text" pattern="[0-9]*" inputmode="numeric"
+                      placeholder="N° Celular" size="xl" class="w-full text-xl" />
+            </div>
+            <div class="mt-6">
+              <label class="flex items-center">
+                <input v-model="formState.is_saved" type="checkbox"
+                       class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
+                <span class="ml-2 text-sm text-gray-600">
+                Guardar como cuenta frecuente
+              </span>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- Submit Button -->
+          <UButton
+              type="submit"
+              size="xl"
+              color="primary"
+              block
+              :loading="loadingSubmit"
+              class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center">
+            Continuar
+          </UButton>
+        </UForm>
+      </div>
     </div>
   </div>
 </template>

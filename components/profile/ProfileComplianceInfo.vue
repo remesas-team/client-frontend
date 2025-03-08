@@ -3,8 +3,8 @@
     <h2 class="text-lg font-medium mb-6">Información de Cumplimiento</h2>
     
     <!-- PEP Declaration -->
-    <div class="space-y-6">
-      <div class="bg-gray-50 p-4 rounded-lg">
+    <div class="[&>*]:mb-6">
+      <div class="[&>*]:mb-2">
         <label class="block text-sm font-medium text-gray-700 mb-3">
           ¿Eres una Persona Expuesta Políticamente (PEP)?
         </label>
@@ -62,7 +62,7 @@
       </div>
 
       <!-- PEP Details (Conditional) -->
-      <div v-if="form.isPep || form.hasPepRelatives" class="space-y-4">
+      <div v-if="form.isPep || form.hasPepRelatives" class="[&>*]:mb-4">
         <div v-if="form.isPep">
           <label class="block text-sm font-medium text-gray-700 mb-2">
             Cargo o Función Pública

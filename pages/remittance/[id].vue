@@ -24,7 +24,7 @@
         </div>
 
         <!-- Transaction Details Card -->
-        <div class="bg-white rounded-xl shadow-lg p-8 space-y-6">
+        <div class="bg-white rounded-xl shadow-lg p-8 [&>*]:mb-6">
           <!-- Status Section -->
           <div class="flex items-center justify-between pb-4 border-b">
             <span class="text-gray-600">Datos de la operación</span>
@@ -41,7 +41,7 @@
           </div>
 
           <!-- Amount Details -->
-          <div class="space-y-4">
+          <div class="[&>*]:mb-4">
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Monto enviado</span>
               <span class="font-medium">{{ remittance.source_currency_symbol }} {{ Number(remittance.source_amount).toFixed(2) }}</span>
@@ -69,10 +69,10 @@
           </div>
 
           <!-- Recipient Details -->
-          <div class="pt-4 border-t space-y-4">
+          <div class="pt-4 border-t [&>*]:mb-4">
             <h3 class="font-medium text-lg">Datos del destinatario</h3>
             
-            <div class="space-y-3">
+            <div class="[&>*]:mb-3">
               <div class="flex justify-between items-center">
                 <span class="text-gray-600">Nombre</span>
                 <span class="font-medium">{{ remittance.destination_user_account.alias }}</span>
@@ -91,7 +91,7 @@
           </div>
 
           <!-- Date Information -->
-          <div class="pt-4 border-t space-y-4">
+          <div class="pt-4 border-t [&>*]:mb-4">
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Fecha de creación</span>
               <span class="font-medium">{{ formatDate(remittance.created_at) }}</span>
@@ -105,7 +105,7 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="mt-8 space-y-4">
+        <div class="mt-8 [&>*]:mb-4">
           <UButton
             variant="ghost"
             block

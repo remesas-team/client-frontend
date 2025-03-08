@@ -25,7 +25,7 @@
     </div>
 
     <!-- Navigation Buttons -->
-    <div class="space-y-3 mt-8">
+    <div class="[&>*]:mb-3 mt-8">
       <button
         @click="handleNext"
         class="w-full bg-green-grass text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"

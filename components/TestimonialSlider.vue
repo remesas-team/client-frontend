@@ -55,7 +55,7 @@
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
                   <div class="absolute bottom-0 left-0 p-4 md:p-8 w-full">
-                    <blockquote class="space-y-2 md:space-y-4">
+                    <blockquote class="[&>*]:mb-4 md:[&>*]:mb-4">
                       <p class="text-base md:text-xl text-white font-serif">
                         "{{ slide.testimonial }}"
                       </p>

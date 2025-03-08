@@ -8,7 +8,7 @@
           Envía dinero a cualquier parte del Perú y Brasil
         </h1>
         <p class="mt-4 text-gray-600 text-lg xl:text-2xl">
-          Recibe el dinero en efectivo en el mismo día con el mejor tipo de cambio.
+          Recibe el dinero el mismo día con el mejor tipo de cambio.
         </p>
       </div>
       <div class="w-full md:w-1/2">

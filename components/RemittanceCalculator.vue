@@ -118,8 +118,8 @@
             <UIcon name="i-lucide:chevron-down ml-2 mt-1 rotate-"></UIcon>
           </div>
         </div>
-        <div v-if="estimate && showDetails" class="space-y-4 mb-8">
-          <div class="space-y-3">
+        <div v-if="estimate && showDetails" class="[&>*]:mb-4 mb-8">
+          <div class="[&>*]:mb-3">
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Tipo de cambio:</span>
               <span class="text-[#E91E63] font-medium">1 {{ estimate.from }} = {{ estimate.exchange_unit }} {{

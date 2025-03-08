@@ -13,7 +13,7 @@
       <p class="text-gray-600 mb-8">Trabajamos con los bancos más grandes de Perú y Brasil</p>
 
       <!-- Bank Logos -->
-      <div class="space-y-6">
+      <div class="[&>*]:mb-6">
         <!-- Brazilian Banks -->
         <div class="grid grid-cols-4 gap-4">
           <div class="flex items-center justify-center">
