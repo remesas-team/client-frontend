@@ -19,7 +19,8 @@ export const useSourcesStore = defineStore('sources', {
     civil_statuses: [],
     currencies: [],
     countries: [],
-    banks: []
+    banks: [],
+    system_accounts: []
   }),
 
   getters: {},
@@ -104,7 +105,7 @@ export const useSourcesStore = defineStore('sources', {
 
       if (response.success) {
         this.system_accounts = response.data;
-
+        console.log(this.system_accounts)
         // Extraemos el array de cuentas
         const accounts = this.system_accounts;
 

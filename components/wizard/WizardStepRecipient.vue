@@ -39,8 +39,8 @@
       <UForm id="refFormRemittance" ref="refFormRemittance" :state="formState" @submit="handleSubmit">
         <!-- Save Account -->
         <div v-if="!selectedAccount">
+          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos de la cuenta:</label>
           <div class="w-full mb-2">
-            <label for="">Nuevo destinatario:</label>
             <USelectMenu
                 v-model="formState.bank_id"
                 :items="banks"
@@ -50,14 +50,34 @@
                 placeholder="Selecciona un banco"
                 size="xl"
                 class="w-full"
+                @change="getBankTypes"
+            />
+          </div>
+          
+          <div class="w-full mb-2">
+            <USelectMenu
+                v-model="formState.account_type_id"
+                :items="bank_types"
+                :search-input="false"
+                value-key="id"
+                label-key="name"
+                placeholder="Tipo de cuenta"
+                size="xl"
+                class="w-full"
             />
           </div>
 
           <div class="w-full mb-2">
-            <UInput v-model="formState.account_number" type="text" pattern="[0-9]*" inputmode="numeric"
-                    placeholder="Número de cuenta interbancario" size="xl" class="w-full text-xl"
-                    @input="formState.account_number = formState.account_number.replace(/\D/g, '')"/>
+            <UInput
+                v-model="formState.account_number"
+                :placeholder="bankTypes"
+                @input="formState.account_number = formState.account_number.replace(/\D/g, '')"
+                type="text"
+                size="xl" class="w-full text-xl"
+              />  
           </div>
+
+          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos del destinatario:</label>
 
           <div class="w-full mb-2">
             <UInput v-model="formState.phone_number" type="text" pattern="[0-9]*" inputmode="numeric"
@@ -113,11 +133,13 @@ const remittanceStore = useRemittanceStore();
 const loadingInfo = ref(true)
 const loadingSubmit = ref(false)
 const banks = ref([])
+const bank_types = ref([])
 const savedAccounts = ref([])
 
 const selectedAccount = ref(null)
 const formState = ref({
   bank_id: null,
+  account_type_id: null,
   account_number: '',
   recipientName: '',
   is_saved: false,
@@ -128,14 +150,16 @@ const formState = ref({
 const handleSubmit = async () => {
   loadingSubmit.value = true
 
-  const {bank_id, account_number, is_saved, alias, phone_number} = formState.value
+  const {bank_id, account_number, is_saved, alias, phone_number, account_type_id} = formState.value
+  
+  console.log(formState.value)
 
   if (!selectedAccount.value) {
     const response = await userRequest.createBankAccount({
       "bank_id": bank_id,
       "district_id": null,
       "currency_id": remittanceStore.form.destination_currency_id,
-      "type": "corriente",
+      "account_type_id": account_type_id,
       "account_number": account_number,
       "alias": alias,
       "is_joint_account": false,
@@ -165,8 +189,8 @@ const getBanks = async () => {
   if (!response.success) {
     return
   }
-
   banks.value = response.data
+  console.log(banks.value)
 }
 
 const getBankAccounts = async () => {
@@ -179,16 +203,19 @@ const getBankAccounts = async () => {
   savedAccounts.value = response.data.filter(item => item.tag === "destination" && item.is_saved && item.currency_code === remittanceStore.form.destination_currency_symbol)
 }
 
-const setFormState = () => {
-  const {destination_user_account_id} = remittanceStore.form
-
-  if (savedAccounts.value.length > 0 && destination_user_account_id === null) {
-    selectedAccount.value = savedAccounts.value[0]
-    return
-  }
-
-  selectedAccount.value = savedAccounts.value.find(item => item.id === destination_user_account_id)
+const getBankTypes = async () => {
+  const selectedBank = formState.value.bank_id
+  bank_types.value = banks.value.find(item => item.id === selectedBank)?.account_types
+  console.log(bank_types.value)
 }
+
+const bankTypes = computed(() => {
+  const selectedType = formState.value.account_type_id
+  const selectedbanktype = bank_types.value.find(item => item.id === selectedType)?.name || ""
+
+  return "Ingresa tu " + selectedbanktype
+})
+
 
 onMounted(async () => {
   loadingInfo.value = true
@@ -197,7 +224,6 @@ onMounted(async () => {
     getBankAccounts(),
     getBanks()
   ]);
-  //setFormState()
 
   loadingInfo.value = false
 });

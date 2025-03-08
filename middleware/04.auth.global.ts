@@ -1,7 +1,7 @@
 export default defineNuxtRouteMiddleware(async (to) => {
 	const { $config, $auth } = useNuxtApp()
 	const { path, meta, fullPath } = to
-
+	console.log('define')
 	if (path === '/logout') return
 
 	const authCookieToken = useCookie($config.public.auth.name_cookie_token, {
