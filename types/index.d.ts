@@ -1,6 +1,4 @@
-import type {$Fetch} from "nitropack";
-
-
+import type { $Fetch } from 'nitropack'
 
 interface PluginsInjections {
 	$api: $Fetch

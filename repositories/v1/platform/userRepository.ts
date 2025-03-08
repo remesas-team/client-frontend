@@ -1,15 +1,14 @@
-import {handleApi} from "~/utils/handleApi";
+import { handleApi } from '~/utils/handleApi'
 
 export const userRepository = () => {
-    const fetch = handleApi()
+	const fetch = handleApi()
 
-    return {
-        async createBankAccount(params) {
-            return fetch.post('/v1/platform/user-accounts/create', params)
-        },
-        async getBankAccounts() {
-            return fetch.get('/v1/platform/user-accounts')
-        }
-    }
+	return {
+		async createBankAccount(params) {
+			return fetch.post('/v1/platform/user-accounts/create', params)
+		},
+		async getBankAccounts() {
+			return fetch.get('/v1/platform/user-accounts')
+		},
+	}
 }
-

@@ -1,9 +1,9 @@
 <template>
-  <section class="mb-16 mt-8">
-    <KeyFeatures />
-    <GuaranteedBenefit />
-    <ServiceSteps />
-  </section>
+	<section class="mb-16 mt-8">
+		<KeyFeatures />
+		<GuaranteedBenefit />
+		<ServiceSteps />
+	</section>
 </template>
 
 <script setup>

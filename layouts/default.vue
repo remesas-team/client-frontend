@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex flex-col">
-    <TheHeader/>
+	<div class="min-h-screen bg-gray-50 flex flex-col">
+		<TheHeader />
 
-    <NuxtPage/>
+		<NuxtPage />
 
-    <TheFooter/>
-  </div>
+		<TheFooter />
+	</div>
 </template>
 
 <script setup lang="ts">

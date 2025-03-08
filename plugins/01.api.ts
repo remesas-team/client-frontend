@@ -6,9 +6,9 @@ export default defineNuxtPlugin(({ provide, $config }) => {
 
 	const $api = $fetch.create({
 		baseURL: $config.public.apiBase,
-		onRequest({  options }) {
+		onRequest({ options }) {
 			commonHeaders.forEach((value, key) => {
-				if(options.headers.get(key) === null) {
+				if (options.headers.get(key) === null) {
 					options.headers.set(key, value)
 				}
 			})
