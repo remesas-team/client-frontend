@@ -112,11 +112,9 @@
           </div>
         </div>
         <!-- Exchange Rate Information -->
-        <div class="flex items-center text-lg mb-5 cursor-pointer hover:underline" @click="showDetails = !showDetails">
+        <div class="flex items-center gap-2 text-lg mb-5 cursor-pointer hover:underline" @click="showDetails = !showDetails">
           <div>Mira los detalles</div>
-          <div>
-            <UIcon name="i-lucide:chevron-down ml-2 mt-1 rotate-"></UIcon>
-          </div>
+          <UIcon name="i-lucide:chevron-down" :class="showDetails ? 'rotate-180' : ''" />
         </div>
         <div v-if="estimate && showDetails" class="[&>*]:mb-4 mb-8">
           <div class="[&>*]:mb-3">
