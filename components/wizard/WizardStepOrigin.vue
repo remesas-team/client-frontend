@@ -1,19 +1,19 @@
 <template>
-  <div class="space-y-6">
-    <h2 class="text-xl font-semibold mb-6">Configura una cuenta de origen</h2>
-    <p>Esto nos ayudará a poder regresarte el dinero en caso de que no se pueda realizar tu transacción.
-      Esto lo vas a realizar solo una vez. Para modificar tu cuenta de origen puedes hacerlo en
-      <a href="" class="text-green-wather">
-        <UIcon name="i-lucide:link"></UIcon>
-        Perfil > cuentas de origen</a></p>
-    <!-- Bank Account Form -->
+  <div class="[&>*]:mb-6">
+    <div class="[&>*]:mb-4 w-full">
+      <h2 class="text-xl font-semibold mb-6">Configura una cuenta de origen</h2>
+      <p>Esto nos ayudará a poder regresarte el dinero en caso de que no se pueda realizar tu transacción.
+        Esto lo vas a realizar solo una vez. Para modificar tu cuenta de origen puedes hacerlo en
+        <a href="" class="text-green-wather">
+          <UIcon name="i-lucide:link"></UIcon>
+          Perfil > cuentas de origen</a></p>
+      <!-- Bank Account Form -->
 
-    <div v-if="loadingInfo" class="flex items-center justify-center h-[308px]">
-      <CircleLoader class="size-10"/>
-    </div>
+      <div v-if="loadingInfo" class="flex items-center justify-center h-[308px]">
+        <CircleLoader class="size-10"/>
+      </div>
 
-    <div v-else>
-      <div class="space-y-4 w-full">
+      <div v-else>
         <div class="mb-2" v-if="savedAccounts.length">
           <label for="">Origen guardados:</label>
           <USelectMenu
@@ -29,7 +29,7 @@
 
         <div v-if="selectedAccount" class="mt-4 bg-gray-50 p-4 rounded-lg">
           <h3 class="font-bold mb-2">Información de la cuenta:</h3>
-          <ul class="space-y-2 text-sm">
+          <ul class="[&>*]:mb-2 text-sm">
             <li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
             <li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
             <li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
@@ -39,46 +39,61 @@
       </div>
 
       <UForm id="refFormRemittance" ref="refFormRemittance" :state="formState" @submit="handleSubmit">
-        <div v-if="!selectedAccount" class="space-y-4 w-full">
-          <div class="w-full">
-            <label for="">Crea una cuenta de origen:</label>
+        <div v-if="!selectedAccount">
+          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos de la cuenta:</label>
+          <div class="w-full mb-2">
             <USelectMenu
                 v-model="formState.bank_id"
                 :items="banks"
                 :search-input="false"
                 value-key="id"
-                label-Key="name"
+                label-key="name"
                 placeholder="Selecciona un banco"
+                size="xl"
+                class="w-full"
+                @change="getBankTypes"
+            />
+          </div>
+          
+          <div class="w-full mb-2">
+            <USelectMenu
+                v-model="formState.account_type_id"
+                :items="bank_types"
+                :search-input="false"
+                value-key="id"
+                label-key="name"
+                placeholder="Tipo de cuenta"
                 size="xl"
                 class="w-full"
             />
           </div>
 
-          <div class="w-full">
+          <div class="w-full mb-2">
             <UInput
                 v-model="formState.account_number"
-                type="text"
-                pattern="[0-9]*"
-                inputmode="numeric"
-                placeholder="Número de cuenta interbancario"
-                size="xl"
-                class="w-full text-xl"
+                :placeholder="bankTypes"
                 @input="formState.account_number = formState.account_number.replace(/\D/g, '')"
-            />
+                type="text"
+                size="xl" class="w-full text-xl"
+              />  
           </div>
+
+          <label for="" class="mb-2 mt-4 w-full block font-medium">Datos del titular:</label>
 
           <div class="w-full">
-
-            <!-- Save Account Name -->
-          <div class="mt-4 w-full">
-            <UInput
-                v-model="formState.alias"
-                type="text"
-                placeholder="Nombre completo del titular"
-                size="xl"
-                class="w-full text-xl"
-            />
+            <UInput v-model="formState.alias" type="text" placeholder="Nombre del destinatario" size="xl"
+                    disabled
+                    class="w-full text-xl text-gray" />
           </div>
+
+          <div class="mt-6">
+            <label class="flex items-center">
+              <input v-model="formState.is_saved" type="checkbox"
+                     class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
+              <span class="ml-2 text-sm text-gray-600">
+              Guardar como cuenta frecuente
+            </span>
+            </label>
           </div>
 
         </div>
@@ -100,6 +115,8 @@
 
 <script setup lang="ts">
 import {userRepository} from "~/repositories/v1/platform/userRepository"
+import {useAuthStore} from '~/stores/auth'
+
 import {useRemittanceStore} from '~/stores/remittance'
 import {sourcesRepository} from "~/repositories/v1/platform/sourcesRepository"
 import CircleLoader from "~/components/CircleLoader.vue";
@@ -111,15 +128,18 @@ const emit = defineEmits<{
 const userRequest = userRepository();
 const sourcesRequest = sourcesRepository();
 const remittanceStore = useRemittanceStore();
+const authStore = useAuthStore();
 
 const loadingInfo = ref(true)
 const loadingSubmit = ref(false)
 const banks = ref([])
+const bank_types = ref([])
 const savedAccounts = ref([])
 
 const selectedAccount = ref(null)
 const formState = ref({
   bank_id: null,
+  account_type_id: null,
   account_number: '',
   recipientName: '',
   is_saved: true,
@@ -129,14 +149,14 @@ const formState = ref({
 const handleSubmit = async () => {
   loadingSubmit.value = true
 
-  const {bank_id, account_number, is_saved, alias} = formState.value
+  const {bank_id, account_number, is_saved, alias, account_type_id} = formState.value
 
   if (!selectedAccount.value) {
     const response = await userRequest.createBankAccount({
       "bank_id": bank_id,
       "district_id": null,
       "currency_id": remittanceStore.form.source_currency_id,
-      "type": "corriente",
+      "account_type_id": account_type_id,
       "account_number": account_number,
       "alias": alias,
       "is_joint_account": false,
@@ -176,8 +196,22 @@ const getBankAccounts = async () => {
     return
   }
 
-  savedAccounts.value = response.data.filter(item => item.tag === "origin")
+  savedAccounts.value = response.data.filter(item => item.tag === "origin" && item.is_saved && item.currency_code === remittanceStore.form.source_currency_code)
 }
+
+const getBankTypes = async () => {
+  const selectedBank = formState.value.bank_id
+  bank_types.value = banks.value.find(item => item.id === selectedBank)?.account_types
+  console.log(bank_types.value)
+}
+
+const bankTypes = computed(() => {
+  const selectedType = formState.value.account_type_id
+  const selectedbanktype = bank_types.value.find(item => item.id === selectedType)?.name || ""
+
+  return "Ingresa tu " + selectedbanktype
+})
+
 
 const setFormState = () => {
   const {source_user_account_id} = remittanceStore.form
@@ -187,13 +221,14 @@ const setFormState = () => {
 
     return
   }
-
+  
   selectedAccount.value = savedAccounts.value.find(item => item.id === source_user_account_id)
 }
 
+
 onMounted(async () => {
   loadingInfo.value = true
-
+  formState.value.alias = authStore.fullName
   await Promise.all([
     getBankAccounts(),
     getBanks()

@@ -9,7 +9,7 @@
         
         <div>
           <h5 class="font-bold mb-4">Compañía</h5>
-          <ul class="space-y-2 text-gray-400 text-sm">
+          <ul class="[&>*]:mb-2 text-gray-400 text-sm">
             <li><NuxtLink to="#" class="hover:text-white">Sobre nosotros</NuxtLink></li>
             <li><NuxtLink to="#" class="hover:text-white">Contacto</NuxtLink></li>
             <li><NuxtLink to="#" class="hover:text-white">Blog</NuxtLink></li>
@@ -17,7 +17,7 @@
         </div>
         <div>
           <h5 class="font-bold mb-4">Legal</h5>
-          <ul class="space-y-2 text-gray-400 text-sm">
+          <ul class="[&>*]:mb-2 text-gray-400 text-sm">
             <li><NuxtLink to="#" class="hover:text-white">Términos y condiciones</NuxtLink></li>
             <li><NuxtLink to="#" class="hover:text-white">Política de privacidad</NuxtLink></li>
           </ul>

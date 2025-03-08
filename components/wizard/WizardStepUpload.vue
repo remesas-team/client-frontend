@@ -33,12 +33,28 @@
         </div>
 
         <div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
-          <span class="text-gray-600">N° de cuenta</span>
+          <span class="text-gray-600">N° de cuenta:</span>
           <div class="flex items-center gap-2">
             <span v-if="newOperation"
               class="font-medium">{{ newOperation.collection_system_account.account_number }}</span>
             <button class="text-blue-600 hover:text-blue-700"
               @click="copyToClipboard(newOperation.collection_system_account.account_number)"
+              title="Copiar número de cuenta">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
+          <span class="text-gray-600">Titular de la cuenta:</span>
+          <div class="flex items-center gap-2">
+            <span v-if="newOperation"
+              class="font-medium">{{ newOperation.collection_system_account.account_owner }}</span>
+            <button class="text-blue-600 hover:text-blue-700"
+              @click="copyToClipboard(newOperation.collection_system_account.account_owner)"
               title="Copiar número de cuenta">
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -5,7 +5,7 @@
       <div class="bg-white rounded-lg shadow-lg p-8">
         <h2 class="text-2xl font-semibold mb-6">Preguntas frecuentes</h2>
 
-        <div class="space-y-6">
+        <div class="[&>*]:mb-6">
           <div>
             <h3 class="text-lg font-medium mb-2">¿Cuánto tiempo tarda una transferencia?</h3>
             <p class="text-gray-600">Las transferencias a Brasil se completan en 2-3 horas en días hábiles.</p>

@@ -1,7 +1,6 @@
 <template>
-  <div class="space-y-6">
-    <h2 class="text-xl font-semibold">Método de pago</h2>
-    <div class="space-y-4">
+  <div class="[&>*]:mb-6">
+    <div class="[&>*]:mb-4">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">
           Número de tarjeta

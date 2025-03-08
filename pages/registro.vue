@@ -7,8 +7,8 @@ ntra<template>
           <p class="text-gray-600 mt-2">Únete a nuestra plataforma de envíos</p>
         </div>
 
-        <UForm :state="form" @submit="handleRegister" @error="handleError" class="space-y-6" :schema="v.safeParser(schemaRemittance)">
-          <div class="space-y-4">
+        <UForm :state="form" @submit="handleRegister" @error="handleError" class="mb-6" :schema="v.safeParser(schemaRemittance)">
+          <div class="[&>*]:mb-4">
             <div>
               <UFormField label="Nombre completo" name="name">
                 <UInput v-model="form.name" placeholder="Nombre" size="xl" class="w-full"  />
