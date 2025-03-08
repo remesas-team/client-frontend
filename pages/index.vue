@@ -12,7 +12,7 @@
         </p>
       </div>
       <div class="w-full md:w-1/2">
-        <RemittanceCalculator :setCoupon="coupon" />
+        <RemittanceCalculator :set-coupon="coupon" />
       </div>
     </div>
     <div class="px-5">

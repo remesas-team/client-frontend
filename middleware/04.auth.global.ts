@@ -18,7 +18,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 		}
 
 		if (meta.auth === 'guest' || meta.auth === false) return
-	
+
 		console.log($config.public.auth.name_cookie_redirect)
 
 		return navigateTo(`/login`)

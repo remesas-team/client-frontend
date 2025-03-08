@@ -1,90 +1,89 @@
 import { defineStore } from 'pinia'
-import type {User} from "~/types/user";
-import {authRepository} from "~/repositories/v1/platform/authRepository";
+import type { User } from '~/types/user'
+import { authRepository } from '~/repositories/v1/platform/authRepository'
 
 interface AuthState {
-  user: User | null;
+	user: User | null
 }
 
 export const useAuthStore = defineStore('auth', {
-  state: (): AuthState => ({
-    user: null
-  }),
+	state: (): AuthState => ({
+		user: null,
+	}),
 
-  getters: {
-    isAuthenticated: (state) => !!state.user,
-    fullName: (state) => state.user ? `${state.user.name} ${state.user.last_name}` : ''
-  },
+	getters: {
+		isAuthenticated: (state) => !!state.user,
+		fullName: (state) => (state.user ? `${state.user.name} ${state.user.last_name}` : ''),
+	},
 
-  actions: {
-    setToken(token) {
-      const { $api, $config } = useNuxtApp()
+	actions: {
+		setToken(token) {
+			const { $api, $config } = useNuxtApp()
 
-      const authCookieToken = useCookie($config.public.auth.name_cookie_token, {
-        domain: $config.public.auth.name_cookie_domain,
-        maxAge: $config.public.auth.max_age,
-      })
+			const authCookieToken = useCookie($config.public.auth.name_cookie_token, {
+				domain: $config.public.auth.name_cookie_domain,
+				maxAge: $config.public.auth.max_age,
+			})
 
-      authCookieToken.value = token
-      $api.setHeader('Authorization', `Bearer ${token}`)
-    },
+			authCookieToken.value = token
+			$api.setHeader('Authorization', `Bearer ${token}`)
+		},
 
+		async logout() {
+			// Clear auth state
+			this.user = null
+			this.token = null
 
-    async logout() {
-      // Clear auth state
-      this.user = null
-      this.token = null
+			// Clear cookies
+			this.removeToken()
 
-      // Clear cookies
-      this.removeToken()
+			// Navigate to login
+			navigateTo('/login')
+		},
 
-      // Navigate to login
-      navigateTo('/login')
-    },
+		removeToken() {
+			const { $api, $config } = useNuxtApp()
 
-    removeToken() {
-      const { $api, $config } = useNuxtApp()
+			const authCookieToken = useCookie($config.public.auth.name_cookie_token, {
+				domain: $config.public.auth.name_cookie_domain,
+			})
 
-      const authCookieToken = useCookie($config.public.auth.name_cookie_token, {
-        domain: $config.public.auth.name_cookie_domain,
-      })
+			authCookieToken.value = null
+			$api.setHeader('Authorization', null)
+		},
 
-      authCookieToken.value = null
-      $api.setHeader('Authorization', null)
-    },
+		async login(params) {
+			const { $auth } = useNuxtApp()
+			const requestAuth = authRepository()
+			const response = await requestAuth.postLogin(params)
 
-    async login(params) {
-      const { $auth } = useNuxtApp();
-      const requestAuth = authRepository();
-      const response = await requestAuth.postLogin(params);
+			if (response.success) {
+				$auth.setToken(response.data.access_token)
+			}
 
-      if (response.success) {
-        $auth.setToken(response.data.access_token);
-      }
+			return response
+		},
 
-      return response;
-    },
+		async fetchMe() {
+			const requestAuth = authRepository()
+			const response = await requestAuth.getMe()
 
-    async fetchMe() {
-      const requestAuth = authRepository();
-      const response = await requestAuth.getMe();
+			if (response.success) {
+				this.user = response.data
+			}
 
-      if (response.success) {
-        this.user = response.data;
-      }
+			return response
+		},
 
-      return response;
-    },
+		async registerUser(params) {
+			const requestAuth = authRepository()
+			const response = await requestAuth.postRegister(params)
 
-    async registerUser(params) {
-      const requestAuth = authRepository();
-      const response = await requestAuth.postRegister(params);
-      
-      if (response.success) {
-        console.log('store response', response)
-      }
-      
-      return response;
-    }
-  }
+			if (response.success) {
+				console.log('store response', response)
+			}
+
+			return response
+		},
+	},
 })
