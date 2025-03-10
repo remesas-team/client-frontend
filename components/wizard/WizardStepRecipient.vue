@@ -279,4 +279,5 @@ onMounted(async () => {
 
 	loadingInfo.value = false
 })
+
 </script>
