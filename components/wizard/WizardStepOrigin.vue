@@ -112,7 +112,7 @@
 							@input="formState.account_number = formState.account_number.replace(/\D/g, '')"
 						/>
 					</div>
-					<div class="w-full mb-2" v-if="remittanceStore.form.origin_currency_symbol === 'PEN'">
+					<div class="w-full mb-2" v-if="remittanceStore.form.destination_country_id === 1">
 						<UInput
 							v-model="formState.cci"
 							placeholder="Numero de cuenta interbancario"
