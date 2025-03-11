@@ -165,7 +165,7 @@
 							<div class="flex gap-2">
 								<div class="flex-1">
 									<UInput
-										v-model="formRemittance.coupon"
+										v-model="formRemittance.coupon_code"
 										placeholder="Ingresa tu cupón"
 										size="2xl"
 										class="w-full"
@@ -292,7 +292,7 @@ const formRemittance = ref({
 	from: 'PEN',
 	to: 'BRL',
 	amount: 1500,
-	coupon: null,
+	coupon_code: null,
 })
 
 const getCountries = computed(() => {
