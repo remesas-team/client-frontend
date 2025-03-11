@@ -144,7 +144,7 @@
 					size="xl"
 					color="primary"
 					block
-					class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center hover:bg-green-grass"
+					class="w-full mt-8 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-dark hover:cursor-pointer"
 				>
 					Continuar
 				</UButton>
@@ -236,9 +236,11 @@ const getBankAccounts = async () => {
 		return
 	}
 
+	
+	console.log(remittanceStore.form.source_currency_symbol)
 	savedAccounts.value = response.data.filter(
 		(item) =>
-			item.tag === 'origin' && item.is_saved && item.currency_code === remittanceStore.form.source_currency_code,
+			item.tag === 'origin' && item.is_saved && item.currency_code === remittanceStore.form.source_currency_symbol
 	)
 }
 

@@ -146,7 +146,7 @@
 						color="primary"
 						block
 						:loading="loadingSubmit"
-						class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center"
+						class="w-full mt-8 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-dark hover:cursor-pointer"
 					>
 						Continuar
 					</UButton>

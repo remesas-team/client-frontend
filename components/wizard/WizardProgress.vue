@@ -15,7 +15,7 @@
 								? 'bg-green-grass text-white hover:bg-green-wather'
 								: 'bg-gray-200 text-gray-600',
 						]"
-						@click="handleStepClick(step.number)"
+						@click="currentStep >= step.number ? handleStepClick(step.number) : null"
 					>
 						{{ step.number }}
 					</button>

@@ -9,7 +9,7 @@
 						href="#"
 						class="text-[#93f8f4] font-bold ml-2"
 						@click="applyCoupon"
-						>WELCOME50</a
+						>WELCOME100</a
 					></span
 				>
 				<h1 class="text-3xl md:text-5xl xl:text-7xl font-bold leading-tight mt-5">

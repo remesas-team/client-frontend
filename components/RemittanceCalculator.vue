@@ -260,7 +260,7 @@
 					type="submit"
 					class="w-full bg-green-grass text-white py-4 rounded-xl text-[17px] font-medium hover:bg-green-dark transition-colors hover:cursor-pointer"
 				>
-					Iniciar transferencia
+					Enviar dinero
 				</button>
 			</UForm>
 		</div>

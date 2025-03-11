@@ -67,19 +67,19 @@
 			size="xl"
 			color="primary"
 			block
-			class="w-full mt-2 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-grass cursor-pointer mb-8"
+			class="w-full mt-8 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-dark hover:cursor-pointer"
 			:loading="loadingSubmit"
 			@click="handleConfirm"
 		>
-			Realiza la transferencia
+			Enviar dinero
 		</UButton>
 
 		<!-- Delivery Time Notice -->
 		<p
-			class="text-center text-gray-600 flex flex-col direction-column items-center justify-center gap-2 text-[#2e7d6b]"
+			class="text-center text-gray-600 flex flex-col direction-column md:flex-row items-center justify-center gap-2 text-[#2e7d6b] "
 		>
-			<UIcon name="i-mdi:run-fast"></UIcon>
-			<span> Tu dinero estará disponible el mismo día</span>
+			<UIcon name="i-mdi:run-fast text-green-wather"></UIcon>
+			<span> Tu dinero estará disponible entre 4 a 6 horas</span>
 		</p>
 	</div>
 </template>
