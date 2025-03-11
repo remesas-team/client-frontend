@@ -82,7 +82,7 @@ ntra
 							>
 								<USelect
 									v-model="form.phone_code"
-									:items="[{ label: '+51', value: '+51' }]"
+									:items="country_codes"
 									placeholder="+1"
 									size="xl"
 								/>
@@ -111,7 +111,7 @@ ntra
 							>
 								<USelect
 									v-model="form.doc_type_id"
-									:items="[{ label: 'DNI', value: 1 }]"
+									:items="[{ label: 'DNI', value: 1 }, { label: 'CPF', value: 5 }, { label: 'Carnet de extranjería', value: 4 }]"
 									placeholder="Tipo de documento"
 									size="xl"
 									class="w-full"
@@ -323,7 +323,7 @@ const form = reactive({
 	geo_district_id: 10,
 	password_confirmation: null,
 	password: null,
-	acceptTerms: null,
+	acceptTerms: false,
 })
 
 const schemaRemittance = v.object({
@@ -345,6 +345,13 @@ const schemaRemittance = v.object({
 	password_confirmation: v.string('Required'),
 	acceptTerms: v.pipe(v.boolean(), v.literal(true, 'Este campo es obligatorio')),
 })
+
+const country_codes = [
+	{ label: '+51 PE', value: '+51' },
+	{ label: '+1 US ', value: '+1' },
+	{ label: '+55 BR', value: '+55' },
+]
+
 
 const handleRegister = async () => {
 	if (form.password !== form.password_confirmation) {

@@ -30,6 +30,7 @@ export const useRemittanceStore = defineStore('remittance', {
 
 			// ????
 			collection_system_account_id: 1,
+			savings: 0
 			// source_origin_fund_id: null,
 			// destination_bank_account_id: null,
 			// destination_origin_fund_id: null,

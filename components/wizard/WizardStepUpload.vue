@@ -88,6 +88,36 @@
 				</div>
 
 				<div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
+					<span class="text-gray-600">N° de cuenta interbancario:</span>
+					<div class="flex items-center gap-2">
+						<span
+							v-if="newOperation"
+							class="font-medium"
+							>{{ newOperation.collection_system_account.cci }}</span
+						>
+						<button
+							class="text-blue-600 hover:text-blue-700"
+							title="Copiar número de cuenta"
+							@click="copyToClipboard(newOperation.collection_system_account.cci)"
+						>
+							<svg
+								class="w-5 h-5"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+								/>
+							</svg>
+						</button>
+					</div>
+				</div>
+
+				<div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
 					<span class="text-gray-600">Titular de la cuenta:</span>
 					<div class="flex items-center gap-2">
 						<span
@@ -129,7 +159,7 @@
 						<button
 							class="text-blue-600 hover:text-blue-700"
 							title="Copiar monto"
-							@click="copyToClipboard(newOperation.source_amount_to_send)"
+							@click="copyToClipboard(parseFloat(newOperation.source_amount).toFixed(2))"
 						>
 							<svg
 								class="w-5 h-5"
@@ -234,14 +264,20 @@
 				size="xl"
 				color="primary"
 				block
-				class="w-full mt-8 text-lg font-medium h-14 bg-green-dark text-center"
+				class="w-full mt-8 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-dark hover:cursor-pointer"
 				:loading="loadingSubmit"
 				@click="confirmTransaction"
 			>
 				Confirmar transacción
 			</UButton>
 
-			<p class="text-center text-gray-600 mt-4">Tu dinero estará disponible en máximo 6h</p>
+			<!-- Delivery Time Notice -->
+			<p
+				class="mt-4 text-center text-gray-600 flex flex-col direction-column md:flex-row items-center justify-center gap-2 text-[#2e7d6b] "
+			>
+				<UIcon name="i-mdi:run-fast text-green-wather"></UIcon>
+				<span> Tu dinero estará disponible entre 4 a 6 horas</span>
+			</p>
 		</div>
 	</div>
 </template>

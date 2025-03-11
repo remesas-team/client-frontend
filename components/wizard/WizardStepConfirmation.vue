@@ -44,6 +44,13 @@
 						{{ remittanceStore.form.source_currency_symbol }}</span
 					>
 				</div>
+				<div class="flex justify-between mb-3 text-green-wather" v-if="remittanceStore.form.savings > 0">
+					<span class="text-gray-600">Descuento coupon:</span>
+					<span class="font-bold"
+						>- {{ remittanceStore.form.savings }}
+						{{ remittanceStore.form.source_currency_symbol }}</span
+					>
+				</div>
 				<div class="flex justify-between">
 					<span class="text-gray-600">Total a convertir:</span>
 					<span class="font-medium"

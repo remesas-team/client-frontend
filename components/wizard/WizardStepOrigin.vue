@@ -31,7 +31,7 @@
 					<USelectMenu
 						v-model="selectedAccount"
 						:items="savedAccounts"
-						:search-input="false"
+						:search-input="true"
 						label-key="alias"
 						placeholder="Selecciona un destinatario"
 						size="xl"
@@ -75,7 +75,10 @@
 						<USelectMenu
 							v-model="formState.bank_id"
 							:items="banks"
-							:search-input="false"
+							:search-input="{
+							placeholder: 'Filter...',
+							icon: 'i-lucide-search'
+							}"
 							value-key="id"
 							label-key="name"
 							placeholder="Selecciona un banco"

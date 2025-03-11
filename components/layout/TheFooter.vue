@@ -26,13 +26,6 @@
 								>Contacto</NuxtLink
 							>
 						</li>
-						<li>
-							<NuxtLink
-								to="#"
-								class="hover:text-white"
-								>Blog</NuxtLink
-							>
-						</li>
 					</ul>
 				</div>
 				<div>

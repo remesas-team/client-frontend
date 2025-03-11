@@ -11,7 +11,7 @@
 			</div>
 
 			<div v-else>
-				<div class="space-y-4 w-full">
+				<div class="space-y-4 w-full" v-if="!setNewAccount">
 					<div
 						v-if="savedAccounts.length"
 						class="mb-2"
@@ -40,16 +40,14 @@
 							<li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
 							<li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
 						</ul>
-						<a
-							href="#"
-							class="underline decoration-solid mt-5 block"
-							@click="selectedAccount = null"
-						>
-							+ Crear nuevo destinatario</a
-						>
 					</div>
 				</div>
-
+				<div @click="setNewAccount = true" class="cursor-pointer hover:font-medium mt-4" v-if="!setNewAccount">
+					+ Crear nuevo destinatario
+				</div>
+				<div v-else @click="setNewAccount = false">
+					< Volver
+				</div>
 				<!-- Bank Account Form -->
 				<UForm
 					id="refFormRemittance"
@@ -58,7 +56,7 @@
 					@submit="handleSubmit"
 				>
 					<!-- Save Account -->
-					<div v-if="!selectedAccount">
+					<div  v-if="setNewAccount == true">
 						<label
 							for=""
 							class="mb-2 mt-4 w-full block font-medium"
@@ -68,7 +66,7 @@
 							<USelectMenu
 								v-model="formState.bank_id"
 								:items="banks"
-								:search-input="false"
+								:search-input="true"
 								value-key="id"
 								label-key="name"
 								placeholder="Selecciona un banco"
@@ -170,6 +168,7 @@ const userRequest = userRepository()
 const sourcesRequest = sourcesRepository()
 const remittanceStore = useRemittanceStore()
 
+const setNewAccount = ref(false)
 const loadingInfo = ref(true)
 const loadingSubmit = ref(false)
 const banks = ref([])
@@ -275,7 +274,7 @@ onMounted(async () => {
 	loadingInfo.value = true
 
 	await Promise.all([getBankAccounts(), getBanks()])
-	setFormState()
+	//setFormState()
 
 	loadingInfo.value = false
 })

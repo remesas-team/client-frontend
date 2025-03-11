@@ -397,6 +397,8 @@ const startOperation = () => {
 	remittanceStore.form.coupon_id = formRemittance.value.coupon?.toUpperCase() || null
 	remittanceStore.form.send_tax = estimate.value.tax
 	remittanceStore.form.amount_to_send = estimate.value.amount_to_send
+	remittanceStore.form.savings = estimate.value.savings || 0
+
 
 	router.push('/operacion/1')
 }
@@ -404,7 +406,7 @@ const startOperation = () => {
 const initCalculator = () => {
 	fromCountry.value = getCountries.value[0]
 	toCountry.value = getCountries.value[1]
-	formRemittance.value.from = getFromCurrency.value[0].label
+	formRemittance.value.from = getFromCurrency.value[1].label
 	formRemittance.value.to = getToCurrency.value[0].label
 }
 
