@@ -218,7 +218,7 @@ const handleSubmit = async () => {
 			currency_id: remittanceStore.form.destination_currency_id,
 			account_type_id: account_type_id,
 			account_number: account_number,
-			cci: cci,
+			cci: cci ? cci : null,
 			alias: alias,
 			is_joint_account: false,
 			is_saved: is_saved,

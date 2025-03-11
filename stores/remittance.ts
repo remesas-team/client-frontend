@@ -18,7 +18,7 @@ export const useRemittanceStore = defineStore('remittance', {
 			destination_amount: null,
 			exchange_rate: null,
 			send_cost: null,
-			coupon_id: null,
+			coupon_code: null,
 			send_tax: null,
 			amount_to_send: null,
 
