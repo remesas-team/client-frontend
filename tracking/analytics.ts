@@ -41,6 +41,4 @@ export const tracerLoad = (config: ConfigProvide) => {
 	analytics.load(config.key, config.url)
 }
 
-export { analytics }
-
 export default tracer
