@@ -124,7 +124,7 @@
 						<div class="flex justify-between">
 							<label class="block text-[15px] font-medium text-gray-700 mb-2"> Ellos reciben: </label>
 							<span
-								class="text-md font-bold hover:cursor-pointer hover:text-green-wather"
+								class="text-md font-bold hover:cursor-pointer text-green-wather hover:text-green-grass"
 								@click="showCoupon = !showCoupon"
 								>Aplicar cupon</span
 							>
@@ -394,7 +394,6 @@ const startOperation = () => {
 	remittanceStore.form.destination_amount = estimate.value.exchange_result
 	remittanceStore.form.exchange_rate = estimate.value.exchange_unit
 	remittanceStore.form.send_cost = estimate.value.send_cost
-	remittanceStore.form.coupon_id = formRemittance.value.coupon?.toUpperCase() || null
 	remittanceStore.form.send_tax = estimate.value.tax
 	remittanceStore.form.amount_to_send = estimate.value.amount_to_send
 	remittanceStore.form.savings = estimate.value.savings || 0

@@ -46,6 +46,7 @@
 					<h3 class="font-bold mb-2">Información de la cuenta:</h3>
 					<ul class="[&>*]:mb-2 text-sm">
 						<li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
+						<li><span class="font-medium">CCI:</span> {{ selectedAccount?.cci }}</li>
 						<li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
 						<li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
 					</ul>
@@ -105,6 +106,16 @@
 						<UInput
 							v-model="formState.account_number"
 							:placeholder="bankTypes"
+							type="text"
+							size="xl"
+							class="w-full text-xl"
+							@input="formState.account_number = formState.account_number.replace(/\D/g, '')"
+						/>
+					</div>
+					<div class="w-full mb-2" v-if="remittanceStore.form.origin_currency_symbol === 'PEN'">
+						<UInput
+							v-model="formState.cci"
+							placeholder="Numero de cuenta interbancario"
 							type="text"
 							size="xl"
 							class="w-full text-xl"
@@ -187,12 +198,13 @@ const formState = ref({
 	recipientName: '',
 	is_saved: true,
 	alias: '',
+	cci: 0,
 })
 
 const handleSubmit = async () => {
 	loadingSubmit.value = true
 
-	const { bank_id, account_number, is_saved, alias, account_type_id } = formState.value
+	const { bank_id, account_number, is_saved, alias, account_type_id, cci } = formState.value
 
 	if (!selectedAccount.value) {
 		const response = await userRequest.createBankAccount({
@@ -205,6 +217,7 @@ const handleSubmit = async () => {
 			is_joint_account: false,
 			is_saved: is_saved,
 			tag: 'origin',
+			cci: cci
 		})
 
 		if (!response.success) {

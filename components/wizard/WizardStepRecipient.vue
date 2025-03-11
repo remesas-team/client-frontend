@@ -36,6 +36,7 @@
 						<ul class="[&>*]:mb-2 text-sm">
 							<li><span class="font-medium">Nombre:</span> {{ selectedAccount?.alias }}</li>
 							<li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
+							<li><span class="font-medium">CCI:</span> {{ selectedAccount?.cci }}</li>
 							<li><span class="font-medium">Celular:</span> {{ selectedAccount?.phone_number }}</li>
 							<li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
 							<li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>
@@ -93,6 +94,17 @@
 							<UInput
 								v-model="formState.account_number"
 								:placeholder="bankTypes"
+								type="text"
+								size="xl"
+								class="w-full text-xl"
+								@input="formState.account_number = formState.account_number.replace(/\D/g, '')"
+							/>
+						</div>
+
+						<div class="w-full mb-2" v-if="remittanceStore.form.destination_currency_symbol === 'PEN'">
+							<UInput
+								v-model="formState.cci"
+								placeholder="Numero de cuenta interbancario"
 								type="text"
 								size="xl"
 								class="w-full text-xl"
@@ -180,6 +192,7 @@ const formState = ref({
 	bank_id: null,
 	account_type_id: null,
 	account_number: '',
+	cci: '',
 	recipientName: '',
 	is_saved: false,
 	alias: '',
@@ -196,7 +209,7 @@ const bankTypes = computed(() => {
 const handleSubmit = async () => {
 	loadingSubmit.value = true
 
-	const { bank_id, account_number, is_saved, alias, phone_number, account_type_id } = formState.value
+	const { bank_id, account_number, is_saved, alias, phone_number, account_type_id, cci } = formState.value
 
 	if (!selectedAccount.value) {
 		const response = await userRequest.createBankAccount({
@@ -205,6 +218,7 @@ const handleSubmit = async () => {
 			currency_id: remittanceStore.form.destination_currency_id,
 			account_type_id: account_type_id,
 			account_number: account_number,
+			cci: cci,
 			alias: alias,
 			is_joint_account: false,
 			is_saved: is_saved,
