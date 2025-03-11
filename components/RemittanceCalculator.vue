@@ -350,7 +350,7 @@ const handleAmountInput = (value: number) => {
 const calculateEstimate = async () => {
 	const params = {
 		...formRemittance.value,
-		coupon: formRemittance.value.coupon?.toUpperCase(),
+		coupon_code: formRemittance.value.coupon?.toUpperCase(),
 	}
 
 	const response = await requestOperations.getEstimate(params)
