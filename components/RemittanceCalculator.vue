@@ -328,7 +328,6 @@ const schemaRemittance = v.object({
 	from: v.string('Required'),
 	to: v.string('Required'),
 	amount: v.pipe(v.number('Required'), v.minValue(1, 'Amount required')),
-	coupon: v.nullable(v.string('Invalid coupon')),
 })
 
 const reverseAmount = () => {
@@ -372,6 +371,7 @@ const applyCoupon = () => {
 }
 
 const startOperation = () => {
+	console.log("Start")
 	loadingSubmit.value = true
 
 	remittanceStore.$reset()
