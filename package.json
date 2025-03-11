@@ -11,7 +11,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "dependencies": { 
+  "dependencies": {
     "@nuxt/eslint": "^1.2.0",
     "@nuxt/ui": "^3.0.0-beta.3",
     "@pinia/nuxt": "^0.9.0",
@@ -19,6 +19,7 @@
     "eslint": "^9.22.0",
     "nuxt": "^3.16.0",
     "pinia-plugin-persistedstate": "^4.2.0",
+    "swiper": "^11.2.5",
     "valibot": "^1.0.0-rc.0"
   },
   "devDependencies": {

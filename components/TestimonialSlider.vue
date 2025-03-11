@@ -1,204 +1,153 @@
 <template>
-	<section
-		class="relative overflow-hidden"
-		aria-label="Carrusel de testimonios"
-	>
-		<div class="max-w-6xl mx-auto px-4">
-			<div class="grid grid-cols-12 gap-4 md:gap-8 items-center">
-				<!-- Title and Controls Column -->
-				<div class="col-span-5">
-					<h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8">Sientete cerca de los tuyos</h2>
-					<p class="mb-8">La forma de poder cuidarlos anque estés lejos de casa.</p>
+  <section class="py-16 bg-white overflow-hidden md:bg-transparent lg:w-[50%]"  >
+    <div class="container mx-auto px-4">
+      <h2 class="text-center text-2xl font-bold mb-3 font-rebond lg:hidden"> 
+        Hecho por inmigrantes <span class="text-green-600">para inmigrantes</span>
+      </h2>
+      <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 lg:hidden">
+        Sabemos lo que significa estar lejos de casa o tener que cuidar a familiares que se encuentran lejos...
+      </p>
 
-					<div class="flex gap-2 md:gap-4">
-						<button
-							class="bg-gray-100 p-2 md:p-4 rounded-full hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-							aria-label="Anterior testimonio"
-							@click="prevSlide"
-						>
-							<svg
-								class="w-4 h-4 md:w-6 md:h-6 text-gray-800"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M15 19l-7-7 7-7"
-								/>
-							</svg>
-						</button>
-						<button
-							class="bg-gray-100 p-2 md:p-4 rounded-full hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-							aria-label="Siguiente testimonio"
-							@click="nextSlide"
-						>
-							<svg
-								class="w-4 h-4 md:w-6 md:h-6 text-gray-800"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M9 5l7 7-7 7"
-								/>
-							</svg>
-						</button>
-					</div>
-				</div>
-
-				<!-- Slider Column -->
-				<div class="col-span-7">
-					<div
-						class="overflow-hidden rounded-xl"
-						@mouseenter="pauseAutoplay"
-						@mouseleave="resumeAutoplay"
-					>
-						<div
-							class="flex transition-transform duration-500 ease-in-out"
-							:style="{ transform: `translateX(-${currentSlide * 100}%)` }"
-						>
-							<div
-								v-for="(slide, index) in slides"
-								:key="index"
-								class="w-full md:w-1/2 flex-shrink-0 px-2"
-							>
-								<div class="relative h-[300px] md:h-[500px] overflow-hidden rounded-xl">
-									<img
-										:src="slide.image"
-										:alt="slide.imageAlt"
-										class="absolute inset-0 w-full h-full object-cover"
-									/>
-									<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
-									<div class="absolute bottom-0 left-0 p-4 md:p-8 w-full">
-										<blockquote class="[&>*]:mb-4 md:[&>*]:mb-4">
-											<p class="text-base md:text-xl text-white font-serif">"{{ slide.testimonial }}"</p>
-											<footer class="text-white/80">
-												<cite class="font-medium block text-sm md:text-lg">{{ slide.author }}</cite>
-												<span class="text-xs md:text-sm">{{ slide.location }}</span>
-											</footer>
-										</blockquote>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Slide Indicators -->
-					<div class="flex justify-center space-x-1 md:space-x-2 mt-2 md:mt-4">
-						<button
-							v-for="(_, index) in slides"
-							:key="index"
-							:class="[
-								'w-1.5 md:w-2 h-1.5 md:h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500',
-								currentSlide === index ? 'bg-blue-600 w-3 md:w-4' : 'bg-gray-400 hover:bg-gray-600',
-							]"
-							:aria-label="`Ir al testimonio ${index + 1}`"
-							:aria-current="currentSlide === index"
-							@click="goToSlide(index)"
-						></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+      <div class="max-w-[400px] mx-auto">
+        <swiper
+          :modules="[Navigation, Pagination, EffectCoverflow]"
+          :effect="'coverflow'"
+          :grab-cursor="true"
+          :centered-slides="true"
+          :loop="true"
+          :looped-slides="1"
+          :slides-per-view="1"
+          :space-between="30"
+          :navigation="true"
+          :pagination="{ clickable: true }"
+          :coverflow-effect="{
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }"
+          class="testimonial-slider"
+        >
+          <swiper-slide v-for="testimonial in testimonials" :key="testimonial.name">
+            <div class="relative h-[600px] rounded-xl overflow-hidden">
+              <!-- Background Image with Gradient Overlay -->
+              <div class="absolute inset-0">
+                <img 
+                  :src="testimonial.image" 
+                  :alt="testimonial.name"
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+              </div>
+              
+              <!-- Content -->
+              <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
+                <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
+                <h3 class="text-3xl font-semibold mb-4 font-rebond">{{ testimonial.name }}</h3>
+                <p class="text-lg max-w-2xl">
+                  "{{ testimonial.text }}"
+                </p>
+              </div>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
+    </div>
+  </section>
 </template>
-
 <script setup lang="ts">
-interface Slide {
-	image: string
-	imageAlt: string
-	testimonial: string
-	author: string
-	location: string
-}
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-coverflow';
 
-const slides = ref<Slide[]>([
-	{
-		image: '/images/historia1.png',
-		imageAlt: 'Familia feliz reunida en la sala de estar',
-		testimonial: '',
-		author: 'Gabriel Rodrigues',
-		location: 'São Paulo, Brasil',
-	},
-	{
-		image: '/images/seño1.png',
-		imageAlt: 'Madre e hija compartiendo un momento especial',
-		testimonial: 'Gracias a remesas.com puedo mantener a mi familia en Brasil sin preocupaciones.',
-		author: 'Carlos Santos',
-		location: 'Rio de Janeiro, Brasil',
-	},
-	{
-		image: '/images/historia4.png',
-		imageAlt: 'Familia celebrando juntos',
-		testimonial:
-			'Me encanta la transparencia y la rapidez del servicio. Ahora puedo ayudar a mi familia sin complicaciones.',
-		author: 'Marina Costa',
-		location: 'Florianópolis, Brasil',
-	},
-])
-
-const currentSlide = ref(0)
-const autoplayInterval = ref<number | null>(null)
-const AUTOPLAY_DELAY = 5000
-
-const nextSlide = () => {
-	currentSlide.value = (currentSlide.value + 1) % slides.value.length
-}
-
-const prevSlide = () => {
-	currentSlide.value = currentSlide.value === 0 ? slides.value.length - 1 : currentSlide.value - 1
-}
-
-const goToSlide = (index: number) => {
-	currentSlide.value = index
-}
-
-const startAutoplay = () => {
-	autoplayInterval.value = window.setInterval(nextSlide, AUTOPLAY_DELAY)
-}
-
-const pauseAutoplay = () => {
-	if (autoplayInterval.value) {
-		clearInterval(autoplayInterval.value)
-		autoplayInterval.value = null
-	}
-}
-
-const resumeAutoplay = () => {
-	pauseAutoplay() // Clear any existing interval
-	startAutoplay()
-}
-
-// Start autoplay on mount
-onMounted(() => {
-	startAutoplay()
-})
-
-// Clean up on unmount
-onUnmounted(() => {
-	pauseAutoplay()
-})
-
-// Handle visibility change
-onMounted(() => {
-	const handleVisibilityChange = () => {
-		if (document.hidden) {
-			pauseAutoplay()
-		} else {
-			resumeAutoplay()
-		}
-	}
-
-	document.addEventListener('visibilitychange', handleVisibilityChange)
-
-	onUnmounted(() => {
-		document.removeEventListener('visibilitychange', handleVisibilityChange)
-	})
-})
+const testimonials = [
+  {
+    name: 'Patricia M.',
+    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200&auto=format&fit=crop',
+    text: 'He utilizado varias veces el servicio desde hace mucho tiempo y siempre ha sido eficiente, dentro del tiempo indicado y en caso de dudas dispuestos a solucionarlos. Excelente app y atención.'
+  },
+  {
+    name: 'Carlos R.',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop',
+    text: 'El servicio es rápido y confiable. Mi familia en Brasil recibe el dinero sin problemas y el soporte siempre está disponible para ayudar.'
+  },
+  {
+    name: 'Ana L.',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop',
+    text: 'La mejor opción para enviar dinero. El proceso es simple y la plataforma es muy fácil de usar. Totalmente recomendado.'
+  },
+  {
+    name: 'Ana L.',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop',
+    text: 'La mejor opción para enviar dinero. El proceso es simple y la plataforma es muy fácil de usar. Totalmente recomendado.'
+  }
+];
 </script>
+<style>
+.testimonial-slider {
+  padding-bottom: 3rem !important;
+  overflow: visible !important;
+}
+
+.testimonial-slider .swiper-button-next,
+.testimonial-slider .swiper-button-prev {
+  width: 48px !important;
+  height: 48px !important;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  color: #333;
+  transform: translateY(-50%);
+}
+
+.testimonial-slider .swiper-button-next:hover,
+.testimonial-slider .swiper-button-prev:hover {
+  background-color: white;
+}
+
+.testimonial-slider .swiper-pagination-bullet {
+  background: white;
+  opacity: 0.5;
+}
+
+.testimonial-slider .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: white;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 1.25rem !important;
+}
+
+.swiper-slide {
+  opacity: 0.4;
+  transform: scale(0.9);
+  transition: all 0.3s ease;
+}
+
+.swiper-slide-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 0.4;
+  transform: scale(0.85);
+}
+
+/* Fix for loop transition */
+.swiper-slide-duplicate {
+  opacity: 0.4;
+  transform: scale(0.85);
+}
+
+.swiper-slide-duplicate-active {
+  opacity: 1;
+  transform: scale(1);
+}
+</style>

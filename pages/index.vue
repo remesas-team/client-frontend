@@ -1,28 +1,69 @@
 <template>
 	<main class="container mx-auto py-6">
 		<!-- Hero Section -->
-		<div class="flex flex-col md:flex-row justify-between items-center gap-8 px-4 md:min-h-[calc(100vh-100px)] mt-8">
+		<div
+			class="flex flex-col md:flex-row justify-between items-center gap-8 px-4 md:min-h-[calc(100vh-120px)] mt-8">
 			<div class="w-full md:w-1/2 justify-center text-center items-center md:items-left md:text-left">
-				<span class="bg-green-grass text-white rounded-2xl px-4 py-2 text-sm mb-3 text-nowrap lg:text-lg"
-					>🎁 <strong>Regalo:</strong> Cupón 1er envío gratis
-					<a
-						href="#"
-						class="text-[#93f8f4] font-bold ml-2"
-						@click="applyCoupon"
-						>WELCOME100</a
-					></span
-				>
+				<span class="bg-green-grass text-white rounded-2xl px-4 py-2 text-sm mb-3 text-nowrap lg:text-lg">🎁
+					<strong>Regalo:</strong> Cupón 1er envío gratis
+					<a href="#" class="text-[#93f8f4] font-bold ml-2" @click="applyCoupon">WELCOME100</a></span>
 				<h1 class="text-3xl md:text-5xl xl:text-7xl font-bold leading-tight mt-5">
 					Envía dinero a cualquier parte del Perú y Brasil
 				</h1>
-				<p class="mt-4 text-gray-600 text-lg xl:text-2xl">Recibe el dinero el mismo día con el mejor tipo de cambio.</p>
+				<p class="mt-4 text-gray-600 text-lg xl:text-2xl">Recibe el dinero el mismo día con el mejor tipo de
+					cambio.</p>
 			</div>
 			<div class="w-full md:w-1/2">
 				<RemittanceCalculator :set-coupon="coupon" />
 			</div>
 		</div>
 		<div class="px-5">
-			<TestimonialSlider />
+			<h1 class="text-center text-3xl font-bold mb-8 font-rebond max-w-[600px] mx-auto">
+				La forma más simple de <span class="text-green-600">enviar dinero</span> entre Perú y Brasil
+			</h1>
+			<div class="lg:flex items-center gap-10">
+				<section class="py-12 lg:w-[50%]">
+					<div class="container mx-auto px-4">
+						<div class="flex justify-center space-x-8 border-b mb-12">
+							<button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
+							'pb-2 px-4 transition-colors font-rebond',
+							activeTab === tab.id
+								? 'border-b-2 border-green-600 font-semibold text-green-600'
+								: 'text-gray-500'
+						]">
+								{{ tab.label }}
+							</button>
+						</div>
+	
+						<!-- Contenido del tab Enviar -->
+						<div v-if="activeTab === 'enviar'" class="max-w-2xl mx-auto">
+							<div class="space-y-8">
+								<div v-for="(step, index) in enviarSteps" :key="index" class="flex gap-4">
+									<div class="text-3xl flex-shrink-0">{{ step.icon }}</div>
+									<div>
+										<h3 class="font-semibold text-lg mb-1 font-rebond">{{ step.title }}</h3>
+										<p class="text-gray-600">{{ step.description }}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+	
+						<!-- Contenido del tab Recibir -->
+						<div v-if="activeTab === 'recibir'" class="max-w-2xl mx-auto">
+							<div class="space-y-8">
+								<div v-for="(step, index) in recibirSteps" :key="index" class="flex gap-4">
+									<div class="text-3xl flex-shrink-0">{{ step.icon }}</div>
+									<div>
+										<h3 class="font-semibold text-lg mb-1 font-rebond">{{ step.title }}</h3>
+										<p class="text-gray-600">{{ step.description }}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<TestimonialSlider />
+			</div>
 			<FeaturesSection />
 			<TrustSection />
 		</div>
@@ -37,4 +78,51 @@ const coupon = ref(null)
 const applyCoupon = () => {
 	coupon.value = 'WELCOME100'
 }
+const activeTab = ref('enviar');
+
+const tabs = [
+  { id: 'enviar', label: 'Cómo enviar dinero' },
+  { id: 'recibir', label: 'Cómo se recibe' }
+];
+
+const enviarSteps = [
+  {
+    icon: '🧮',
+    title: 'Cotiza tu remesa usando la calculadora',
+    description: 'No dejamos nada a la imaginación, revisa los detalles de tu operación'
+  },
+  {
+    icon: '⚙️',
+    title: 'Configura tu cuenta de Remesas.com',
+    description: 'Garantizamos tus envíos al cumplir con regulación de ambos países'
+  },
+  {
+    icon: '📝',
+    title: 'Registra los datos del destinatario',
+    description: 'Es preciso para evitar contratiempos. Si algo sale mal, te regresaremos el dinero'
+  },
+  {
+    icon: '🏦',
+    title: 'Deposita a la cuenta indicada',
+    description: 'Es una transferencia local, así que no asumirás costos extras'
+  }
+];
+
+const recibirSteps = [
+  {
+    icon: '📱',
+    title: 'Recibe notificación del envío',
+    description: 'Te avisaremos cuando el dinero esté en camino'
+  },
+  {
+    icon: '🔍',
+    title: 'Monitorea el estado en tiempo real',
+    description: 'Sigue el proceso de tu dinero paso a paso'
+  },
+  {
+    icon: '💳',
+    title: 'Recibe en tu cuenta bancaria',
+    description: 'El dinero llega directamente a tu cuenta en reales'
+  }
+];
 </script>

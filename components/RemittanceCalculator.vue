@@ -1,5 +1,5 @@
 <template>
-	<div class="max-w-[450px] mx-auto px-2 md:px-4 mb-16">
+	<div class="max-w-[450px] mx-auto px-2 md:px-4 mb-16 lg:mb-4">
 		<div class="bg-white rounded-xl shadow-lg px-4 md:px-8 py-5 md:py-12">
 			<UForm
 				id="refFormRemittance"
