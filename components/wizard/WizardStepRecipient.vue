@@ -211,20 +211,27 @@ const handleSubmit = async () => {
 
 	const { bank_id, account_number, is_saved, alias, phone_number, account_type_id, cci } = formState.value
 
-	if (!selectedAccount.value) {
-		const response = await userRequest.createBankAccount({
+	const params = {
 			bank_id: bank_id,
 			district_id: null,
 			currency_id: remittanceStore.form.destination_currency_id,
 			account_type_id: account_type_id,
 			account_number: account_number,
-			cci: cci ? cci : null,
 			alias: alias,
 			is_joint_account: false,
 			is_saved: is_saved,
 			tag: 'destination',
 			phone_number: phone_number,
-		})
+		}
+
+	if(cci) {
+		params.cci = cci
+	}
+
+	console.log("PARAMS", params)
+
+	if (!selectedAccount.value) {
+		const response = await userRequest.createBankAccount(params)
 
 		if (!response.success) {
 			loadingSubmit.value = false
