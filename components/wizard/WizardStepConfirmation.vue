@@ -12,14 +12,14 @@
 		<!-- Exchange Rate Info -->
 		<div class="mb-8">
 			<div class="flex justify-between items-center mb-4">
-				<span class="text-gray-600 text-xl">Total a depositar</span>
-				<span class="text-2xl font-bold"
+				<span class="text-gray-600 text-lg">Total a depositar</span>
+				<span class="text-xl font-bold"
 					>{{ remittanceStore.form.source_amount }} {{ remittanceStore.form.source_currency_symbol }}</span
 				>
 			</div>
 			<div class="flex justify-between items-center">
-				<span class="text-gray-600 text-xl">Recibe en destino:</span>
-				<span class="text-2xl font-bold"
+				<span class="text-gray-600 text-lg">Recibe en destino:</span>
+				<span class="text-xl font-bold"
 					>{{ remittanceStore.form.destination_amount }} {{ remittanceStore.form.destination_currency_symbol }}</span
 				>
 			</div>

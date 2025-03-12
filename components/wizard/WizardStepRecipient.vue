@@ -36,7 +36,7 @@
 						<ul class="[&>*]:mb-2 text-sm">
 							<li><span class="font-medium">Nombre:</span> {{ selectedAccount?.alias }}</li>
 							<li><span class="font-medium">Número de cuenta:</span> {{ selectedAccount?.account_number }}</li>
-							<li><span class="font-medium">CCI:</span> {{ selectedAccount?.cci }}</li>
+							<li v-if="selectedAccount.cci"><span class="font-medium">CCI:</span> {{ selectedAccount?.cci }}</li>
 							<li><span class="font-medium">Celular:</span> {{ selectedAccount?.phone_number }}</li>
 							<li><span class="font-medium">Banco:</span> {{ selectedAccount?.bank_name }}</li>
 							<li><span class="font-medium">Moneda:</span> {{ selectedAccount?.currency_code }}</li>

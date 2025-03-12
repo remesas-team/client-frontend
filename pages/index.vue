@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div class="px-5">
-			<h1 class="text-center text-3xl font-bold mb-8 font-rebond max-w-[600px] mx-auto lg:text-4xl">
+			<h1 class="text-center text-2xl font-bold mb-8 font-rebond max-w-[600px] mx-auto lg:text-4xl">
 				La forma más simple de <span class="text-green-600">enviar dinero</span> entre Perú y Brasil
 			</h1>
 			<div class="lg:flex items-center gap-10">

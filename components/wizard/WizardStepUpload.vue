@@ -27,9 +27,9 @@
 		<div class="mb-4">
 			<h3 class="text-lg font-medium my-5 text-center">Confirma la transacción al siguiente n° de cuenta</h3>
 			<div class="mb-4 flex flex-col gap-4">
-				<div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
-					<span class="text-gray-600">Banco:</span>
-					<div class="flex items-center gap-2">
+				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
+					<span class="text-gray-600 text-sm">Banco:</span>
+					<div class="flex items-center gap-2 justify-between">
 						<span
 							v-if="newOperation"
 							class="font-medium"
@@ -57,9 +57,9 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
-					<span class="text-gray-600">N° de cuenta:</span>
-					<div class="flex items-center gap-2">
+				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
+					<span class="text-gray-600 text-sm" >N° de cuenta:</span>
+					<div class="flex items-center gap-2 justify-between">
 						<span
 							v-if="newOperation"
 							class="font-medium"
@@ -87,9 +87,9 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
-					<span class="text-gray-600">N° de cuenta interbancario:</span>
-					<div class="flex items-center gap-2">
+				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
+					<span class="text-gray-600 text-sm">N° de cuenta interbancario:</span>
+					<div class="flex items-center gap-2 justify-between">
 						<span
 							v-if="newOperation"
 							class="font-medium"
@@ -117,9 +117,9 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
-					<span class="text-gray-600">Titular de la cuenta:</span>
-					<div class="flex items-center gap-2">
+				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
+					<span class="text-gray-600 text-sm">Titular de la cuenta:</span>
+					<div class="flex items-center gap-2 justify-between">
 						<span
 							v-if="newOperation"
 							class="font-medium"
@@ -147,9 +147,9 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col items-center gap-2 md:justify-between md:items-center">
-					<span class="text-gray-600">Total a Transferir</span>
-					<div class="flex items-center gap-2">
+				<div class="flex flex-col gap-2 md:justify-between md:items-center">
+					<span class="text-gray-600 text-sm">Total a Transferir</span>
+					<div class="flex items-center gap-2 justify-between">
 						<span
 							v-if="newOperation.collection_system_account.currency"
 							class="font-medium text-2xl"
@@ -181,7 +181,7 @@
 		</div>
 
 		<!-- Upload Section -->
-		<div class="mb-4">
+		<div class="mb-4 mt-8">
 			<div
 				v-if="!selectedFile"
 				class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center mt-4"
@@ -191,9 +191,7 @@
 				@drop.prevent="handleDrop"
 			>
 				<div class="mb-2">
-					<p class="text-gray-600">Sube la Screenshot de tu transacción</p>
-					<p class="text-gray-600 mt-2">o</p>
-					<p class="text-gray-600 mt-2">Foto del voucher de depósito</p>
+					<p class="text-gray-600">Sube una Screenshot o foto de tu transacción o voucher de depósito</p>
 				</div>
 
 				<input
@@ -280,6 +278,18 @@
 			</p>
 		</div>
 	</div>
+
+	<!-- Toast notification for copy feedback -->
+	<div 
+		v-if="showCopyToast" 
+		class="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-300"
+		:class="{ 'opacity-100': showCopyToast, 'opacity-0': !showCopyToast }"
+	>
+		<div class="flex items-center gap-2">
+			<UIcon name="i-mdi:check-circle" />
+			<span>Copiado al portapapeles</span>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -307,6 +317,9 @@ const newOperation = ref({
 	},
 })
 
+// Toast notification state
+const showCopyToast = ref(false)
+
 // Format remaining time as MM:SS
 const formattedTimeRemaining = computed(() => {
 	const minutes = Math.floor(timeRemaining.value / 60)
@@ -318,7 +331,12 @@ const formattedTimeRemaining = computed(() => {
 const copyToClipboard = async (text: string) => {
 	try {
 		await navigator.clipboard.writeText(text)
-		// You could add a toast notification here
+		// Show toast notification
+		showCopyToast.value = true
+		// Hide toast after 2 seconds
+		setTimeout(() => {
+			showCopyToast.value = false
+		}, 2000)
 	} catch (err) {
 		console.error('Failed to copy text: ', err)
 	}
