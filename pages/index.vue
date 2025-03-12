@@ -1,5 +1,5 @@
 <template>
-	<main class="container mx-auto py-6">
+	<main class="container mx-auto py-6 overflow-hidden">
 		<!-- Hero Section -->
 		<div
 			class="flex flex-col md:flex-row justify-between items-center gap-8 px-4 md:min-h-[calc(100vh-120px)] mt-8">
@@ -18,13 +18,13 @@
 			</div>
 		</div>
 		<div class="px-5">
-			<h1 class="text-center text-3xl font-bold mb-8 font-rebond max-w-[600px] mx-auto">
+			<h1 class="text-center text-3xl font-bold mb-8 font-rebond max-w-[600px] mx-auto lg:text-4xl">
 				La forma más simple de <span class="text-green-600">enviar dinero</span> entre Perú y Brasil
 			</h1>
 			<div class="lg:flex items-center gap-10">
 				<section class="py-12 lg:w-[50%]">
 					<div class="container mx-auto px-4">
-						<div class="flex justify-center space-x-8 border-b mb-12">
+						<div class="flex justify-center space-x-8 border-b mb-12 text-xl">
 							<button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
 							'pb-2 px-4 transition-colors font-rebond',
 							activeTab === tab.id

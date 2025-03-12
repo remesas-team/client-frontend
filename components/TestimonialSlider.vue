@@ -1,14 +1,14 @@
 <template>
-  <section class="py-16 bg-white overflow-hidden md:bg-transparent lg:w-[50%]"  >
+  <section class="py-16 bg-white overflow-hidden md:bg-transparent lg:w-[50%] lg:pb-4"  >
     <div class="container mx-auto px-4">
       <h2 class="text-center text-2xl font-bold mb-3 font-rebond lg:hidden"> 
         Hecho por inmigrantes <span class="text-green-600">para inmigrantes</span>
       </h2>
       <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 lg:hidden">
-        Sabemos lo que significa estar lejos de casa o tener que cuidar a familiares que se encuentran lejos...
+        Sabemos lo que significa estar lejos de casa o tener que cuidar a familiares que se encuentran lejos. Estamos aquí para ayudartlos.
       </p>
 
-      <div class="max-w-[400px] mx-auto">
+      <div class="md:max-w-[400px] max-w-[300px] mx-auto">
         <swiper
           :modules="[Navigation, Pagination, EffectCoverflow]"
           :effect="'coverflow'"
@@ -17,7 +17,7 @@
           :loop="true"
           :looped-slides="1"
           :slides-per-view="1"
-          :space-between="30"
+          :space-between="10"
           :navigation="true"
           :pagination="{ clickable: true }"
           :coverflow-effect="{
@@ -30,7 +30,7 @@
           class="testimonial-slider"
         >
           <swiper-slide v-for="testimonial in testimonials" :key="testimonial.name">
-            <div class="relative h-[600px] rounded-xl overflow-hidden">
+            <div class="relative h-[500px] md:h-[600px] rounded-xl overflow-hidden">
               <!-- Background Image with Gradient Overlay -->
               <div class="absolute inset-0">
                 <img 
@@ -45,7 +45,7 @@
               <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
                 <div class="text-yellow-400 text-xl mb-2">★★★★★</div>
                 <h3 class="text-3xl font-semibold mb-4 font-rebond">{{ testimonial.name }}</h3>
-                <p class="text-lg max-w-2xl">
+                <p class="lg:text-lg max-w-2xl">
                   "{{ testimonial.text }}"
                 </p>
               </div>
@@ -68,21 +68,21 @@ const testimonials = [
   {
     name: 'Patricia M.',
     image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200&auto=format&fit=crop',
-    text: 'He utilizado varias veces el servicio desde hace mucho tiempo y siempre ha sido eficiente, dentro del tiempo indicado y en caso de dudas dispuestos a solucionarlos. Excelente app y atención.'
+    text: 'He utilizado varías veces el servicio desde hace mucho tiempo y siempre ha sido eficiente, dentro del tiempo indicado y en caso de dudas dispuestos a solucionarlos. Excelente app y atención.'
   },
   {
-    name: 'Carlos R.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop',
-    text: 'El servicio es rápido y confiable. Mi familia en Brasil recibe el dinero sin problemas y el soporte siempre está disponible para ayudar.'
+    name: 'Rossina D.',
+    image: '/images/testimoniomeli.jpeg',
+    text: 'Utilizo la plataforma hace un buen tiempo y es muy fácil de usar, buen soporte técnico. Cualquier duda puede ser resolvida a travez del WhatsApp'
   },
   {
-    name: 'Ana L.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop',
-    text: 'La mejor opción para enviar dinero. El proceso es simple y la plataforma es muy fácil de usar. Totalmente recomendado.'
+    name: 'Cynthia M.',
+    image: '/images/seño1.png',
+    text: 'Excelente servicio! Súper confiable, me depositaron el mismo día, muy agradecida con el servicio, se contactaron conmigo para brindarme todas las informaciones! Recomiendo al 100%! Solo confió en ellos!'
   },
   {
-    name: 'Ana L.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop',
+    name: 'Marco L.',
+    image: '/images/historia1.png',
     text: 'La mejor opción para enviar dinero. El proceso es simple y la plataforma es muy fácil de usar. Totalmente recomendado.'
   }
 ];
@@ -101,6 +101,13 @@ const testimonials = [
   border-radius: 50%;
   color: #333;
   transform: translateY(-50%);
+}
+
+.testimonial-slider .swiper-button-next {
+	right: -30px;
+}
+.testimonial-slider .swiper-button-prev {
+	left: -30px;
 }
 
 .testimonial-slider .swiper-button-next:hover,
