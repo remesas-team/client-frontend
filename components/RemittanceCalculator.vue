@@ -365,7 +365,7 @@ const calculateEstimate = async () => {
 }
 
 const applyCoupon = (coupon_code) => {
-	console.log("coupon_code: ", coupon_code)
+	showCoupon.value = true
 	if (coupon_code) {
 		formRemittance.value.coupon = coupon_code
 		calculateEstimate()
@@ -442,9 +442,9 @@ onMounted(async () => {
 })
 
 watch(coupon, (data) => {
-	console.log(watch)
-	 if (coupon) {
-		applyCoupon(coupon)
+	console.log("NEW VALuE", data)
+	 if (data) {
+		applyCoupon(data)
 	}
 })
 </script>

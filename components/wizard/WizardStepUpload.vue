@@ -198,7 +198,7 @@
 					ref="fileInput"
 					type="file"
 					class="hidden"
-					accept="image/*"
+					accept="image/*,.pdf"
 					@change="handleFileSelect"
 				/>
 
