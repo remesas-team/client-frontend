@@ -43,7 +43,7 @@
 						</ul>
 					</div>
 				</div>
-				<div @click="setNewAccount = true" class="cursor-pointer hover:font-medium mt-4" v-if="!setNewAccount">
+				<div @click="switchNewAccount()" class="cursor-pointer hover:font-medium mt-4" v-if="!setNewAccount">
 					+ Crear nuevo destinatario
 				</div>
 				<div v-else @click="setNewAccount = false">
@@ -213,28 +213,37 @@ const formState = ref({
 	phone_number: null,
 })
 
-const schemaRecipient = v.object({
-  bank_id: v.number('Banco es requerido'),
-  account_type_id: v.number('Tipo de cuenta es requerido'),
-  account_number: v.pipe(
-    v.string('Número de cuenta es requerido'),
-    v.regex(/^(?:\d+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/, 'Debe contener solo números o ser un correo válido')
-  ),
-  ...(remittanceStore.form.destination_currency_symbol != 'BRL' ? { //PARCHE: Verifica que no sea Brasil para validar el cci
-    cci: v.pipe(
-      v.string('CCI es requerido'),
-      v.regex(/^\d*$/, 'CCI debe contener solo números')
-    )
-  } : {}),
-  alias: v.pipe(
-    v.string('Nombre del destinatario es requerido'),
-    v.regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'Nombre debe contener solo letras')
-  ),
-  phone_number: v.pipe(
-    v.string('Número de teléfono es requerido'),
-    v.regex(/^\d+$/, 'Número de teléfono debe contener solo números')
-  ),
+const schemaRecipient = computed(() => {
+	console.log(selectedAccount.value)
+  if (selectedAccount.value) {
+    return v.object({})
+  }
+
+  return v.object({
+    bank_id: v.number('Banco es requerido'),
+    account_type_id: v.number('Tipo de cuenta es requerido'),
+    account_number: v.pipe(
+      v.string('Número de cuenta es requerido'),
+      v.regex(/^(?:\d+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/, 'Debe contener solo números o ser un correo válido')
+    ),
+    ...(remittanceStore.form.destination_currency_symbol != 'BRL' ? { //PARCHE: Verifica que no sea Brasil para validar el cci
+      cci: v.pipe(
+        v.string('CCI es requerido'),
+        v.regex(/^\d*$/, 'CCI debe contener solo números')
+      )
+    } : {}),
+    alias: v.pipe(
+      v.string('Nombre del destinatario es requerido'),
+      v.regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'EL Nombre del destinatario debe contener solo letras')
+    ),
+    phone_number: v.pipe(
+      v.string('Número de teléfono es requerido'),
+      v.regex(/^\d+$/, 'Número de teléfono debe contener solo números')
+    ),
+  })
 })
+
+
 const bankTypes = computed(() => {
 	const selectedType = formState.value.account_type_id
 	const selectedbanktype = bank_types.value.find((item) => item.id === selectedType)?.name || ''
@@ -273,9 +282,10 @@ const handleSubmit = async () => {
 			loadingSubmit.value = false
 			return
 		}
-
+		console.log("Selected!", response.data)
 		remittanceStore.form.destination_user_account_id = response.data.id
 	} else {
+		console.log("Selected",selectedAccount.value.id)
 		remittanceStore.form.destination_user_account_id = selectedAccount.value.id
 	}
 
@@ -292,7 +302,6 @@ const getBanks = async () => {
 	}
 	banks.value = response.data
 
-	console.log('banks', banks.value)
 }
 
 const getBankAccounts = async () => {
@@ -325,6 +334,11 @@ const setFormState = () => {
 	}
 
 	selectedAccount.value = savedAccounts.value.find((item) => item.id === destination_user_account_id)
+}
+
+const switchNewAccount = () => {
+	selectedAccount.value = null
+	setNewAccount.value = !setNewAccount.value
 }
 
 onMounted(async () => {

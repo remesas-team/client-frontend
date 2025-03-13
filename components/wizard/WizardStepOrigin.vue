@@ -79,8 +79,8 @@
 								v-model="formState.bank_id"
 								:items="banks"
 								:search-input="{
-								placeholder: 'Filter...',
-								icon: 'i-lucide-search'
+									placeholder: 'Filter...',
+									icon: 'i-lucide-search'
 								}"
 								value-key="id"
 								label-key="name"
@@ -136,7 +136,7 @@
 						>Datos del titular:</label
 					>
 
-					<div class="w-full">
+					<div class="w-full text-green">
 						<UFormField name="alias">
 							<UInput
 								v-model="formState.alias"
@@ -144,7 +144,7 @@
 								placeholder="Nombre del destinatario"
 								size="xl"
 								disabled
-								class="w-full text-xl text-gray"
+								class="w-full text-xl disabled:text-gray-500"
 							/>
 						</UFormField>
 					</div>
@@ -213,33 +213,37 @@ const formState = ref({
 	phone_number: null,
 })
 
-const schemaOrigin = v.object({
-  bank_id: v.number('Banco es requerido'),
-  account_type_id: v.number('Tipo de cuenta es requerido'),
-  account_number: v.pipe(
-    v.string('Número de cuenta es requerido'),
-    v.regex(/^(?:\d+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/, 'Debe contener solo números o ser un correo válido')
-  ),
-  ...(remittanceStore.form.source_currency_symbol != 'BRL' ? { //PARCHE: Verifica que no sea Brasil para validar el cci
-    cci: v.pipe(
-      v.string('CCI es requerido'),
-      v.regex(/^\d*$/, 'CCI debe contener solo números')
+const schemaOrigin = computed(() => {
+  if (selectedAccount.value) {
+    return v.object({})
+  }
+
+  return v.object({
+    bank_id: v.number('Banco es requerido'),
+    account_type_id: v.number('Tipo de cuenta es requerido'),
+    account_number: v.pipe(
+      v.string('Número de cuenta es requerido'),
+      v.regex(/^(?:\d+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/, 'Debe contener solo números o ser un correo válido')
+    ),
+    ...(remittanceStore.form.source_currency_symbol != 'BRL' ? { //PARCHE: Verifica que no sea Brasil para validar el cci
+      cci: v.pipe(
+        v.string('CCI es requerido'),
+        v.regex(/^\d*$/, 'CCI debe contener solo números')
+      )
+    } : {}),
+    alias: v.pipe(
+      v.string('Nombre del destinatario es requerido'),
+      v.regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'Nombre debe contener solo letras')
     )
-  } : {}),
-  alias: v.pipe(
-    v.string('Nombre del destinatario es requerido'),
-    v.regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'Nombre debe contener solo letras')
-  ),
-  phone_number: v.optional(v.nullable(v.pipe(
-    v.string(),
-    v.regex(/^\d+$/, 'Número de teléfono debe contener solo números')
-  ))),
+  })
 })
 
+
 const handleSubmit = async () => {
+	console.log("Submit")
 	loadingSubmit.value = true
 
-	const { bank_id, account_number, is_saved, alias, phone_number, account_type_id, cci } = formState.value
+	const { bank_id, account_number, is_saved, alias, account_type_id, cci } = formState.value
 
 	const params = {
 			bank_id: bank_id,
@@ -250,8 +254,7 @@ const handleSubmit = async () => {
 			alias: alias,
 			is_joint_account: false,
 			is_saved: is_saved,
-			tag: 'origin',
-			phone_number: phone_number,
+			tag: 'origin'
 		}
 
 	if(cci) {
@@ -268,9 +271,9 @@ const handleSubmit = async () => {
 			return
 		}
 
-		remittanceStore.form.destination_user_account_id = response.data.id
+		remittanceStore.form.source_user_account_id = response.data.id
 	} else {
-		remittanceStore.form.destination_user_account_id = selectedAccount.value.id
+		remittanceStore.form.source_user_account_id = selectedAccount.value.id
 	}
 
 	emit('next')
@@ -295,8 +298,6 @@ const getBankAccounts = async () => {
 		return
 	}
 
-	
-	console.log(remittanceStore.form.source_currency_symbol)
 	savedAccounts.value = response.data.filter(
 		(item) =>
 			item.tag === 'origin' && item.is_saved && item.currency_code === remittanceStore.form.source_currency_symbol
