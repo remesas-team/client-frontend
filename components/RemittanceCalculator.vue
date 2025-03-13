@@ -165,7 +165,7 @@
 							<div class="flex gap-2">
 								<div class="flex-1">
 									<UInput
-										v-model="formRemittance.coupon_code"
+										v-model="formRemittance.coupon"
 										placeholder="Ingresa tu cupón"
 										size="2xl"
 										class="w-full"
@@ -175,7 +175,7 @@
 									<UButton
 										type="button"
 										class="hover:cursor-pointer px-5 py-4 bg-green-dark text-white hover:bg-green-grass"
-										@click="applyCoupon"
+										@click="applyCoupon(formRemittance.coupon)"
 									>
 										Aplicar
 									</UButton>
@@ -235,7 +235,7 @@
 				</div>
 				<!-- Coupon Information -->
 				<div
-					v-if="estimate && estimate.coupon !== 'not applied'"
+					v-if="estimate && estimate.coupon != 'not applied'"
 					class="p-4 bg-green-50 rounded-xl mb-4"
 				>
 					<div class="flex items-center gap-2">
@@ -255,7 +255,12 @@
 					<p class="text-sm text-green-600 mt-1">{{ estimate.coupon.description }}</p>
 					<p class="font-bold text-green-600">Ahorraste: {{ estimate.savings }} {{ estimate.from }}</p>
 				</div>
-				<!-- Compare Button -->
+				<!-- Errores -->
+				<div>
+
+
+				</div>
+				<!-- Submit Button -->
 				<button
 					type="submit"
 					class="w-full bg-green-grass text-white py-4 rounded-xl text-[17px] font-medium hover:bg-green-dark transition-colors hover:cursor-pointer"
@@ -273,12 +278,11 @@ import { useRemittanceStore } from '~/stores/remittance'
 import { useSourcesStore } from '~/stores/sources'
 import { operationsRepository } from '~/repositories/v1/platform/operationsRepository'
 
-const props = defineProps(['setCoupon'])
-
 const router = useRouter()
 const remittanceStore = useRemittanceStore()
 const sourcesStore = useSourcesStore()
 const requestOperations = operationsRepository()
+const { coupon } = storeToRefs(remittanceStore)
 
 const refFormRemittance = ref(null)
 const fromCountry = ref(null)
@@ -292,7 +296,7 @@ const formRemittance = ref({
 	from: 'PEN',
 	to: 'BRL',
 	amount: 1500,
-	coupon_code: null,
+	coupon: null,
 })
 
 const getCountries = computed(() => {
@@ -347,12 +351,8 @@ const handleAmountInput = (value: number) => {
 }
 
 const calculateEstimate = async () => {
-	const params = {
-		...formRemittance.value,
-		coupon_code: formRemittance.value.coupon?.toUpperCase(),
-	}
 
-	const response = await requestOperations.getEstimate(params)
+	const response = await requestOperations.getEstimate(formRemittance.value)
 
 	if (!response.success) {
 		const listErrors = Object.keys(response.errors).map((key) => ({ name: key, message: response.errors[key][0] }))
@@ -364,8 +364,13 @@ const calculateEstimate = async () => {
 	estimate.value = response.data
 }
 
-const applyCoupon = () => {
-	if (formRemittance.value.coupon) {
+const applyCoupon = (coupon_code) => {
+	console.log("coupon_code: ", coupon_code)
+	if (coupon_code) {
+		formRemittance.value.coupon = coupon_code
+		calculateEstimate()
+	} else {
+		coupon.value = null // si llega vacío resetea el cupon
 		calculateEstimate()
 	}
 }
@@ -398,7 +403,7 @@ const startOperation = () => {
 	remittanceStore.form.amount_to_send = estimate.value.amount_to_send
 	remittanceStore.form.savings = estimate.value.savings || 0
 
-	remittanceStore.form.coupon_code = estimate.value.coupon?.code || null
+	remittanceStore.form.coupon = estimate.value.coupon?.code || null
 
 
 	router.push('/operacion/1')
@@ -427,6 +432,7 @@ const setFromCurrencies = () => {
 }
 
 onMounted(async () => {
+	coupon.value = null // Resetea el cupon
 	await Promise.all([sourcesStore.fetchCurrencies(), sourcesStore.fetchSystemAccounts()])
 
 	if (sourcesStore.countries?.length > 0) {
@@ -435,15 +441,10 @@ onMounted(async () => {
 	}
 })
 
-watch(
-	() => props.setCoupon,
-	(newCoupon) => {
-		console.log(newCoupon)
-		if (newCoupon) {
-			showCoupon.value = true
-			formRemittance.value.coupon = newCoupon
-			calculateEstimate()
-		}
-	},
-)
+watch(coupon, (data) => {
+	console.log(watch)
+	 if (coupon) {
+		applyCoupon(coupon)
+	}
+})
 </script>

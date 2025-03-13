@@ -71,12 +71,15 @@
 </template>
 
 <script setup lang="ts">
+import { useRemittanceStore } from '~/stores/remittance'
+const remittanceStore = useRemittanceStore()
+
 definePageMeta({
 	auth: false,
 })
 const coupon = ref(null)
 const applyCoupon = () => {
-	coupon.value = 'WELCOME100'
+	remittanceStore.coupon = 'WELCOME100'
 }
 const activeTab = ref('enviar');
 

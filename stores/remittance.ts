@@ -37,6 +37,7 @@ export const useRemittanceStore = defineStore('remittance', {
 		},
 		currentOperation: null,
 		newOperation: null,
+		coupon: null
 	}),
 
 	getters: {},
