@@ -64,6 +64,7 @@
 				id="refFormRemittance"
 				ref="refFormRemittance"
 				:state="formState"
+				:schema="v.safeParser(schemaOrigin)"
 				@submit="handleSubmit"
 			>
 				<div v-if="!selectedAccount">
@@ -73,54 +74,60 @@
 						>Datos de la cuenta:</label
 					>
 					<div class="w-full mb-2">
-						<USelectMenu
-							v-model="formState.bank_id"
-							:items="banks"
-							:search-input="{
-							placeholder: 'Filter...',
-							icon: 'i-lucide-search'
-							}"
-							value-key="id"
-							label-key="name"
-							placeholder="Selecciona un banco"
-							size="xl"
-							class="w-full"
-							@change="getBankTypes"
-						/>
+						<UFormField name="bank_id">
+							<USelectMenu
+								v-model="formState.bank_id"
+								:items="banks"
+								:search-input="{
+								placeholder: 'Filter...',
+								icon: 'i-lucide-search'
+								}"
+								value-key="id"
+								label-key="name"
+								placeholder="Selecciona un banco"
+								size="xl"
+								class="w-full"
+								@change="getBankTypes"
+							/>
+						</UFormField>
 					</div>
 
 					<div class="w-full mb-2">
-						<USelectMenu
-							v-model="formState.account_type_id"
-							:items="bank_types"
-							:search-input="false"
-							value-key="id"
-							label-key="name"
-							placeholder="Tipo de cuenta"
-							size="xl"
-							class="w-full"
-						/>
+						<UFormField name="account_type_id">
+							<USelectMenu
+								v-model="formState.account_type_id"
+								:items="bank_types"
+								:search-input="false"
+								value-key="id"
+								label-key="name"
+								placeholder="Tipo de cuenta"
+								size="xl"
+								class="w-full"
+							/>
+						</UFormField>
 					</div>
 
 					<div class="w-full mb-2">
-						<UInput
-							v-model="formState.account_number"
-							:placeholder="bankTypes"
-							type="text"
-							size="xl"
-							class="w-full text-xl"
-							@input="formState.account_number = formState.account_number.replace(/\D/g, '')"
-						/>
+						<UFormField name="account_number">
+							<UInput
+								v-model="formState.account_number"
+								:placeholder="bankTypes"
+								type="text"
+								size="xl"
+								class="w-full text-xl"
+							/>
+						</UFormField>
 					</div>
-					<div class="w-full mb-2" v-if="remittanceStore.form.destination_country_id === 1">
-						<UInput
-							v-model="formState.cci"
-							placeholder="Numero de cuenta interbancario"
-							type="text"
-							size="xl"
-							class="w-full text-xl"
-							@input="formState.account_number = formState.account_number.replace(/\D/g, '')"
-						/>
+					<div class="w-full mb-2" v-if="remittanceStore.form.source_currency_symbol != 'BRL'">
+						<UFormField name="cci">
+							<UInput
+								v-model="formState.cci"
+								placeholder="Numero de cuenta interbancario"
+								type="text"
+								size="xl"
+								class="w-full text-xl"
+							/>
+						</UFormField>
 					</div>
 
 					<label
@@ -130,14 +137,16 @@
 					>
 
 					<div class="w-full">
-						<UInput
-							v-model="formState.alias"
-							type="text"
-							placeholder="Nombre del destinatario"
-							size="xl"
-							disabled
-							class="w-full text-xl text-gray"
-						/>
+						<UFormField name="alias">
+							<UInput
+								v-model="formState.alias"
+								type="text"
+								placeholder="Nombre del destinatario"
+								size="xl"
+								disabled
+								class="w-full text-xl text-gray"
+							/>
+						</UFormField>
 					</div>
 
 					<div class="mt-6">
@@ -158,6 +167,7 @@
 					size="xl"
 					color="primary"
 					block
+					:loading="loadingSubmit"
 					class="w-full mt-8 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-dark hover:cursor-pointer"
 				>
 					Continuar
@@ -174,6 +184,7 @@ import { useAuthStore } from '~/stores/auth'
 import { useRemittanceStore } from '~/stores/remittance'
 import { sourcesRepository } from '~/repositories/v1/platform/sourcesRepository'
 import CircleLoader from '~/components/CircleLoader.vue'
+import * as v from 'valibot'
 
 const emit = defineEmits<{
 	(e: 'next'): void
@@ -198,16 +209,39 @@ const formState = ref({
 	recipientName: '',
 	is_saved: true,
 	alias: '',
-	cci: 0,
+	cci: null,
+	phone_number: null,
+})
+
+const schemaOrigin = v.object({
+  bank_id: v.number('Banco es requerido'),
+  account_type_id: v.number('Tipo de cuenta es requerido'),
+  account_number: v.pipe(
+    v.string('Número de cuenta es requerido'),
+    v.regex(/^(?:\d+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/, 'Debe contener solo números o ser un correo válido')
+  ),
+  ...(remittanceStore.form.source_currency_symbol != 'BRL' ? { //PARCHE: Verifica que no sea Brasil para validar el cci
+    cci: v.pipe(
+      v.string('CCI es requerido'),
+      v.regex(/^\d*$/, 'CCI debe contener solo números')
+    )
+  } : {}),
+  alias: v.pipe(
+    v.string('Nombre del destinatario es requerido'),
+    v.regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'Nombre debe contener solo letras')
+  ),
+  phone_number: v.optional(v.nullable(v.pipe(
+    v.string(),
+    v.regex(/^\d+$/, 'Número de teléfono debe contener solo números')
+  ))),
 })
 
 const handleSubmit = async () => {
 	loadingSubmit.value = true
 
-	const { bank_id, account_number, is_saved, alias, account_type_id, cci } = formState.value
+	const { bank_id, account_number, is_saved, alias, phone_number, account_type_id, cci } = formState.value
 
-	if (!selectedAccount.value) {
-		const response = await userRequest.createBankAccount({
+	const params = {
 			bank_id: bank_id,
 			district_id: null,
 			currency_id: remittanceStore.form.source_currency_id,
@@ -217,17 +251,26 @@ const handleSubmit = async () => {
 			is_joint_account: false,
 			is_saved: is_saved,
 			tag: 'origin',
-			cci: cci
-		})
+			phone_number: phone_number,
+		}
+
+	if(cci) {
+		params.cci = cci
+	}
+
+	console.log("PARAMS", params)
+
+	if (!selectedAccount.value) {
+		const response = await userRequest.createBankAccount(params)
 
 		if (!response.success) {
 			loadingSubmit.value = false
 			return
 		}
 
-		remittanceStore.form.source_user_account_id = response.data.id
+		remittanceStore.form.destination_user_account_id = response.data.id
 	} else {
-		remittanceStore.form.source_user_account_id = selectedAccount.value.id
+		remittanceStore.form.destination_user_account_id = selectedAccount.value.id
 	}
 
 	emit('next')

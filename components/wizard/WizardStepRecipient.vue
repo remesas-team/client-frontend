@@ -54,6 +54,7 @@
 					id="refFormRemittance"
 					ref="refFormRemittance"
 					:state="formState"
+					:schema="v.safeParser(schemaRecipient)"
 					@submit="handleSubmit"
 				>
 					<!-- Save Account -->
@@ -64,52 +65,58 @@
 							>Datos de la cuenta:</label
 						>
 						<div class="w-full mb-2">
-							<USelectMenu
-								v-model="formState.bank_id"
-								:items="banks"
-								:search-input="true"
-								value-key="id"
-								label-key="name"
-								placeholder="Selecciona un banco"
-								size="xl"
-								class="w-full"
-								@change="getBankTypes"
-							/>
+							<UFormField name="bank_id">
+								<USelectMenu
+									v-model="formState.bank_id"
+									:items="banks"
+									:search-input="true"
+									value-key="id"
+									label-key="name"
+									placeholder="Selecciona un banco"
+									size="xl"
+									class="w-full"
+									@change="getBankTypes"
+								/>
+							</UFormField>
 						</div>
 
 						<div class="w-full mb-2">
-							<USelectMenu
-								v-model="formState.account_type_id"
-								:items="bank_types"
-								:search-input="false"
-								value-key="id"
-								label-key="name"
-								placeholder="Tipo de cuenta"
-								size="xl"
-								class="w-full"
-							/>
+							<UFormField name="account_type_id">
+								<USelectMenu
+									v-model="formState.account_type_id"
+									:items="bank_types"
+									:search-input="false"
+									value-key="id"
+									label-key="name"
+									placeholder="Tipo de cuenta"
+									size="xl"
+									class="w-full"
+								/>
+							</UFormField>
 						</div>
 
 						<div class="w-full mb-2">
-							<UInput
-								v-model="formState.account_number"
-								:placeholder="bankTypes"
-								type="text"
-								size="xl"
-								class="w-full text-xl"
-								@input="formState.account_number = formState.account_number.replace(/\D/g, '')"
-							/>
+							<UFormField name="account_number">
+								<UInput
+									v-model="formState.account_number"
+									:placeholder="bankTypes"
+									type="text"
+									size="xl"
+									class="w-full text-xl"
+								/>
+							</UFormField>
 						</div>
 
-						<div class="w-full mb-2" v-if="remittanceStore.form.destination_country_id === 1">
-							<UInput
-								v-model="formState.cci"
-								placeholder="Numero de cuenta interbancario"
-								type="text"
-								size="xl"
-								class="w-full text-xl"
-								@input="formState.account_number = formState.account_number.replace(/\D/g, '')"
-							/>
+						<div class="w-full mb-2" v-if="remittanceStore.form.destination_currency_symbol != 'BRL'">
+							<UFormField name="cci">
+								<UInput
+									v-model="formState.cci"
+									placeholder="Numero de cuenta interbancario"
+									type="text"
+									size="xl"
+									class="w-full text-xl"
+								/>
+							</UFormField>
 						</div>
 
 						<label
@@ -118,24 +125,28 @@
 							>Datos de contacto:</label
 						>
 						<div class="w-full mb-2">
-							<UInput
-								v-model="formState.alias"
-								type="text"
-								placeholder="Nombre del destinatario"
-								size="xl"
-								class="w-full text-xl"
-							/>
+							<UFormField name="alias">
+								<UInput
+									v-model="formState.alias"
+									type="text"
+									placeholder="Nombre del destinatario"
+									size="xl"
+									class="w-full text-xl"
+								/>
+							</UFormField>
 						</div>
 						<div class="w-full">
-							<UInput
-								v-model="formState.phone_number"
-								type="text"
-								pattern="[0-9]*"
-								inputmode="numeric"
-								placeholder="N° Celular"
-								size="xl"
-								class="w-full text-xl"
-							/>
+							<UFormField name="phone_number">
+								<UInput
+									v-model="formState.phone_number"
+									type="text"
+									pattern="[0-9]*"
+									inputmode="numeric"
+									placeholder="N° Celular"
+									size="xl"
+									class="w-full text-xl"
+								/>
+							</UFormField>
 						</div>
 						<div class="mt-6">
 							<label class="flex items-center">
@@ -172,6 +183,9 @@ import { useRemittanceStore } from '~/stores/remittance'
 import { sourcesRepository } from '~/repositories/v1/platform/sourcesRepository'
 import CircleLoader from '~/components/CircleLoader.vue'
 
+
+import * as v from 'valibot'
+
 const emit = defineEmits<{
 	(e: 'next'): void
 }>()
@@ -191,14 +205,36 @@ const selectedAccount = ref(null)
 const formState = ref({
 	bank_id: null,
 	account_type_id: null,
-	account_number: '',
-	cci: '',
+	account_number: null,
+	cci: null,
 	recipientName: '',
 	is_saved: false,
-	alias: '',
+	alias: null,
 	phone_number: null,
 })
 
+const schemaRecipient = v.object({
+  bank_id: v.number('Banco es requerido'),
+  account_type_id: v.number('Tipo de cuenta es requerido'),
+  account_number: v.pipe(
+    v.string('Número de cuenta es requerido'),
+    v.regex(/^(?:\d+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/, 'Debe contener solo números o ser un correo válido')
+  ),
+  ...(remittanceStore.form.destination_currency_symbol != 'BRL' ? { //PARCHE: Verifica que no sea Brasil para validar el cci
+    cci: v.pipe(
+      v.string('CCI es requerido'),
+      v.regex(/^\d*$/, 'CCI debe contener solo números')
+    )
+  } : {}),
+  alias: v.pipe(
+    v.string('Nombre del destinatario es requerido'),
+    v.regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'Nombre debe contener solo letras')
+  ),
+  phone_number: v.pipe(
+    v.string('Número de teléfono es requerido'),
+    v.regex(/^\d+$/, 'Número de teléfono debe contener solo números')
+  ),
+})
 const bankTypes = computed(() => {
 	const selectedType = formState.value.account_type_id
 	const selectedbanktype = bank_types.value.find((item) => item.id === selectedType)?.name || ''
