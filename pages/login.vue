@@ -4,7 +4,7 @@
 			<div class="bg-white rounded-xl shadow-lg p-8">
 				<div class="text-center mb-8">
 					<h1 class="text-2xl font-bold">Iniciar sesión</h1>
-					<p class="text-gray-600 mt-2">Accede a tu cuenta</p>
+					<p class="text-gray-600 mt-2">Accede a tu cuenta para empezar tu proceso de envío de dinero</p>
 				</div>
 
 				<form
@@ -89,16 +89,17 @@
 					>
 						{{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
 					</button>
-
-					<p class="text-center text-sm text-gray-600">
-						¿No tienes una cuenta?
+					<hr class="bg-gray-300 my-5 text-gray-200">
+					<div class="text-center text-sm text-gray-600 flex flex-col gap-3">
+						<span class="text-xl font-bold">¿Es tu primera vez enviando dinero?</span>
+						<span class="">Crea una cuenta de usuario</span>
 						<NuxtLink
 							to="/registro"
-							class="text-blue-600 hover:underline font-medium"
+							class="text-blue-600 text-lg text-white hover:underline font-medium bg-green-grass px-6 py-4 rounded-lg transition-colors hover:bg-green-dark"
 						>
-							Crear cuenta
+							Registrate aquí
 						</NuxtLink>
-					</p>
+					</div>
 				</form>
 			</div>
 		</div>

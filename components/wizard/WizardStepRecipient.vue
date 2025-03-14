@@ -1,8 +1,7 @@
 <template>
 	<div class="[&>*]:mb-6">
 		<div class="[&>*]:mb-4 w-full">
-			<h2 class="text-xl font-semibold mb-6">Ingresa los datos del destinatario:</h2>
-
+			
 			<div
 				v-if="loadingInfo"
 				class="flex items-center justify-center h-[308px]"
@@ -11,12 +10,12 @@
 			</div>
 
 			<div v-else>
-				<div class="space-y-4 w-full" v-if="!setNewAccount">
+				<div class="mb-6 w-full" v-if="!setNewAccount">
 					<div
 						v-if="savedAccounts.length"
 						class="mb-2"
 					>
-						<label for="">Destinatarios guardados:</label>
+						<label class="text mb-2 block">Selecciona un destinatario guardado:</label>
 						<USelectMenu
 							v-model="selectedAccount"
 							:items="savedAccounts"
@@ -43,8 +42,9 @@
 						</ul>
 					</div>
 				</div>
-				<div @click="switchNewAccount()" class="cursor-pointer hover:font-medium mt-4" v-if="!setNewAccount">
-					+ Crear nuevo destinatario
+				<div @click="switchNewAccount()" class="text mt-2 flex items-center justify-between" v-if="!setNewAccount">
+					<span class="mb-2">También puedes:</span>
+					<span class=" hover:underline cursor-pointer bg-gray-100 py-2 px-5 rounded-lg hover:bg-gray-200">+ Crear un nuevo destinatario</span>
 				</div>
 				<div v-else @click="setNewAccount = false">
 					< Volver

@@ -4,9 +4,9 @@
 		<div
 			class="flex flex-col md:flex-row justify-between items-center gap-8 px-4 md:min-h-[calc(100vh-120px)] mt-8">
 			<div class="w-full md:w-1/2 justify-center text-center items-center md:items-left md:text-left">
-				<span class="bg-green-grass text-white rounded-2xl px-4 py-2 text-sm mb-3 text-nowrap lg:text-lg">🎁
-					<strong>Regalo:</strong> Cupón 1er envío gratis
-					<a href="#" class="text-[#93f8f4] font-bold ml-2" @click="applyCoupon">WELCOME100</a></span>
+				<span class="bg-green-grass text-white rounded-2xl px-4 py-2 text-sm mb-3 text-nowrap lg:text-lg">
+					<strong class="hidden sm:inline">🎁 Regalo:</strong> Cupón 1er envío gratis
+					<a href="#" class="text-[#93f8f4] font-bold ml-1" @click="applyCoupon">WELCOME100</a></span>
 				<h1 class="text-3xl md:text-5xl xl:text-7xl font-bold leading-tight mt-5">
 					Envía dinero a cualquier parte del Perú y Brasil
 				</h1>
@@ -17,16 +17,16 @@
 				<RemittanceCalculator :set-coupon="coupon" />
 			</div>
 		</div>
-		<div class="px-5">
+		<div class="px-2 md:px-5">
 			<h1 class="text-center text-2xl font-bold mb-8 font-rebond max-w-[600px] mx-auto lg:text-4xl">
 				La forma más simple de <span class="text-green-600">enviar dinero</span> entre Perú y Brasil
 			</h1>
 			<div class="lg:flex items-center gap-10">
-				<section class="py-12 lg:w-[50%]">
+				<section class="py-6 md:py-12 lg:w-[50%]">
 					<div class="container mx-auto px-4">
-						<div class="flex justify-center space-x-8 border-b mb-12 text-xl">
+						<div class="flex justify-between border-b mb-12 md:text-xl">
 							<button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
-							'pb-2 px-4 transition-colors font-rebond',
+							'pb-2 px-4 transition-colors font-rebond w-[50%]',
 							activeTab === tab.id
 								? 'border-b-2 border-green-600 font-semibold text-green-600'
 								: 'text-gray-500'
@@ -65,7 +65,7 @@
 				<TestimonialSlider />
 			</div>
 			<FeaturesSection />
-			<TrustSection />
+			<!--<TrustSection />-->
 		</div>
 	</main>
 </template>

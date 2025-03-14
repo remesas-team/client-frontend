@@ -94,7 +94,7 @@
 				<div class="grid grid-cols-1 gap-4 items-start mb-4">
 					<!-- Amount Input with Currency -->
 					<div>
-						<label class="block text-[15px] font-medium text-gray-700 mb-2"> Monto a enviar: </label>
+						<label class="block text-[15px] font-medium text-gray-700 mb-2">Tú depositas: </label>
 						<UFormField name="amount">
 							<UButtonGroup
 								size="2xl"
@@ -122,11 +122,11 @@
 					<!-- Destination Currency -->
 					<div>
 						<div class="flex justify-between">
-							<label class="block text-[15px] font-medium text-gray-700 mb-2"> Ellos reciben: </label>
+							<label class="block text-[15px] font-medium text-gray-700 mb-2">En el destino reciben: </label>
 							<span
 								class="text-md font-bold hover:cursor-pointer text-green-wather hover:text-green-grass"
 								@click="showCoupon = !showCoupon"
-								>Aplicar cupon</span
+								>Aplicar cupón</span
 							>
 						</div>
 						<UFormField name="destination_amount">
