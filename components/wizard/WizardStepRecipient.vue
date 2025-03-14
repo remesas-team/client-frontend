@@ -346,7 +346,9 @@ onMounted(async () => {
 
 	await Promise.all([getBankAccounts(), getBanks()])
 	//setFormState()
-
+	if(!getBankAccounts.value) {
+		setNewAccount.value = true
+	}
 	loadingInfo.value = false
 })
 
