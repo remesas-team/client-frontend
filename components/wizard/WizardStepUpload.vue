@@ -2,7 +2,7 @@
 	<div class="mb-8">
 		<!-- Timer Section -->
 		<div class="text-center mb-2">
-			<h2 class="text-gray-600">Tipo de cambio garantizado durante:</h2>
+			<h2 class="text-gray-600">Termina tu operación antes de que acabe el contador:</h2>
 			<div class="flex items-center justify-center gap-2 my-8">
 				<svg
 					class="w-8 h-8 text-gray-600"
@@ -25,8 +25,38 @@
 
 		<!-- Transfer Details -->
 		<div class="mb-4">
-			<h3 class="text-lg font-medium my-5 text-center">Confirma la transacción al siguiente n° de cuenta</h3>
+			<h3 class="text-md font-medium my-5 text-center">Para terminar con la operación deposita el monto total a transferir al siguiente número de cuenta.</h3>
 			<div class="mb-4 flex flex-col gap-4">
+				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
+					<span class="text-gray-600 text-sm">Total a Transferir</span>
+					<div class="flex items-center gap-2 justify-between">
+						<span
+							v-if="newOperation.collection_system_account.currency"
+							class="font-medium text-2xl"
+							>{{ newOperation.collection_system_account.currency.code }}
+							{{ parseFloat(newOperation.source_amount).toFixed(2) }}</span
+						>
+						<button
+							class="text-blue-600 hover:text-blue-700"
+							title="Copiar monto"
+							@click="copyToClipboard(parseFloat(newOperation.source_amount).toFixed(2))"
+						>
+							<svg
+								class="w-5 h-5"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+								/>
+							</svg>
+						</button>
+					</div>
+				</div>
 				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
 					<span class="text-gray-600 text-sm">Banco:</span>
 					<div class="flex items-center gap-2 justify-between">
@@ -147,36 +177,7 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col gap-2 md:justify-between md:items-center">
-					<span class="text-gray-600 text-sm">Total a Transferir</span>
-					<div class="flex items-center gap-2 justify-between">
-						<span
-							v-if="newOperation.collection_system_account.currency"
-							class="font-medium text-2xl"
-							>{{ newOperation.collection_system_account.currency.code }}
-							{{ parseFloat(newOperation.source_amount).toFixed(2) }}</span
-						>
-						<button
-							class="text-blue-600 hover:text-blue-700"
-							title="Copiar monto"
-							@click="copyToClipboard(parseFloat(newOperation.source_amount).toFixed(2))"
-						>
-							<svg
-								class="w-5 h-5"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-								/>
-							</svg>
-						</button>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 
@@ -266,7 +267,7 @@
 				:loading="loadingSubmit"
 				@click="confirmTransaction"
 			>
-				Confirmar transacción
+				Confirma y Envia el dinero
 			</UButton>
 
 			<!-- Delivery Time Notice -->

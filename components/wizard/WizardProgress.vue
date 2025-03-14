@@ -29,7 +29,6 @@
 				</div>
 			</template>
 		</div>
-		<h2 class="text-2xl font-semibold my-6 text-center">Ingresa los datos del destinatario</h2>
 	</div>
 </template>
 

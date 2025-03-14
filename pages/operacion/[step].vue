@@ -4,7 +4,7 @@
 			<!-- Progress Steps -->
 			<WizardProgress :current-step="currentStep" />
 			<!-- Step Content -->
-			<div class="bg-white rounded-xl shadow-lg p-8">
+			<div class="bg-white rounded-xl shadow-lg px-5 py-4">
 				<component
 					:is="currentComponent"
 					@next="nextStep"

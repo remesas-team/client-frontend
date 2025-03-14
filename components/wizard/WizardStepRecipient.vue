@@ -1,7 +1,7 @@
 <template>
 	<div class="[&>*]:mb-6">
 		<div class="[&>*]:mb-4 w-full">
-			
+			<h2 class="text-2xl font-semibold mb-4">1. Ingresa los datos del destinatario</h2>
 			<div
 				v-if="loadingInfo"
 				class="flex items-center justify-center h-[308px]"
@@ -42,11 +42,11 @@
 						</ul>
 					</div>
 				</div>
-				<div @click="switchNewAccount()" class="text mt-2 flex items-center justify-between" v-if="!setNewAccount">
+				<div @click="switchNewAccount()" class="text mt-2 flex items-center justify-between md:justify-start gap-5" v-if="!setNewAccount && !selectedAccount">
 					<span class="mb-2">También puedes:</span>
 					<span class=" hover:underline cursor-pointer bg-gray-100 py-2 px-5 rounded-lg hover:bg-gray-200">+ Crear un nuevo destinatario</span>
 				</div>
-				<div v-else @click="setNewAccount = false">
+				<div v-else @click="setNewAccount = false; selectedAccount = null">
 					< Volver
 				</div>
 				<!-- Bank Account Form -->
@@ -62,7 +62,7 @@
 						<label
 							for=""
 							class="mb-2 mt-4 w-full block font-medium"
-							>Datos de la cuenta:</label
+							>Cuenta de quién recibe el dinero:</label
 						>
 						<div class="w-full mb-2">
 							<UFormField name="bank_id">
@@ -122,7 +122,7 @@
 						<label
 							for=""
 							class="mb-2 mt-4 w-full block font-medium"
-							>Datos de contacto:</label
+							>Datos de contacto del destinatario:</label
 						>
 						<div class="w-full mb-2">
 							<UFormField name="alias">
