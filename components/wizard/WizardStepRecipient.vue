@@ -178,7 +178,7 @@
 </template>
 
 <script setup lang="ts">
-import { userRepository } from '~/repositories/v1/platform/userRepository'
+import {useUserStore} from '~/stores/user'
 import { useRemittanceStore } from '~/stores/remittance'
 import { sourcesRepository } from '~/repositories/v1/platform/sourcesRepository'
 import CircleLoader from '~/components/CircleLoader.vue'
@@ -190,7 +190,7 @@ const emit = defineEmits<{
 	(e: 'next'): void
 }>()
 
-const userRequest = userRepository()
+const userStore = useUserStore()
 const sourcesRequest = sourcesRepository()
 const remittanceStore = useRemittanceStore()
 
@@ -293,6 +293,7 @@ const handleSubmit = async () => {
 }
 
 const getBanks = async () => {
+	//console.log("remittance store country id", remittanceStore.form, remittanceStore.form.destination_country_id)
 	const response = await sourcesRequest.getBanksByCountry({
 		country_id: remittanceStore.form.destination_country_id,
 	})
@@ -305,11 +306,9 @@ const getBanks = async () => {
 }
 
 const getBankAccounts = async () => {
-	const response = await userRequest.getBankAccounts()
-
-	if (!response.success) {
-		return
-	}
+	const response = await userStore.getBankAccounts()
+	//console.log(userStore.bankAccountsList)
+	if (!response.success) { return }
 
 	savedAccounts.value = response.data.filter(
 		(item) =>
@@ -317,6 +316,8 @@ const getBankAccounts = async () => {
 			item.is_saved &&
 			item.currency_code === remittanceStore.form.destination_currency_symbol,
 	)
+	//console.log("saved accountsssss", savedAccounts.value)
+	return savedAccounts.value
 }
 
 const getBankTypes = async () => {
@@ -326,14 +327,15 @@ const getBankTypes = async () => {
 }
 
 const setFormState = () => {
-	const { destination_user_account_id } = remittanceStore.form
+	//const { destination_user_account_id } = remittanceStore.form
 
-	if (savedAccounts.value.length > 0 && destination_user_account_id === null) {
-		selectedAccount.value = savedAccounts.value[0]
-		return
-	}
 
-	selectedAccount.value = savedAccounts.value.find((item) => item.id === destination_user_account_id)
+	// (savedAccounts.value.length > 0 && destination_user_account_id === null) {
+	//	selectedAccount.value = savedAccounts.value[0]
+	//	return
+	//}
+
+	//selectedAccount.value = savedAccounts.value.find((item) => item.id === destination_user_account_id)
 }
 
 const switchNewAccount = () => {
@@ -344,9 +346,10 @@ const switchNewAccount = () => {
 onMounted(async () => {
 	loadingInfo.value = true
 
-	await Promise.all([getBankAccounts(), getBanks()])
-	//setFormState()
-	if(!getBankAccounts.value) {
+	const requests = await Promise.all([getBankAccounts(), getBanks()])
+	setFormState()
+	console.log("REQUEST",requests[0])
+	if(!requests[0]) {
 		setNewAccount.value = true
 	}
 	loadingInfo.value = false

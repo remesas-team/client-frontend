@@ -1,4 +1,5 @@
 import { sourcesRepository } from '~/repositories/v1/platform/sourcesRepository'
+import {useRemittanceStore} from '~/stores/remittance'
 import type { Country } from '~/types/country'
 import type { Currency } from '~/types/currency'
 
@@ -140,5 +141,19 @@ export const useSourcesStore = defineStore('sources', {
 
 			return response
 		},
+		async fetchBanksByCountry() {
+			//if (this.banks.length > 0) return { success: true, data: this.banks }
+			const remittanceStore = useRemittanceStore()
+			console.log("ACA BANKS SOURCES", remittanceStore.form.destination_country_id)
+			const requestSources = sourcesRepository()
+			const response = await requestSources.getBanksByCountry({
+				country_id: remittanceStore.form.destination_country_id,
+			})
+		
+			if (!response.success) {
+				return
+			}
+			banks.value = response.data
+		}
 	},
 })

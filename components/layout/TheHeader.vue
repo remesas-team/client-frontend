@@ -9,7 +9,7 @@
 					<img
 						src="/images/logo.png"
 						alt=""
-						class="w-32 lg:w-45"
+						class="w-27 md:w-32 lg:w-45"
 					/>
 				</NuxtLink>
 
