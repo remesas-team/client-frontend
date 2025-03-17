@@ -11,6 +11,17 @@
 					class="w-full h-12 px-4 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring focus:ring-blue-200 transition-colors bg-white shadow-sm text-lg"
 					placeholder="Ingresa tu nombre"
 				/>
+
+				<UFormField name="alias">
+					<UInput
+						v-model="formState.alias"
+						type="text"
+						placeholder="Nombre del destinatario"
+						size="xl"
+						disabled
+						class="w-full text-xl disabled:text-gray-500"
+					/>
+				</UFormField>
 			</div>
 			<div>
 				<label class="block text-sm font-medium text-gray-700 mb-2"> Apellido </label>

@@ -178,9 +178,10 @@
 </template>
 
 <script setup lang="ts">
-import {useUserStore} from '~/stores/user'
+import { useUserStore } from '~/stores/user'
 import { useRemittanceStore } from '~/stores/remittance'
 import { sourcesRepository } from '~/repositories/v1/platform/sourcesRepository'
+import { userRepository } from '~/repositories/v1/platform/userRepository'
 import CircleLoader from '~/components/CircleLoader.vue'
 
 
@@ -192,6 +193,7 @@ const emit = defineEmits<{
 
 const userStore = useUserStore()
 const sourcesRequest = sourcesRepository()
+const userRequest = userRepository()
 const remittanceStore = useRemittanceStore()
 
 const setNewAccount = ref(false)

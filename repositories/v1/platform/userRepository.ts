@@ -10,5 +10,8 @@ export const userRepository = () => {
 		async getBankAccounts() {
 			return fetch.get('/v1/platform/user-accounts')
 		},
+		async updateProfile(params) {
+			return fetch.post('/v1/platform/auth/profile', params)
+		}
 	}
 }
