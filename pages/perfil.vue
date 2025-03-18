@@ -60,6 +60,7 @@
 								/>
 							</div>
 						</UFormField>
+
 						<!-- Birth Date -->
 						<UFormField label="Fecha de nacimiento" name="birth_date">
 							<UInput
@@ -78,7 +79,7 @@
 								:items="[
 									{ label: 'Hombre', value: 'hombre' },
 									{ label: 'Mujer', value: 'mujer' },
-									{ label: 'Otro', value: 'Other' }
+									{ label: 'Otro', value: 'LGBTQ+' }
 								]"
 								size="lg"
 								class="w-full"
@@ -204,6 +205,7 @@ const sourcesStore = useSourcesStore()
 const toast = useToast()
 const doc_types = ref([])
 const occupations = ref([])
+const isLoading = ref(false)
 
 // Form state with all profile fields
 const formState = reactive({
@@ -290,6 +292,7 @@ const getOccupations = async () => {
 
 // Handle form submission
 const handleSubmit = async () => {
+	isLoading.value = true;
   try {
     const response = await userStore.updateProfile(formState)
     
@@ -299,12 +302,14 @@ const handleSubmit = async () => {
         description: 'Tu información ha sido actualizada correctamente',
         color: 'green'
       })
+	  isLoading.value = false
     } else {
       toast.add({
         title: 'Error',
         description: response.message || 'Ha ocurrido un error al actualizar tu perfil',
         color: 'red'
       })
+	  isLoading.value = false
     }
   } catch (error) {
     console.error('Error updating profile:', error)
@@ -313,6 +318,7 @@ const handleSubmit = async () => {
       description: 'Ha ocurrido un error al actualizar tu perfil',
       color: 'red'
     })
+	isLoading.value = false
   }
 }
 </script>
