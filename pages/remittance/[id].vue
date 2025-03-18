@@ -2,21 +2,12 @@
 	<main class="flex-1 container mx-auto px-4 py-8">
 		<div class="max-w-2xl mx-auto">
 			<!-- Loading State -->
-			<div
-				v-if="loading"
-				class="flex justify-center items-center min-h-[400px]"
-			>
+			<div v-if="loading" class="flex justify-center items-center min-h-[400px]">
 				<CircleLoader />
 			</div>
 
 			<!-- Error State -->
-			<UAlert
-				v-else-if="error"
-				:description="error"
-				color="red"
-				variant="soft"
-				class="mb-4"
-			/>
+			<UAlert v-else-if="error" :description="error" color="red" variant="soft" class="mb-4" />
 
 			<!-- Content -->
 			<template v-else>
@@ -25,20 +16,37 @@
 					<h1 class="text-3xl font-bold">Remesa N°{{ $route.params.id }}</h1>
 					<p class="text-gray-600 mt-2">Estos son los detalles de tu remeesa</p>
 				</div>
+				<!-- Processing Order Widget -->
+				<div v-if="remittance?.status_id === 1"
+					class="bg-blue-50 rounded-xl p-6 mb-8 border border-blue-100">
+					<div class="flex items-center space-x-4">
+						<!-- Animated Processing Icon -->
+						<div class="relative w-12 h-12">
+							<div class="absolute inset-0 border-4 border-blue-200 rounded-full"></div>
+							<div
+								class="absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin">
+							</div>
+						</div>
 
+						<div class="flex-1">
+							<h3 class="text-lg font-semibold text-blue-700">Esperando comprobante de pago</h3>
+							<p class="text-blue-600 text-sm mt-1">
+								Para que tu remesa pueda ser procesada debes cargar el comprobante de pago.
+							</p>
+							<button class="bg-green-dark px-3 py-1 rounded text-white text-sm mt-3 hover:cursor-pointer" @click="goToUpload()">Cargar comprobante de pago</button>
+						</div>
+					</div>
+				</div>
 				<!-- Transaction Details Card -->
 				<div class="bg-white rounded-xl shadow-lg p-8 [&>*]:mb-6">
 					<!-- Status Section -->
 					<div class="flex items-center justify-between pb-4 border-b">
 						<span class="text-gray-600">Datos de la operación</span>
-						<span
-							class="px-3 py-1 rounded-full text-sm font-medium"
-							:class="{
-								'bg-green-100 text-green-800': remittance.status === 'completed',
-								'bg-yellow-100 text-yellow-800': remittance.status === 'in_progress',
-								'bg-gray-100 text-gray-800': remittance.status === 'pending',
-							}"
-						>
+						<span class="px-3 py-1 rounded-full text-sm font-medium" :class="{
+				'bg-green-100 text-green-800': remittance.status === 'completed',
+				'bg-yellow-100 text-yellow-800': remittance.status === 'in_progress',
+				'bg-gray-100 text-gray-800': remittance.status === 'pending',
+			}">
 							{{ getStatusText(remittance.status) }}
 						</span>
 					</div>
@@ -47,39 +55,33 @@
 					<div class="[&>*]:mb-4">
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Monto enviado</span>
-							<span class="font-medium"
-								>{{ remittance.source_currency_symbol }} {{ Number(remittance.source_amount).toFixed(2) }}</span
-							>
+							<span class="font-medium">{{ remittance.source_currency_symbol }} {{
+				Number(remittance.source_amount).toFixed(2) }}</span>
 						</div>
 
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Tipo de cambio</span>
-							<span class="font-medium"
-								>1 {{ remittance.source_currency_symbol }} = {{ Number(remittance.exchange_rate).toFixed(2) }}
-								{{ remittance.destination_currency_symbol }}</span
-							>
+							<span class="font-medium">1 {{ remittance.source_currency_symbol }} = {{
+				Number(remittance.exchange_rate).toFixed(2) }}
+								{{ remittance.destination_currency_symbol }}</span>
 						</div>
 
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Comisión</span>
-							<span class="font-medium"
-								>{{ remittance.source_currency_symbol }} {{ Number(remittance.source_commission_fee).toFixed(2) }}</span
-							>
+							<span class="font-medium">{{ remittance.source_currency_symbol }} {{
+				Number(remittance.source_commission_fee).toFixed(2) }}</span>
 						</div>
 
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Impuestos</span>
-							<span class="font-medium"
-								>{{ remittance.source_currency_symbol }} {{ Number(remittance.source_tax).toFixed(2) }}</span
-							>
+							<span class="font-medium">{{ remittance.source_currency_symbol }} {{
+				Number(remittance.source_tax).toFixed(2) }}</span>
 						</div>
 
 						<div class="flex justify-between items-center font-bold text-lg">
 							<span>Monto a recibir</span>
-							<span
-								>{{ remittance.destination_currency_symbol }}
-								{{ Number(remittance.destination_amount).toFixed(2) }}</span
-							>
+							<span>{{ remittance.destination_currency_symbol }}
+								{{ Number(remittance.destination_amount).toFixed(2) }}</span>
 						</div>
 					</div>
 
@@ -100,7 +102,8 @@
 
 							<div class="flex justify-between items-center">
 								<span class="text-gray-600">Cuenta</span>
-								<span class="font-medium">{{ remittance.destination_user_account.account_number }}</span>
+								<span class="font-medium">{{ remittance.destination_user_account.account_number
+									}}</span>
 							</div>
 						</div>
 					</div>
@@ -112,10 +115,7 @@
 							<span class="font-medium">{{ formatDate(remittance.created_at) }}</span>
 						</div>
 
-						<div
-							v-if="remittance.completed_at"
-							class="flex justify-between items-center"
-						>
+						<div v-if="remittance.completed_at" class="flex justify-between items-center">
 							<span class="text-gray-600">Fecha de completado</span>
 							<span class="font-medium">{{ formatDate(remittance.completed_at) }}</span>
 						</div>
@@ -124,12 +124,7 @@
 
 				<!-- Action Buttons -->
 				<div class="mt-8 [&>*]:mb-4">
-					<UButton
-						variant="ghost"
-						block
-						size="xl"
-						to="/remittance"
-					>
+					<UButton variant="ghost" block size="xl" to="/remittance">
 						Volver a transferencias
 					</UButton>
 				</div>
@@ -140,11 +135,13 @@
 
 <script setup lang="ts">
 import { operationsRepository } from '~/repositories/v1/platform/operationsRepository'
+import { useRemittanceStore } from '~/stores/remittance' // Import the remittance store
 
 const route = useRoute()
 const loading = ref(true)
 const error = ref('')
 const remittance = ref<any>(null)
+const remittanceStore = useRemittanceStore() // Initialize the store
 
 // Format date helper
 const formatDate = (date: string) => {
@@ -165,6 +162,12 @@ const getStatusText = (status: string) => {
 		pending: 'Pendiente',
 	}
 	return statusMap[status] || status
+}
+const goToUpload = () => {
+	// Add the current remittance to the store's CurrentOperation
+	remittanceStore.CurrentOperation = remittance.value
+	// Navigate to upload page (you might want to add navigation logic here)
+	navigateTo('/operacion/4')
 }
 
 // Fetch remittance details

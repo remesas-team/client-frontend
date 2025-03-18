@@ -275,7 +275,7 @@
 				class="mt-4 text-center text-gray-600 flex flex-col direction-column md:flex-row items-center justify-center gap-2 text-[#2e7d6b] "
 			>
 				<UIcon name="i-mdi:run-fast text-green-wather"></UIcon>
-				<span> Tu dinero estará disponible entre 4 a 6 horas</span>
+				<UtilitiesDineroDisponible />
 			</p>
 		</div>
 	</div>
@@ -301,10 +301,8 @@ const router = useRouter()
 const requestOperations = operationsRepository()
 const remittanceStore = useRemittanceStore()
 
-const TIME_LIMIT = 15 * 60 // 15 minutes in seconds
-
 const timer = ref()
-const timeRemaining = ref(TIME_LIMIT)
+const timeRemaining = ref(0)
 const isDragging = ref(false)
 const selectedFile = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -383,7 +381,7 @@ const confirmTransaction = async () => {
 onMounted(async () => {
 	const newOperationResponse = await remittanceStore.getOperation(remittanceStore.currentOperation.operation_id)
 	newOperation.value = newOperationResponse.data.operation
-
+	timeRemaining.value = newOperationResponse.data.time_left
 	timer.value = setInterval(() => {
 		if (timeRemaining.value > 0) {
 			timeRemaining.value--

@@ -86,7 +86,7 @@
 			class="text-center text-gray-600 flex flex-col direction-column md:flex-row items-center justify-center gap-2 text-[#2e7d6b] "
 		>
 			<UIcon name="i-mdi:run-fast text-green-wather"></UIcon>
-			<span> Tu dinero estará disponible entre 4 a 6 horas</span>
+			<UtilitiesDineroDisponible />
 		</p>
 	</div>
 </template>
