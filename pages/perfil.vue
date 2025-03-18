@@ -3,8 +3,8 @@
 		<div class="max-w-3xl mx-auto">
 			<!-- Header -->
 			<div class="mb-8">
-				<h1 class="text-2xl font-bold">Configura tu perfil</h1>
-				<p class="text-gray-600">Gestiona tu información personal y preferencias</p>
+				<h1 class="text-2xl font-bold">Tu perfil</h1>
+				<p class="text-gray-600">Asegúrate de que todos los datos sean correctos</p>
 			</div>
 
 			<UForm
@@ -13,15 +13,14 @@
 				@submit="handleSubmit"
 				class="space-y-6"
 			>
-				<!-- Avatar Section -->
-				<ProfileAvatar v-model="formState.avatar" />
-
+				<!-- Avatar Section 
+				<ProfileAvatar v-model="formState.avatar" /> -->
 				<!-- Personal Information -->
 				<div class="bg-white rounded-xl shadow-lg p-6">
 					<h2 class="text-lg font-medium mb-6">Información Personal</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<!-- Name -->
-						<UFormGroup label="Nombre" name="name">
+						<UFormField label="Nombre" name="name">
 							<UInput
 								v-model="formState.name"
 								size="lg"
@@ -29,10 +28,10 @@
 								placeholder="Ej: Juan"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
 
 						<!-- Last Name -->
-						<UFormGroup label="Apellido" name="last_name">
+						<UFormField label="Apellido" name="last_name">
 							<UInput
 								v-model="formState.last_name"
 								size="lg"
@@ -40,59 +39,57 @@
 								placeholder="Ej: Pérez"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
 
-						<!-- Phone Code -->
-						<UFormGroup label="Código de país" name="phone_code">
-							<UInput
-								v-model="formState.phone_code"
-								size="lg"
-								type="text"
-								placeholder="Ej: +51"
-								class="w-full"
-							/>
-						</UFormGroup>
-
-						<!-- Phone -->
-						<UFormGroup label="Número de teléfono" name="phone">
-							<UInput
-								v-model="formState.phone"
-								size="lg"
-								type="tel"
-								placeholder="Ej: 999888777"
-								class="w-full"
-							/>
-						</UFormGroup>
-
+						<!-- Phone Number -->
+						<UFormField label="Número de teléfono" name="phone" class="md:col-span-2">
+							<div class="flex">
+								<UInput
+									v-model="formState.phone_code"
+									size="lg"
+									type="text"
+									placeholder="+51"
+									class="w-24 rounded-r-none"
+								/>
+								<UInput
+									v-model="formState.phone"
+									size="lg"
+									type="tel"
+									placeholder="999888777"
+									class="flex-1 rounded-l-none"
+								/>
+							</div>
+						</UFormField>
 						<!-- Birth Date -->
-						<UFormGroup label="Fecha de nacimiento" name="birth_date">
+						<UFormField label="Fecha de nacimiento" name="birth_date">
 							<UInput
-								v-model="formState.birth_date"
+								:model-value="formatDate(formState.birth_date)"
+								@update:model-value="formState.birth_date = $event"
 								type="date"
 								size="lg"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
 
 						<!-- Genre -->
-						<UFormGroup label="Género" name="genre">
+						<UFormField label="Género" name="genre">
 							<USelect
 								v-model="formState.genre"
-								:options="[
-									{ label: 'Masculino', value: 'Male' },
-									{ label: 'Femenino', value: 'Female' },
+								:items="[
+									{ label: 'Hombre', value: 'hombre' },
+									{ label: 'Mujer', value: 'mujer' },
 									{ label: 'Otro', value: 'Other' }
 								]"
 								size="lg"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
 
 						<!-- Civil Status -->
-						<UFormGroup label="Estado civil" name="civil_status">
+						<UFormField label="Estado civil" name="civil_status">
 							<USelect
 								v-model="formState.civil_status"
-								:options="[
+								:items="[
 									{ label: 'Soltero/a', value: 'soltero' },
 									{ label: 'Casado/a', value: 'casado' },
 									{ label: 'Divorciado/a', value: 'divorciado' },
@@ -101,7 +98,7 @@
 								size="lg"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
 					</div>
 				</div>
 
@@ -110,21 +107,17 @@
 					<h2 class="text-lg font-medium mb-6">Información de Documento</h2>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<!-- Document Type -->
-						<UFormGroup label="Tipo de documento" name="doc_type_id">
+						<UFormField label="Tipo de documento" name="doc_type_id">
 							<USelect
 								v-model="formState.doc_type_id"
-								:options="[
-									{ label: 'DNI', value: 1 },
-									{ label: 'Pasaporte', value: 2 },
-									{ label: 'Carnet de Extranjería', value: 3 }
-								]"
+								:items="doc_types"
 								size="lg"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
 
 						<!-- Document Number -->
-						<UFormGroup label="Número de documento" name="doc_value">
+						<UFormField label="Número de documento" name="doc_value">
 							<UInput
 								v-model="formState.doc_value"
 								size="lg"
@@ -132,10 +125,10 @@
 								placeholder="Ej: 12345678"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
 
 						<!-- Address -->
-						<UFormGroup label="Dirección" name="address" class="md:col-span-2">
+						<UFormField label="Dirección" name="address" class="md:col-span-2">
 							<UInput
 								v-model="formState.address"
 								size="lg"
@@ -143,34 +136,19 @@
 								placeholder="Ej: Av. Principal 123, Distrito"
 								class="w-full"
 							/>
-						</UFormGroup>
-
-						<!-- District ID -->
-						<UFormGroup label="Distrito" name="geo_district_id">
-							<UInput
-								v-model="formState.geo_district_id"
-								size="lg"
-								type="number"
-								placeholder="Ej: 12345"
-								class="w-full"
-							/>
-						</UFormGroup>
+						</UFormField>
 
 						<!-- Occupation -->
-						<UFormGroup label="Ocupación" name="occupation_id">
-							<USelect
+						<UFormField label="Ocupación" name="occupation_id">
+							<USelectMenu
 								v-model="formState.occupation_id"
-								:options="[
-									{ label: 'Empleado', value: 1 },
-									{ label: 'Independiente', value: 2 },
-									{ label: 'Estudiante', value: 3 },
-									{ label: 'Jubilado', value: 4 },
-									{ label: 'Otro', value: 5 }
-								]"
+								:items="occupations"
 								size="lg"
+								value-key="value"
 								class="w-full"
 							/>
-						</UFormGroup>
+						</UFormField>
+
 					</div>
 				</div>
 
@@ -180,53 +158,32 @@
 
 					<!-- PEP Declaration -->
 					<div class="space-y-6">
-						<UFormGroup label="¿Eres una Persona Expuesta Políticamente (PEP)?" name="is_pep">
-							<URadio
-								v-model="formState.is_pep"
-								:options="[
+						<label>¿Eres una Persona Expuesta Políticamente (PEP)?</label>
+						<URadioGroup v-model="formState.is_pep" :items="[
 									{ label: 'Sí', value: 1 },
 									{ label: 'No', value: 0 }
-								]"
-							/>
-						</UFormGroup>
-
-						<UFormGroup label="¿Tienes familiares que son Personas Expuestas Políticamente?" name="is_pep_familiar">
-							<URadio
-								v-model="formState.is_pep_familiar"
-								:options="[
+								]" />
+						<!-- PEP Family Declaration -->
+						<label for="">¿Tienes familiares que son Personas Expuestas Políticamente?</label>
+						<URadioGroup v-model="formState.is_pep_familiar" :items="[
 									{ label: 'Sí', value: 1 },
 									{ label: 'No', value: 0 }
-								]"
-							/>
-						</UFormGroup>
+								]" />
 					</div>
 				</div>
 
-				<!-- Terms and Conditions -->
-				<div class="bg-white rounded-xl shadow-lg p-6">
-					<UFormGroup name="terms_accepted">
-						<UCheckbox
-							v-model="formState.terms_accepted"
-							name="terms_accepted"
-						>
-							<span class="text-sm text-gray-700">
-								Declaro que toda la información proporcionada es verdadera y acepto los
-								<a href="#" class="text-blue-600 hover:underline">términos y condiciones</a>
-							</span>
-						</UCheckbox>
-					</UFormGroup>
-				</div>
 
 				<!-- Submit Button -->
 				<div class="flex">
 					<UButton
 						type="submit"
-						color="green"
-						variant="solid"
-						block
 						size="xl"
+						color="primary"
+						block
+						:loading="isLoading"
+						class="w-full text-lg font-medium h-14 bg-green-dark text-center hover:bg-green-grass hover:cursor-pointer"
 					>
-						Guardar Cambios
+						{{ isLoading ? 'Guardando...' : 'Actualizar información' }}
 					</UButton>
 				</div>
 			</UForm>
@@ -237,11 +194,16 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
 import { useAuthStore } from '~/stores/auth'
+import { useSourcesStore } from '~/stores/sources'
+
 import * as v from 'valibot'
 
 const userStore = useUserStore()
 const authStore = useAuthStore()
+const sourcesStore = useSourcesStore()
 const toast = useToast()
+const doc_types = ref([])
+const occupations = ref([])
 
 // Form state with all profile fields
 const formState = reactive({
@@ -275,19 +237,56 @@ const profileSchema = v.safeParser(v.object({
   doc_type_id: v.number('El tipo de documento es requerido'),
   doc_value: v.string('El número de documento es requerido'),
   address: v.string('La dirección es requerida'),
-  geo_district_id: v.string('El distrito es requerido'),
   occupation_id: v.number('La ocupación es requerida'),
   is_pep: v.number('Este campo es requerido'),
   is_pep_familiar: v.number('Este campo es requerido'),
-  terms_accepted: v.pipe(v.boolean(), v.literal(true, 'Debes aceptar los términos y condiciones'))
 }))
 
 // Load user data on component mount
 onMounted(() => {
   // Populate form with user data from auth store
   Object.assign(formState, authStore.user)
-  
+  getDocTypes()
+  getOccupations()
+  console.log(authStore.user)
 })
+
+// Format date to dd/mm/yyyy for display
+const formatDate = (dateString) => {
+  if (!dateString) return ''
+  
+  // If it's already in yyyy-mm-dd format (for the input type="date")
+  // we can return it as is since the input will handle display
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+    return dateString
+  }
+  
+  // Otherwise format it
+  const date = new Date(dateString)
+  if (isNaN(date.getTime())) return '' // Invalid date
+  
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const year = date.getFullYear()
+  
+  return `${year}-${month}-${day}` // Format for input type="date"
+}
+
+const getDocTypes = async () => {
+	const docTypes = await sourcesStore.fetchDocTypes()
+	console.log(docTypes);
+	doc_types.value = docTypes.data.map(item => {
+		return {
+			label: item.code + ' - ' + item.description,
+			value: item.id
+		}
+	})
+}
+
+const getOccupations = async () => {
+	const occupationsRequest = await sourcesStore.fetchOccupations()
+	occupations.value = occupationsRequest.data ? occupationsRequest.data : occupationsRequest
+}
 
 // Handle form submission
 const handleSubmit = async () => {

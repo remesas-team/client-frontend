@@ -11,6 +11,7 @@ interface SourcesState {
 	countries: Country[]
 	system_accounts: any[]
 	banks: any[]
+	doc_types: any[]
 }
 
 export const useSourcesStore = defineStore('sources', {
@@ -22,6 +23,7 @@ export const useSourcesStore = defineStore('sources', {
 		countries: [],
 		banks: [],
 		system_accounts: [],
+		doc_types: []
 	}),
 
 	getters: {},
@@ -45,7 +47,10 @@ export const useSourcesStore = defineStore('sources', {
 			}
 		},
 		async fetchOccupations() {
-			if (this.occupations.length > 0) return { success: true, data: this.occupations }
+			if (this.occupations.length > 0) {
+				console.log("store", this.occupations)
+				return { success: true, data: this.occupations }
+			}
 
 			const requestSources = sourcesRepository()
 			const response = await requestSources.getOccupations()
@@ -56,9 +61,11 @@ export const useSourcesStore = defineStore('sources', {
 					label: item.name,
 				}))
 				this.occupations = formattedResponse
+				console.log('formattedResponse', formattedResponse)
 				return formattedResponse
 			} else {
-				return response
+				console.log('false data')
+				return response.data
 			}
 		},
 		async fetchCivilStatuses() {
@@ -144,7 +151,6 @@ export const useSourcesStore = defineStore('sources', {
 		async fetchBanksByCountry() {
 			//if (this.banks.length > 0) return { success: true, data: this.banks }
 			const remittanceStore = useRemittanceStore()
-			console.log("ACA BANKS SOURCES", remittanceStore.form.destination_country_id)
 			const requestSources = sourcesRepository()
 			const response = await requestSources.getBanksByCountry({
 				country_id: remittanceStore.form.destination_country_id,
@@ -154,6 +160,18 @@ export const useSourcesStore = defineStore('sources', {
 				return
 			}
 			banks.value = response.data
-		}
+		},
+		async fetchDocTypes() {
+			if (this.doc_types.length > 0) return { success: true, data: this.doc_types }
+
+			const requestSources = sourcesRepository()
+			const response = await requestSources.getDocumentTypes()
+
+			if (response.success) {
+				this.doc_types = response.data
+			}
+
+			return response
+		},
 	},
 })

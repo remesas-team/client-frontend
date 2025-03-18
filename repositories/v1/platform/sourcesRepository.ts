@@ -35,7 +35,7 @@ export const sourcesRepository = () => {
 			return fetch.get('/v1/platform/sources/districts', params)
 		},
 		async getDocumentTypes(params) {
-			return fetch.get('/v1/platform/sources/document-types', params)
+			return fetch.get('/v1/platform/sources/doc-types', params)
 		},
 		getSystemAccounts() {
 			return fetch.get('/v1/platform/sources/system-accounts')
