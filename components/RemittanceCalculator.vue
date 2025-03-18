@@ -403,8 +403,9 @@ const startOperation = () => {
 	remittanceStore.form.amount_to_send = estimate.value.amount_to_send
 	remittanceStore.form.savings = estimate.value.savings || 0
 
+	
+	remittanceStore.form.coupon_code = estimate.value.coupon?.code || null
 	remittanceStore.form.coupon = estimate.value.coupon?.code || null
-
 
 	router.push('/operacion/1')
 }
