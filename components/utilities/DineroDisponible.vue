@@ -1,5 +1,5 @@
 <template>
-  <span>{{ availabilityMessage }} </span>
+  <span class="mt-3">{{ availabilityMessage }} </span>
 </template>
 
 <script setup>
@@ -14,12 +14,18 @@ onMounted(() => {
 })
 
 const updateMessage = () => {
-  const currentHour = new Date().getHours()
+  const currentDate = new Date()
+  const currentHour = currentDate.getHours()
+  const currentDay = currentDate.getDay()
   
-  if (currentHour >= 18) { // After 6 PM
-    availabilityMessage.value = 'Tu dinero estará disponible mañana a primeras horas'
+  // Check if it's weekend (Saturday = 6, Sunday = 0)
+  if (currentDay === 0 || currentDay === 6) {
+    availabilityMessage.value = 'Tu operación será atendida el siguiente día útil'
+  } else if (currentHour >= 17) { // After 5 PM
+    availabilityMessage.value = 'Tu dinero será procesado desde las 10am del 19/03 (Mañana)'
   } else {
-    availabilityMessage.value = 'Tu dinero estará disponible el mismo día'
+    availabilityMessage.value = 'Los envíos de 9am a 5pm llegarán el mismo día.'
   }
 }
+
 </script>

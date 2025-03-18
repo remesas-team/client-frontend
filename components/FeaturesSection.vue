@@ -62,7 +62,7 @@
 		<section class="bg-gray-50 py-16">
 			<div class="container mx-auto px-4">
 				<h2 class="text-center text-2xl font-bold mb-3 font-rebond lg:text-4xl max-w-[600px] mx-auto">
-					Mantente informado sobre el <span class="text-green-600">status de tu envío</span>
+					Mantente informado sobre el <span class="text-green-600">estatus de tu envío</span>
 				</h2>
 				<p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
 					No te estreses, que no te pregunten cada 5min a qué hora llega el depósito...

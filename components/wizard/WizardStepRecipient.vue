@@ -95,7 +95,7 @@
 							</UFormField>
 						</div>
 
-						<div class="w-full mb-2">
+						<div class="w-full mb-2" v-if="formState.account_type_id">
 							<UFormField name="account_number">
 								<UInput
 									v-model="formState.account_number"

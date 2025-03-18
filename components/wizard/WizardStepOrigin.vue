@@ -107,7 +107,7 @@
 						</UFormField>
 					</div>
 
-					<div class="w-full mb-2">
+					<div class="w-full mb-2" v-if="formState.account_type_id">
 						<UFormField name="account_number">
 							<UInput
 								v-model="formState.account_number"
@@ -118,7 +118,7 @@
 							/>
 						</UFormField>
 					</div>
-					<div class="w-full mb-2" v-if="remittanceStore.form.source_currency_symbol != 'BRL'">
+					<div class="w-full mb-2" v-if="remittanceStore.form.source_currency_symbol != 'BRL' && formState.account_type_id">
 						<UFormField name="cci">
 							<UInput
 								v-model="formState.cci"
