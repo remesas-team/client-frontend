@@ -46,9 +46,8 @@
 						</div>
 					</div>
 				</div>
-				
 				<!-- Tracking Widget for Status > 1 -->
-				<div v-if="remittance?.status_id in [2,3]"
+				<div v-if="remittance.status_id in {2:2,3:3}"
 					class="bg-purple-50 rounded-xl p-6 mb-8 border border-purple-100 hover:bg-purple-100 transition-colors duration-300">
 					<div class="flex items-center space-x-4">
 						<!-- Animated Tracking Icon -->
