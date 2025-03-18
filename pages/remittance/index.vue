@@ -61,9 +61,9 @@
 								v-for="operation in operations"
 								:key="operation.id"
 								class="hover:bg-gray-50"
-								@click="navigateTo(`/remittance/${operation.id}`)"
+								@click="navigateTo(`/remittance/${operation.code}`)"
 							>
-								<td class="px-4 py-5 text-sm text-gray-900">#{{ operation.id }}</td>
+								<td class="px-4 py-5 text-sm text-gray-900">#{{ operation.code }}</td>
 								<td class="px-4 py-5">
 									<span
 										class="px-3 py-1 rounded-full text-sm font-medium"
@@ -92,7 +92,7 @@
 									<UButton
 										color="gray"
 										variant="ghost"
-										:to="`/remittance/${operation.id}`"
+										:to="`/remittance/${operation.code}`"
 										icon="i-heroicons-eye"
 										class="text-nowrap pl-0"
 									>

@@ -37,9 +37,9 @@
 						<span class="text-gray-600">Código de tracking</span>
 						<span
 							class="font-medium text-lg cursor-pointer group flex items-center gap-2 hover:text-gray-600 transition-colors"
-							@click="copyToClipboard(remittanceStore.currentOperation.operation_id)"
+							@click="copyToClipboard(remittanceStore.currentOperation.operation_code)"
 						>
-							{{ remittanceStore.currentOperation.operation_id }}
+							{{ remittanceStore.currentOperation.operation_code }}
 							<UIcon
 								:name="copied ? 'i-lucide:check' : 'i-lucide:copy'"
 								class="transition-all duration-300"
@@ -58,7 +58,7 @@
 				<!-- Action Button -->
 				<div>
 					<NuxtLink
-						:to="`/tracking/${remittanceStore.currentOperation.operation_id}`"
+						:to="`/tracking/${remittanceStore.currentOperation.operation_code}`"
 						class="block w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium text-center"
 					>
 						Dale seguimiento

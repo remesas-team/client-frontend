@@ -360,11 +360,11 @@ const confirmTransaction = async () => {
 	errorGeneral.value = ''
 	loadingSubmit.value = true
 
-	const operation_id = remittanceStore.currentOperation.operation_id
+	const operation_code = remittanceStore.currentOperation.operation_code
 
 	const formData = new FormData()
 	formData.append('user_voucher_file', selectedFile.value)
-	formData.append('operation_id', operation_id.toString())
+	formData.append('operation_code', operation_code.toString())
 
 	const response = await requestOperations.postUploadVoucher(formData)
 
@@ -379,7 +379,8 @@ const confirmTransaction = async () => {
 
 // Timer countdown
 onMounted(async () => {
-	const newOperationResponse = await remittanceStore.getOperation(remittanceStore.currentOperation.operation_id)
+	console.log("code", remittanceStore.currentOperation.operation_code)
+	const newOperationResponse = await remittanceStore.getOperation(remittanceStore.currentOperation.operation_code)
 	newOperation.value = newOperationResponse.data.operation
 	timeRemaining.value = newOperationResponse.data.time_left
 	timer.value = setInterval(() => {
