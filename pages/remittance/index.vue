@@ -61,6 +61,7 @@
 								v-for="operation in operations"
 								:key="operation.id"
 								class="hover:bg-gray-50"
+								@click="navigateTo(`/remittance/${operation.id}`)"
 							>
 								<td class="px-4 py-5 text-sm text-gray-900">#{{ operation.id }}</td>
 								<td class="px-4 py-5">

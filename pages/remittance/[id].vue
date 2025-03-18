@@ -17,14 +17,18 @@
 					<p class="text-gray-600 mt-2">Estos son los detalles de tu remeesa</p>
 				</div>
 				<!-- Processing Order Widget -->
-				<div v-if="remittance?.status_id === 1"
-					class="bg-blue-50 rounded-xl p-6 mb-8 border border-blue-100">
+				<div v-if="remittance?.status_id === 1" 
+					class="bg-blue-50 rounded-xl p-6 mb-8 border border-blue-100 hover:bg-blue-100 transition-colors duration-300">
 					<div class="flex items-center space-x-4">
 						<!-- Animated Processing Icon -->
-						<div class="relative w-12 h-12">
-							<div class="absolute inset-0 border-4 border-blue-200 rounded-full"></div>
-							<div
-								class="absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin">
+						<div class="relative w-12 h-12 flex items-center justify-center">
+							<div class="absolute animate-ping w-8 h-8 bg-blue-400 rounded-full opacity-20"></div>
+							<div class="relative">
+								<div class="h-8 w-8 text-blue-600">
+									<div class="absolute inset-0 border-4 border-blue-200 rounded-full"></div>
+									<div class="absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin">
+									</div>
+								</div>
 							</div>
 						</div>
 
@@ -33,10 +37,47 @@
 							<p class="text-blue-600 text-sm mt-1">
 								Para que tu remesa pueda ser procesada debes cargar el comprobante de pago.
 							</p>
-							<button class="bg-green-dark px-3 py-1 rounded text-white text-sm mt-3 hover:cursor-pointer" @click="goToUpload()">Cargar comprobante de pago</button>
+							<button 
+								@click="goToUpload()"
+								class="inline-block bg-blue-600 px-4 py-2 rounded-lg text-white text-sm mt-3 hover:bg-blue-700 transition-colors duration-300">
+								Cargar comprobante de pago
+								<span class="ml-2">→</span>
+							</button>
 						</div>
 					</div>
 				</div>
+				
+				<!-- Tracking Widget for Status > 1 -->
+				<div v-if="remittance?.status_id in [2,3]"
+					class="bg-purple-50 rounded-xl p-6 mb-8 border border-purple-100 hover:bg-purple-100 transition-colors duration-300">
+					<div class="flex items-center space-x-4">
+						<!-- Animated Tracking Icon -->
+						<div class="relative w-12 h-12 flex items-center justify-center">
+							<div class="absolute animate-ping w-8 h-8 bg-purple-400 rounded-full opacity-20"></div>
+							<div class="relative">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none"
+									viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+										d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+								</svg>
+							</div>
+						</div>
+
+						<div class="flex-1">
+							<h3 class="text-lg font-semibold text-purple-700">¡Tu remesa está en proceso! 🚀</h3>
+							<p class="text-purple-600 text-sm mt-1">
+								Dale seguimiento a tu operación en tiempo real
+							</p>
+							<NuxtLink :to="`/tracking/${$route.params.id}`"
+								class="inline-block bg-purple-600 px-4 py-2 rounded-lg text-white text-sm mt-3 hover:bg-purple-700 transition-colors duration-300">
+								Ver seguimiento
+								<span class="ml-2">→</span>
+							</NuxtLink>
+						</div>
+					</div>
+				</div>
+
+
 				<!-- Transaction Details Card -->
 				<div class="bg-white rounded-xl shadow-lg p-8 [&>*]:mb-6">
 					<!-- Status Section -->
@@ -124,7 +165,14 @@
 
 				<!-- Action Buttons -->
 				<div class="mt-8 [&>*]:mb-4">
-					<UButton variant="ghost" block size="xl" to="/remittance">
+					<UButton 
+						variant="solid"
+						color="green-grass"
+						block 
+						size="xl" 
+						to="/remittance"
+						class="bg-green-grass text-white hover:bg-green-dark transition-colors duration-300 font-medium shadow-md"
+					>
 						Volver a transferencias
 					</UButton>
 				</div>

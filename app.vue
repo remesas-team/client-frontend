@@ -34,6 +34,27 @@ useHead({
 			href: 'https://remesas.com/favicon.png',
 		},
 	],
+	script: [
+		{
+			children: `window.WTT_API = {
+				config: {
+					token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55SWQiOiIyOTU3MDI2My0yY2EwLTQxNmQtYWI1ZC0zNmJlMzUxYjcxOGMiLCJjb25uZWN0aW9uSWQiOiJhYjg5ZTFmZi1lYTYwLTQ1YzEtODM1Zi1iMjBhODI4YzdhYjkiLCJpYXQiOjE3NDIyNzM1MDR9.uKSkLMH9XNCHup3f606NCwtE1BjLsaEDsO1dR63eFGg",
+					title: "¡Bienvenido al soporte!",
+					subtitle: "¿Cómo podemos ayudar?",
+					position: "right",
+					initialMessages: ["Hola, ¿cómo podemos ayudarte?"],
+					toggleButtonEnabled: true,
+					toggleButtonBgColor: "#42a5f5",
+					isAudioEnabled: false
+				}
+			};`,
+		},
+		{
+			src: 'https://public.whaticket.com/widget/production/wtt-widget-default.js',
+			async: true,
+			crossorigin: '*'
+		}
+	]
 })
 
 onMounted(() => {
