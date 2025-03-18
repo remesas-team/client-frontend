@@ -68,9 +68,9 @@
 									<span
 										class="px-3 py-1 rounded-full text-sm font-medium"
 										:class="{
-											'bg-green-100 text-green-800': operation.status_id in [8],
-											'bg-yellow-100 text-yellow-800': operation.status_id in [1, 2, 4, 6, 7],
-											'bg-red-100 text-white': operation.status_id in [3, 9, 10, 5],
+											'bg-green-100 text-green-800': operation.status_id in {8:8},
+											'bg-yellow-100 text-yellow-800': operation.status_id in {1:1, 2:2, 4:4, 6:6, 7:7},
+											'bg-red-100 text-red-800': operation.status_id in {3:3, 9:9, 10:10, 5:5},
 										}"
 									>
 										{{ operation.status.user_label }}

@@ -76,17 +76,16 @@
 					</div>
 				</div>
 
-
 				<!-- Transaction Details Card -->
 				<div class="bg-white rounded-xl shadow-lg p-8 [&>*]:mb-6">
 					<!-- Status Section -->
 					<div class="flex items-center justify-between pb-4 border-b">
-						<span class="text-gray-600">Datos de la operación</span>
+						<span class="text-gray-600 font-bold text-lg">Datos de la operación</span>
 						<span class="px-3 py-1 rounded-full text-sm font-medium" :class="{
-				'bg-green-100 text-green-800': remittance.status === 'completed',
-				'bg-yellow-100 text-yellow-800': remittance.status === 'in_progress',
-				'bg-gray-100 text-gray-800': remittance.status === 'pending',
-			}">
+								'bg-green-100 text-green-800': remittance.status === 'completed',
+								'bg-yellow-100 text-yellow-800': remittance.status === 'in_progress',
+								'bg-gray-100 text-gray-800': remittance.status === 'pending',
+							}">
 							{{ getStatusText(remittance.status) }}
 						</span>
 					</div>
@@ -95,32 +94,32 @@
 					<div class="[&>*]:mb-4">
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Monto enviado</span>
-							<span class="font-medium">{{ remittance.source_currency_symbol }} {{
+							<span class="font-medium">{{ remittance.source_currency.code }} {{
 				Number(remittance.source_amount).toFixed(2) }}</span>
 						</div>
 
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Tipo de cambio</span>
-							<span class="font-medium">1 {{ remittance.source_currency_symbol }} = {{
+							<span class="font-medium">1 {{ remittance.source_currency.code }} = {{
 				Number(remittance.exchange_rate).toFixed(2) }}
 								{{ remittance.destination_currency_symbol }}</span>
 						</div>
 
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Comisión</span>
-							<span class="font-medium">{{ remittance.source_currency_symbol }} {{
+							<span class="font-medium">{{ remittance.source_currency.code }} {{
 				Number(remittance.source_commission_fee).toFixed(2) }}</span>
 						</div>
 
 						<div class="flex justify-between items-center">
 							<span class="text-gray-600">Impuestos</span>
-							<span class="font-medium">{{ remittance.source_currency_symbol }} {{
+							<span class="font-medium">{{ remittance.source_currency.code }} {{
 				Number(remittance.source_tax).toFixed(2) }}</span>
 						</div>
 
 						<div class="flex justify-between items-center font-bold text-lg">
 							<span>Monto a recibir</span>
-							<span>{{ remittance.destination_currency_symbol }}
+							<span>{{ remittance.destination_currency.code }}
 								{{ Number(remittance.destination_amount).toFixed(2) }}</span>
 						</div>
 					</div>
