@@ -64,7 +64,7 @@
 			<!-- Support Button -->
 			<div class="mt-12">
 				<button
-					class="w-full bg-gray-800 text-white py-4 rounded-lg hover:bg-gray-700 transition-colors text-lg font-medium flex justify-center items-center"
+					class="w-full bg-green-grass text-white py-4 rounded-lg hover:bg-green-dark transition-colors text-lg font-medium flex justify-center items-center hover:cursor-pointer"
 					@click="openSupportChat"
 				>
 					<UIcon name="i-lucide:headset mr-2"></UIcon> <span>Contactar con soporte</span>
@@ -112,6 +112,11 @@ const steps = ref<Step[]>([
 const openSupportChat = () => {
 	// Here you would implement the logic to open the support chat
 	console.log('Opening support chat...')
+    // Open WhatsApp with tracking message
+    const phoneNumber = '51914034946' // Replace with actual support phone number
+    const message = `Hola, Remesas. Quiero darle seguimiento a esta orden: ${route.params.id}`
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, '_blank')
 }
 function objectMap(object, mapFn) {
 	return Object.keys(object).reduce(function (result, key) {
