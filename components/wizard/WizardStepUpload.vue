@@ -34,7 +34,7 @@
 					</div>
 					<div class="ml-3">
 						<h3 class="text-md font-medium text-blue-800">
-							Para terminar con la operación deposita el monto total a transferir al siguiente número de cuenta.
+							Para terminar con la operación deposita el monto total a transferir al siguiente número de {{ newOperation.collection_system_account.account_type?.name }}.
 						</h3>
 					</div>
 				</div>
