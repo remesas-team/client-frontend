@@ -101,7 +101,7 @@
 				</div>
 
 				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
-					<span class="text-gray-600 text-sm" >{{ newOperation.collection_system_account.account_type.name }}:</span>
+					<span class="text-gray-600 text-sm" >{{ newOperation.collection_system_account.account_type?.name }}:</span>
 					<div class="flex items-center gap-2 justify-between">
 						<span
 							v-if="newOperation"
