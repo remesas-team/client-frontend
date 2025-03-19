@@ -126,7 +126,7 @@
 
 					<!-- Recipient Details -->
 					<div class="pt-4 border-t [&>*]:mb-4">
-						<h3 class="font-medium text-lg">Datos del destinatario</h3>
+						<h3 class="font-black text-lg">Datos del destinatario</h3>
 
 						<div class="[&>*]:mb-3">
 							<div class="flex justify-between items-center">

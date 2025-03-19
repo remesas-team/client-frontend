@@ -25,7 +25,20 @@
 
 		<!-- Transfer Details -->
 		<div class="mb-4">
-			<h3 class="text-md font-medium my-5 text-center">Para terminar con la operación deposita el monto total a transferir al siguiente número de cuenta.</h3>
+			<div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-5">
+				<div class="flex items-center">
+					<div class="flex-shrink-0">
+						<svg class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+						</svg>
+					</div>
+					<div class="ml-3">
+						<h3 class="text-md font-medium text-blue-800">
+							Para terminar con la operación deposita el monto total a transferir al siguiente número de cuenta.
+						</h3>
+					</div>
+				</div>
+			</div>
 			<div class="mb-4 flex flex-col gap-4">
 				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
 					<span class="text-gray-600 text-sm">Total a Transferir</span>
@@ -88,7 +101,7 @@
 				</div>
 
 				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
-					<span class="text-gray-600 text-sm" >N° de cuenta:</span>
+					<span class="text-gray-600 text-sm" >{{ newOperation.collection_system_account.account_type.name }}:</span>
 					<div class="flex items-center gap-2 justify-between">
 						<span
 							v-if="newOperation"
@@ -117,7 +130,7 @@
 					</div>
 				</div>
 
-				<div class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
+				<div v-if="newOperation.collection_system_account.cci" class="flex flex-col gap-2 md:justify-between md:items-center border-b-1 border-b-[#ececec] pb-4">
 					<span class="text-gray-600 text-sm">N° de cuenta interbancario:</span>
 					<div class="flex items-center gap-2 justify-between">
 						<span
@@ -252,8 +265,10 @@
 		<UAlert
 			v-if="errorGeneral"
 			:description="errorGeneral"
+			@update:open="errorGeneral = null"
 			color="error"
 			variant="soft"
+			close
 		/>
 
 		<!-- Action Buttons -->
@@ -266,6 +281,7 @@
 				class="w-full mt-8 text-lg font-medium h-14 bg-green-grass text-center hover:bg-green-dark hover:cursor-pointer"
 				:loading="loadingSubmit"
 				@click="confirmTransaction"
+				
 			>
 				Confirma y Envia el dinero
 			</UButton>
@@ -357,6 +373,10 @@ const handleDrop = (event: DragEvent) => {
 }
 
 const confirmTransaction = async () => {
+	if(!selectedFile.value) {
+		errorGeneral.value = 'Debe seleccionar un archivo'
+		return
+	}
 	errorGeneral.value = ''
 	loadingSubmit.value = true
 
