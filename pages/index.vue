@@ -6,7 +6,7 @@
 			<div class="w-full md:w-1/2 justify-center text-center items-center md:items-left md:text-left">
 				<span class="bg-green-grass text-white rounded-2xl px-4 py-2 text-sm mb-3 text-nowrap lg:text-lg">
 					<strong class="hidden sm:inline">🎁 Regalo:</strong> Cupón 1er envío gratis
-					<a href="#" class="text-[#93f8f4] font-bold ml-1" @click="applyCoupon">WELCOME100</a></span>
+					<a href="#" class="text-[#93f8f4] font-bold ml-1" @click="applyCoupon(couponName)">{{ couponName }}</a></span>
 				<h1 class="text-3xl md:text-5xl xl:text-7xl font-bold leading-tight mt-5">
 					Envía dinero a cualquier parte del Perú y Brasil
 				</h1>
@@ -77,10 +77,18 @@ const remittanceStore = useRemittanceStore()
 definePageMeta({
 	auth: false,
 })
-const coupon = ref(null)
-const applyCoupon = () => {
-	remittanceStore.coupon = 'WELCOME100'
+
+// Get the query parameter 'c' and set default value
+const route = useRoute()
+const couponName = ref(route.query.c?.toString().toUpperCase() || 'WELCOME100')
+const coupon = ref(couponName.value)
+
+// Update applyCoupon to accept a parameter
+const applyCoupon = (code: string) => {
+	remittanceStore.coupon = code
 }
+
+
 const activeTab = ref('enviar');
 
 const tabs = [
