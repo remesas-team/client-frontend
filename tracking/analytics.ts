@@ -6,7 +6,7 @@ interface ConfigProvide {
 }
 
 interface Properties {
-	[key: string]: string | number | boolean
+	[key: string]: string | number | boolean | undefined
 }
 
 let analytics: RudderAnalytics | null = null

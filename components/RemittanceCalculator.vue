@@ -256,10 +256,7 @@
 					<p class="font-bold text-green-600">Ahorraste: {{ estimate.savings }} {{ estimate.from }}</p>
 				</div>
 				<!-- Errores -->
-				<div>
-
-
-				</div>
+				<div></div>
 				<!-- Submit Button -->
 				<button
 					type="submit"
@@ -277,6 +274,7 @@ import * as v from 'valibot'
 import { useRemittanceStore } from '~/stores/remittance'
 import { useSourcesStore } from '~/stores/sources'
 import { operationsRepository } from '~/repositories/v1/platform/operationsRepository'
+import { trackRemittanceCalculator } from '~/tracking/events/remittanceEvents'
 
 const router = useRouter()
 const remittanceStore = useRemittanceStore()
@@ -351,7 +349,6 @@ const handleAmountInput = (value: number) => {
 }
 
 const calculateEstimate = async () => {
-
 	const response = await requestOperations.getEstimate(formRemittance.value)
 
 	if (!response.success) {
@@ -376,7 +373,7 @@ const applyCoupon = (coupon_code) => {
 }
 
 const startOperation = () => {
-	console.log("Start")
+	console.log('Start')
 	loadingSubmit.value = true
 
 	remittanceStore.$reset()
@@ -403,10 +400,10 @@ const startOperation = () => {
 	remittanceStore.form.amount_to_send = estimate.value.amount_to_send
 	remittanceStore.form.savings = estimate.value.savings || 0
 
-	
 	remittanceStore.form.coupon_code = estimate.value.coupon?.code || null
 	remittanceStore.form.coupon = estimate.value.coupon?.code || null
 
+	trackRemittanceCalculator()
 	router.push('/operacion/1')
 }
 
@@ -443,8 +440,8 @@ onMounted(async () => {
 })
 
 watch(coupon, (data) => {
-	console.log("NEW VALuE", data)
-	 if (data) {
+	console.log('NEW VALuE', data)
+	if (data) {
 		applyCoupon(data)
 	}
 })
