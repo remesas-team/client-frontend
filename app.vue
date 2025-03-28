@@ -11,7 +11,6 @@
 <script setup lang="ts">
 import { trackPage } from '~/tracking/events/pagesEvents'
 import { trackIdentify } from '~/tracking/events/authEvents'
-import { trackExample } from '~/tracking/events/exampleEvents'
 
 const route = useRoute()
 
@@ -60,7 +59,6 @@ useHead({
 onMounted(() => {
 	trackIdentify()
 	trackPage()
-	trackExample()
 })
 
 watch(

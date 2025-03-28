@@ -277,6 +277,7 @@ import * as v from 'valibot'
 import { useRemittanceStore } from '~/stores/remittance'
 import { useSourcesStore } from '~/stores/sources'
 import { operationsRepository } from '~/repositories/v1/platform/operationsRepository'
+import {trackEstimate} from '~/tracking/events/remittanceEvents'
 
 const router = useRouter()
 const remittanceStore = useRemittanceStore()
@@ -360,7 +361,7 @@ const calculateEstimate = async () => {
 		refFormRemittance.value?.setErrors(listErrors)
 		return
 	}
-
+	trackEstimate(response.data)
 	estimate.value = response.data
 }
 
