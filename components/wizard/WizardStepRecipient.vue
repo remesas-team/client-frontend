@@ -183,6 +183,7 @@ import { useRemittanceStore } from '~/stores/remittance'
 import { sourcesRepository } from '~/repositories/v1/platform/sourcesRepository'
 import { userRepository } from '~/repositories/v1/platform/userRepository'
 import CircleLoader from '~/components/CircleLoader.vue'
+import {trackSetDestinatary} from '~/tracking/events/remittanceEvents'
 
 
 import * as v from 'valibot'
@@ -275,6 +276,7 @@ const handleSubmit = async () => {
 		params.cci = cci
 	}
 
+
 	console.log("PARAMS", params)
 
 	if (!selectedAccount.value) {
@@ -285,9 +287,13 @@ const handleSubmit = async () => {
 			return
 		}
 		console.log("Selected!", response.data)
+		params.is_new = true
+		trackSetDestinatary(params)
 		remittanceStore.form.destination_user_account_id = response.data.id
 	} else {
 		console.log("Selected",selectedAccount.value.id)
+		params.is_new = false
+		trackSetDestinatary(params)
 		remittanceStore.form.destination_user_account_id = selectedAccount.value.id
 	}
 

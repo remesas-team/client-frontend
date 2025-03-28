@@ -3,31 +3,32 @@ import tracer from '~/tracking/analytics'
 export const trackEstimate = (params) => {
 	tracer.track('estimate', params)
 }
-export const trackApplyCoupon = () => {
-	tracer.track('example')
+export const trackApplyCoupon = (params) => {
+	tracer.track('cupon_applie', params)
 }
 
-export const trackStartRemittance = () => {
-	tracer.track('example')
+export const trackStartRemittance = (params) => {
+	tracer.track('remittance_start', params)
 }
 
-export const trackStep = () => {
-	tracer.track('example')
+export const trackSetDestinatary = (params) => {
+	tracer.track('remittance_destination', params)
 }
 
-export const trackNewDestinatary = () => {
-	tracer.track('example')
+export const trackSetOrigin = (params) => {
+	tracer.track('remittance_origin',params)
 }
 
-export const trackNewOrigin = () => {
-	tracer.track('example')
+export const trackConfirmation = (params) => {
+	tracer.track('remittance_confirmation', params)
+}
+    
+export const trackUpload = (params) => {
+    // format, 
+	tracer.track('remittance_upload', params)
 }
 
-export const trackConfirmation = () => {
-	tracer.track('example')
-}
-
-export const trackUpload = () => {
-	tracer.track('example')
+export const trackFinish = (params) => {
+	tracer.track('remittance_finish', params)
 }
 

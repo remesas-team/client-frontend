@@ -277,7 +277,7 @@ import * as v from 'valibot'
 import { useRemittanceStore } from '~/stores/remittance'
 import { useSourcesStore } from '~/stores/sources'
 import { operationsRepository } from '~/repositories/v1/platform/operationsRepository'
-import {trackEstimate} from '~/tracking/events/remittanceEvents'
+import {trackEstimate, trackApplyCoupon, trackStartRemittance} from '~/tracking/events/remittanceEvents'
 
 const router = useRouter()
 const remittanceStore = useRemittanceStore()
@@ -363,13 +363,15 @@ const calculateEstimate = async () => {
 	}
 	trackEstimate(response.data)
 	estimate.value = response.data
+	return response.data
 }
 
 const applyCoupon = (coupon_code) => {
 	showCoupon.value = true
 	if (coupon_code) {
 		formRemittance.value.coupon = coupon_code
-		calculateEstimate()
+		const estimate = calculateEstimate()
+		trackApplyCoupon(estimate)
 	} else {
 		coupon.value = null // si llega vacío resetea el cupon
 		calculateEstimate()
@@ -408,6 +410,7 @@ const startOperation = () => {
 	remittanceStore.form.coupon_code = estimate.value.coupon?.code || null
 	remittanceStore.form.coupon = estimate.value.coupon?.code || null
 
+	trackStartRemittance(remittanceStore.form)
 	router.push('/operacion/1')
 }
 

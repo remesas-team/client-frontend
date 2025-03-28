@@ -93,6 +93,8 @@
 
 <script setup lang="ts">
 import { useRemittanceStore } from '~/stores/remittance'
+import {trackConfirmation} from '~/tracking/events/remittanceEvents'
+
 
 const emit = defineEmits<{
 	(e: 'next'): void
@@ -119,6 +121,7 @@ const handleConfirm = async () => {
 
 	console.log(response.data)
 	remittanceStore.newOperation = ref(response.data)
+	trackConfirmation(remittanceStore.form)
 
 	emit('next')
 }

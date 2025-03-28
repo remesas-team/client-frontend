@@ -312,6 +312,7 @@
 <script setup lang="ts">
 import { operationsRepository } from '~/repositories/v1/platform/operationsRepository'
 import { useRemittanceStore } from '~/stores/remittance'
+import {trackUpload} from '~/tracking/events/remittanceEvents'
 
 const router = useRouter()
 const requestOperations = operationsRepository()
@@ -393,6 +394,8 @@ const confirmTransaction = async () => {
 		errorGeneral.value = response.message
 		return
 	}
+
+	trackUpload()
 
 	router.push('/operacion/success')
 }

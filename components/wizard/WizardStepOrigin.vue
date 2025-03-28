@@ -180,6 +180,7 @@
 <script setup lang="ts">
 import { userRepository } from '~/repositories/v1/platform/userRepository'
 import { useAuthStore } from '~/stores/auth'
+import {trackSetOrigin} from '~/tracking/events/remittanceEvents'
 
 import { useRemittanceStore } from '~/stores/remittance'
 import { sourcesRepository } from '~/repositories/v1/platform/sourcesRepository'
@@ -271,8 +272,10 @@ const handleSubmit = async () => {
 			return
 		}
 
+		trackSetOrigin(params)
 		remittanceStore.form.source_user_account_id = response.data.id
 	} else {
+		trackSetOrigin(params)
 		remittanceStore.form.source_user_account_id = selectedAccount.value.id
 	}
 
