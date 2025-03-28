@@ -5,21 +5,33 @@ definePageMeta({
 import { ref } from 'vue'
 
 const stats = ref([
-  { label: 'Usuarios registrados', value: '+807 mil', icon: 'users' },
-  { label: 'Envíos mensuales', value: '+46 mil', icon: 'refresh' },
-  { label: 'Monto total último mes', value: 'USD +13 millones', icon: 'chart' },
-  { label: 'Monto total transferido', value: 'USD +620 millones', icon: 'globe' },
+  { label: 'Usuarios atendidos', value: '+20 mil', icon: 'users' },
+  { label: 'Envíos mensuales', value: '+1.4 mil', icon: 'refresh' },
+  { label: 'Monto total último año', value: 'USD +13 millones', icon: 'chart' },
+  { label: 'Bancos con los que trabajamos', value: '+30 bancos', icon: 'globe' },
 ])
 
 const team = ref([
   {
-    name: 'Amparo Naivarte',
+    name: 'Alex Zuñiga',
     position: 'Chief Executive Officer',
     image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
     bio: 'Reconocida en el MIT como joven innovadora, tiene más de 10 años de experiencia liderando empresas disruptivas y equipos de fintech.'
   },
   {
-    name: 'Rodrigo Neira',
+    name: 'Cristian Vega',
+    position: 'Director de Operaciones',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
+    bio: 'Con 12 años de experiencia en finanzas y economía estratégica con gobiernos y empresas de Latinoamérica, lidera nuestras operaciones para garantizar el mejor servicio.'
+  },
+  {
+    name: 'Melissa Hernández',
+    position: 'Director de Operaciones',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
+    bio: 'Con 12 años de experiencia en finanzas y economía estratégica con gobiernos y empresas de Latinoamérica, lidera nuestras operaciones para garantizar el mejor servicio.'
+  },
+  {
+    name: 'Raul Auccatoma',
     position: 'Director de Operaciones',
     image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&q=80',
     bio: 'Con 12 años de experiencia en finanzas y economía estratégica con gobiernos y empresas de Latinoamérica, lidera nuestras operaciones para garantizar el mejor servicio.'
@@ -74,9 +86,11 @@ const certifications = ref([
           </h1>
           
           <p class="text-lg text-gray-600 mb-8">
-            Fundada en 2020, Remesas.com está transformando el envío de dinero entre países con tecnología blockchain, logrando transferencias instantáneas a una fracción del costo tradicional.
+            Somos una empresa jóven que busca romper las barreras entre países y a través de nuestra plataforma de envío de dinero, conectamos a personas de todo el mundo. 
           </p>
-          
+          <p class="text-lg text-gray-600 mb-8 font-bold">
+            Queremos garantizarte:
+          </p>          
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div class="flex items-start gap-3">
               <div class="w-10 h-10 flex items-center justify-center rounded-full bg-green-wather/10 mt-1">
@@ -85,8 +99,8 @@ const certifications = ref([
                 </svg>
               </div>
               <div>
-                <h3 class="font-medium text-green-dark">Transferencias instantáneas</h3>
-                <p class="text-gray-600">El dinero llega en minutos, no días</p>
+                <h3 class="font-medium text-green-dark">Transferencias inmediatas</h3>
+                <p class="text-gray-600">Trabajamos en hacer el proceso siempre más rápido</p>
               </div>
             </div>
             
@@ -110,7 +124,7 @@ const certifications = ref([
               </div>
               <div>
                 <h3 class="font-medium text-green-dark">Servicio 24/7</h3>
-                <p class="text-gray-600">Soporte disponible todo el tiempo</p>
+                <p class="text-gray-600">Soporte disponible todo el tiempo vía Whatsapp</p>
               </div>
             </div>
             
@@ -122,7 +136,7 @@ const certifications = ref([
               </div>
               <div>
                 <h3 class="font-medium text-green-dark">100% Seguro</h3>
-                <p class="text-gray-600">Protección y cifrado avanzado</p>
+                <p class="text-gray-600">Protegemos tu dinero y tus datos con tecnología</p>
               </div>
             </div>
           </div>
@@ -138,14 +152,14 @@ const certifications = ref([
     <section class="py-20 px-6 md:px-12 bg-white">
       <div class="max-w-7xl mx-auto text-center mb-16">
         <div class="inline-block px-3 py-1 rounded-full bg-green-wather/10 text-green-wather font-medium text-sm mb-4">
-          Datos que Importan
+          Datos que te van a interesar
         </div>
         
         <h2 class="text-4xl font-bold text-green-dark mb-4">
-          Cada día conectamos a <span class="text-green-wather">miles de familias</span>
+          Cada día conectamos a <span class="text-green-wather">decenas de familias</span>
         </h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          Más de 800,000 personas confían en nosotros para enviar dinero a sus seres queridos de forma rápida y segura.
+          Más de 20,000 personas han confiado en nosotros para enviar dinero a sus seres queridos de forma rápida y segura.
         </p>
       </div>
       
@@ -172,7 +186,57 @@ const certifications = ref([
       </div>
     </section>
 
-    <!-- Trust badges -->
+    <!-- Team section -->
+    <section class="py-20 px-6 md:px-12 bg-light">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <div class="inline-block px-3 py-1 rounded-full bg-green-wather/10 text-green-wather font-medium text-sm mb-4">
+            Nuestro Equipo
+          </div>
+          
+          <h2 class="text-4xl font-bold text-green-dark mb-4">
+            Expertos apasionados por la <span class="text-green-wather">innovación financiera</span>
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Nuestro equipo combina décadas de experiencia en fintech, blockchain y mercados emergentes.
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+          <div v-for="person in team" :key="person.name" class="bg-white rounded-xl p-10 shadow-soft relative group overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-wather to-green-grass transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+              <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-light shadow-sm">
+                <img :src="person.image" :alt="person.name" class="w-full h-full object-cover">
+              </div>
+              
+              <div>
+                <h3 class="text-2xl font-bold text-green-dark">{{ person.name }}</h3>
+                <p class="text-green-wather font-medium mb-4">{{ person.position }}</p>
+                
+                <p class="text-gray-600 mb-6">{{ person.bio }}</p>
+                
+                <div class="flex gap-3">
+                  <a href="#" class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-gray-600 hover:bg-green-wather hover:text-white transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+                      <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                    </svg>
+                  </a>
+                  <a href="#" class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-gray-600 hover:bg-green-wather hover:text-white transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                      <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust badges 
     <section class="py-20 px-6 md:px-12 bg-gradient-to-br from-green-grass to-green-dark text-white">
       <div class="max-w-7xl mx-auto flex flex-col items-center justify-center">
         <div class="inline-block px-3 py-1 rounded-full bg-white/10 text-white font-medium text-sm mb-4 mx-auto text-center block">
@@ -206,7 +270,7 @@ const certifications = ref([
         </div>
       </div>
     </section>
-
+-->
     <!-- Manifesto section -->
     <section class="py-20 px-6 md:px-12 bg-white">
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -258,56 +322,6 @@ const certifications = ref([
             <p class="text-gray-600">
               Con nuestra comunidad, paso a paso. Combinando tecnología de punta, regulación inteligente y centrando cada decisión en las necesidades reales de nuestros usuarios.
             </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Team section -->
-    <section class="py-20 px-6 md:px-12 bg-light">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <div class="inline-block px-3 py-1 rounded-full bg-green-wather/10 text-green-wather font-medium text-sm mb-4">
-            Nuestro Equipo
-          </div>
-          
-          <h2 class="text-4xl font-bold text-green-dark mb-4">
-            Expertos apasionados por la <span class="text-green-wather">innovación financiera</span>
-          </h2>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-            Nuestro equipo combina décadas de experiencia en fintech, blockchain y mercados emergentes.
-          </p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div v-for="person in team" :key="person.name" class="bg-white rounded-xl p-10 shadow-soft relative group overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-wather to-green-grass transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            
-            <div class="flex flex-col md:flex-row gap-8 items-start">
-              <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-light shadow-sm">
-                <img :src="person.image" :alt="person.name" class="w-full h-full object-cover">
-              </div>
-              
-              <div>
-                <h3 class="text-2xl font-bold text-green-dark">{{ person.name }}</h3>
-                <p class="text-green-wather font-medium mb-4">{{ person.position }}</p>
-                
-                <p class="text-gray-600 mb-6">{{ person.bio }}</p>
-                
-                <div class="flex gap-3">
-                  <a href="#" class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-gray-600 hover:bg-green-wather hover:text-white transition-colors duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
-                      <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
-                    </svg>
-                  </a>
-                  <a href="#" class="w-8 h-8 rounded-full bg-light flex items-center justify-center text-gray-600 hover:bg-green-wather hover:text-white transition-colors duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-                      <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@
 					class="text-xl font-bold text-gray-800"
 				>
 					<img
-						src="/images/logo.png"
+						src="/images/logo-remesas.svg"
 						alt=""
 						class="w-27 md:w-32 lg:w-45"
 					/>

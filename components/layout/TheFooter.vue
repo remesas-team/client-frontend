@@ -1,5 +1,31 @@
 <template>
-	<footer class="bg-green-dark text-white py-12">
+	<footer class="flex flex-col items-center justify-center pt-4">
+		<NuxtLink to="/" class="text-xl font-bold text-gray-800 my-8">
+			<img src="/images/logo-remesas.svg" alt="" class="w-27 md:w-32 lg:w-45" />
+		</NuxtLink>
+		<div>
+			<p>Enviamos más que dinero, conectamos familias.</p>
+		</div>
+		<div class="p-10">
+			<ul class="flex gap-10">
+				<li>
+					<a href="https://www.instagram.com/remesascom/" class="text-gray-800 hover:text-gray-600 text-3xl">
+						<UIcon
+						name="i-lucide:instagram"
+					/>
+					</a>
+				</li>
+				<li>
+					<a href="https://wa.me/51914034946" class="text-gray-800 hover:text-gray-600 text-3xl">
+						<UIcon
+						name="i-lucide:message-circle"
+					/>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</footer>
+	<!--<footer class="bg-green-dark text-white py-12">
 		<div class="container mx-auto px-4">
 			<div class="grid md:grid-cols-4 gap-8">
 				<div>
@@ -50,4 +76,5 @@
 			</div>
 		</div>
 	</footer>
+	-->
 </template>
