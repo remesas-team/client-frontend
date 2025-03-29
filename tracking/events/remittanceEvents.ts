@@ -31,4 +31,3 @@ export const trackUpload = (params) => {
 export const trackFinish = (params) => {
 	tracer.track('remittance_finish', params)
 }
-
