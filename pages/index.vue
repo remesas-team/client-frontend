@@ -64,6 +64,9 @@
 				</section>
 				<TestimonialSlider />
 			</div>
+			<div class="logos w-full mb-10">
+				<LogoSlider />
+			</div>
 			<FeaturesSection />
 			<!--<TrustSection />-->
 		</div>
