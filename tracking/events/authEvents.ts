@@ -13,7 +13,16 @@ export const trackIdentify = (userParams = {}) => {
 	}
 
 	tracer.identify(user.email, params)
-	tracer.track('Sign Up', params)
+}
+
+export const trackLogIn = () => {
+	trackIdentify()
+	tracer.track('login')
+}
+
+export const trackRegister = () => {
+	trackIdentify()
+	tracer.track('create_account')
 }
 
 export const trackLogOut = () => {

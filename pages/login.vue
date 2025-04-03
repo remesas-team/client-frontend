@@ -110,6 +110,8 @@
 const router = useRouter()
 const authStore = useAuthStore()
 const showPassword = ref(false)
+import { trackLogIn } from '~/tracking/events/authEvents'
+
 definePageMeta({
 	auth: 'guest',
 })
@@ -148,6 +150,8 @@ const handleLogin = async () => {
 		redirect.value = null
 		return
 	}
+
+	trackLogIn()
 
 	router.push('/perfil')
 }

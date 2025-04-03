@@ -284,6 +284,7 @@ ntra
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth'
 import { useSourcesStore } from '~/stores/sources'
+import { trackRegister } from '~/tracking/events/authEvents'
 import * as v from 'valibot'
 
 const { $auth } = useNuxtApp()
@@ -401,6 +402,8 @@ const handleRegister = async () => {
 
 	$auth.setToken(response.data.access_token)
 	authStore.user = response.data.user
+
+	trackRegister()
 
 	const redirect = useCookie('auth.prod.remesas.redirect')
 	if (redirect.value) {
