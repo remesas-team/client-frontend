@@ -78,7 +78,7 @@
 			</div>
 			<button 
 			@click="reloadEstimation"
-			class="px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors duration-200 flex items-center space-x-2"
+			class="cursor-pointer px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors duration-200 flex items-center space-x-2"
 			>
 			<span>Volver a calcular</span>
 			<UIcon 
@@ -143,6 +143,8 @@ const reloadEstimation = async () => {
 		return
 	}
 	trackEstimate(response.data, 'recalculado')
+
+	errorGeneral.value = null
 
 	estimate.value = response.data
 	setNewEstimation()
