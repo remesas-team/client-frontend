@@ -270,7 +270,7 @@
 			variant="soft"
 			close
 		/>
-
+		
 		<!-- Action Buttons -->
 		<div class="mb-4">
 			<UButton

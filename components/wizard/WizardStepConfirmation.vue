@@ -67,7 +67,27 @@
 			variant="soft"
 			class="mb-8"
 		/>
-
+		<div v-if="errorGeneral" class="bg-white rounded-lg p-4 mb-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+		<div class="flex items-center justify-between">
+			<div class="flex items-center space-x-3">
+			<UIcon 
+				name="i-mdi-refresh" 
+				class="text-blue-500 w-5 h-5"
+			/>
+			<span class="text-gray-600">Ups... El tipo de cambio se actualizó...</span>
+			</div>
+			<button 
+			@click="reloadEstimation"
+			class="px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors duration-200 flex items-center space-x-2"
+			>
+			<span>Volver a calcular</span>
+			<UIcon 
+				name="i-mdi-arrow-right" 
+				class="w-4 h-4"
+			/>
+			</button>
+		</div>
+		</div>
 		<!-- Action Button -->
 		<UButton
 			type="submit"
@@ -94,7 +114,8 @@
 <script setup lang="ts">
 import { useRemittanceStore } from '~/stores/remittance'
 import {trackConfirmation} from '~/tracking/events/remittanceEvents'
-
+import { operationsRepository } from '~/repositories/v1/platform/operationsRepository'
+import {trackEstimate, trackApplyCoupon, trackStartRemittance} from '~/tracking/events/remittanceEvents'
 
 const emit = defineEmits<{
 	(e: 'next'): void
@@ -102,10 +123,45 @@ const emit = defineEmits<{
 
 const remittanceStore = useRemittanceStore()
 
+
+const refFormRemittance = ref(null)
+
 const TIME_LIMIT = 15 * 60 // 15 minutes in seconds
 const timeRemaining = ref(TIME_LIMIT)
 const loadingSubmit = ref(false)
 const errorGeneral = ref('')
+const requestOperations = operationsRepository()
+const estimate = ref(null)
+ 	
+const reloadEstimation = async () => {
+	const response = await requestOperations.getEstimate(remittanceStore.estimationData)
+
+	if (!response.success) {
+		const listErrors = Object.keys(response.errors).map((key) => ({ name: key, message: response.errors[key][0] }))
+
+		refFormRemittance.value?.setErrors(listErrors)
+		return
+	}
+	trackEstimate(response.data, 'recalculado')
+
+	estimate.value = response.data
+	setNewEstimation()
+	return response.data
+}
+
+const setNewEstimation = async () => {
+	remittanceStore.form.source_currency_symbol = estimate.value.from
+	remittanceStore.form.destination_currency_symbol = estimate.value.to
+	remittanceStore.form.destination_amount = estimate.value.exchange_result
+	remittanceStore.form.exchange_rate = estimate.value.exchange_unit
+	remittanceStore.form.send_cost = estimate.value.send_cost
+	remittanceStore.form.send_tax = estimate.value.tax
+	remittanceStore.form.amount_to_send = estimate.value.amount_to_send
+	remittanceStore.form.savings = estimate.value.savings || 0
+	remittanceStore.form.coupon_code = estimate.value.coupon?.code || null
+	remittanceStore.form.coupon = estimate.value.coupon?.code || null
+}
+
 
 const handleConfirm = async () => {
 	errorGeneral.value = ''

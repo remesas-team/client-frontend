@@ -354,6 +354,7 @@ const handleAmountInput = (value: number) => {
 const calculateEstimate = async () => {
 
 	const response = await requestOperations.getEstimate(formRemittance.value)
+	
 
 	if (!response.success) {
 		const listErrors = Object.keys(response.errors).map((key) => ({ name: key, message: response.errors[key][0] }))
@@ -409,6 +410,8 @@ const startOperation = () => {
 	
 	remittanceStore.form.coupon_code = estimate.value.coupon?.code || null
 	remittanceStore.form.coupon = estimate.value.coupon?.code || null
+
+	remittanceStore.estimationData = formRemittance.value
 
 	trackStartRemittance(remittanceStore.form)
 	router.push('/operacion/1')

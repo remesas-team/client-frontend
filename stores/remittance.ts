@@ -35,6 +35,9 @@ export const useRemittanceStore = defineStore('remittance', {
 			// destination_bank_account_id: null,
 			// destination_origin_fund_id: null,
 		},
+		estimationData: {
+
+		},
 		currentOperation: null,
 		newOperation: null,
 		coupon: null
